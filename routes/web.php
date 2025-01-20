@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ApprovalController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\auth\RegisterController;
 use Illuminate\Support\Facades\Route;
@@ -15,30 +16,23 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
+// Route untuk register
 Route::get('/register', [RegisterController::class, 'showRegister'])->name('register');
 Route::post('/register', [RegisterController::class, 'register']);
+
+// Route untuk login
 Route::get('/login', [LoginController::class, 'showLogin'])->name('login');
-Route::post('/login', [LoginController::class, 'login']);
+Route::post('/login', [LoginController::class, 'login'])->name('credential');
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
-// Route untuk verifikasi email
-// Email verification routes
-Route::get('/email/verify', [RegisterController::class, 'notice'])
-    ->middleware('auth')
-    ->name('verification.notice');
 
-Route::get('/email/verify/{id}', [RegisterController::class, 'verify'])
-    ->name('verification.verify')
-    ->middleware('signed');
+// Grup route yang memerlukan autentikasi dan status approved
+// Route::middleware(['auth'])->group(function () {
+Route::middleware(['auth', 'check.status'])->group(function () {
+    Route::get('/', function () {
+        return view('welcome');
+    })->name('dashboard');
 
-Route::post('/email/verification-notification', [RegisterController::class, 'resendVerification'])
-    ->middleware(['auth', 'throttle:6,1'])
-    ->name('verification.send');
-// Route::get('verify/{id}', [RegisterController::class, 'verify'])->name('verification.verify')->middleware('signed');
-// Route untuk halaman setelah login
-Route::get('/', function () {
-    return view('welcome');
-})->name('dashboard')->middleware('auth');
+    Route::get('/admin/users', [ApprovalController::class, 'index'])->name('users.index');
+    Route::get('/admin/users/approve/{id}', [ApprovalController::class, 'approve'])->name('users.approve');
+    Route::get('/admin/users/reject/{id}', [ApprovalController::class, 'reject'])->name('users.reject');
+});

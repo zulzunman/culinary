@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\auth;
 
 use App\Http\Controllers\Controller;
+use App\Mail\RegisterMail;
 use App\Models\City;
 use App\Models\Location;
 use App\Models\MerchantProfile;
@@ -12,6 +13,7 @@ use Illuminate\Auth\Events\Verified;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 
 class RegisterController extends Controller
 {
@@ -77,7 +79,7 @@ class RegisterController extends Controller
             $ktpPicture->move(public_path('assets/img/ktp_picture'), $ktpPictureName);
 
             // Membuat merchant profile
-            MerchantProfile::create([
+            $data =  MerchantProfile::create([
                 'nik' => $request->nik,
                 'name' => $request->name,
                 'gender' => $request->gender,
@@ -91,7 +93,7 @@ class RegisterController extends Controller
             ]);
 
             // Kirim email verifikasi
-            $user->sendEmailVerificationNotification();
+            Mail::to($user->email)->send(new RegisterMail($data));
 
 
             DB::commit(); // Jika semua proses berhasil
@@ -100,55 +102,5 @@ class RegisterController extends Controller
             DB::rollBack(); // Membatalkan semua perubahan jika terjadi error
             return back()->withErrors(['error' => 'Registration failed: ' . $e->getMessage()]);
         }
-    }
-
-    // Email Verification Notice
-    public function notice()
-    {
-        return view('auth.verify-email');
-    }
-
-    // Handle Email Verification
-    public function verify(Request $request, $id)
-    {
-        $user = User::findOrFail($id);
-
-        // Check if URL is valid
-        if (!$request->hasValidSignature()) {
-            return response()->json([
-                'status' => 'failed',
-                'message' => 'Invalid verification link or link has expired'
-            ], 400);
-        }
-
-        // Check if user is already verified
-        if ($user->hasVerifiedEmail()) {
-            return redirect()->route('login')->with('success', 'Email already verified. You can now login.');
-        }
-
-        // Verify the email
-        if ($user->markEmailAsVerified()) {
-            event(new Verified($user));
-        }
-
-        return redirect()->route('login')->with('success', 'Email has been verified successfully. You can now login.');
-    }
-
-    // Resend Verification Email
-    public function resendVerification(Request $request)
-    {
-        $user = User::where('email', $request->email)->first();
-
-        if (!$user) {
-            return back()->withErrors(['email' => 'No user found with this email address.']);
-        }
-
-        if ($user->hasVerifiedEmail()) {
-            return back()->with('success', 'Email already verified. You can login.');
-        }
-
-        $user->sendEmailVerificationNotification();
-
-        return back()->with('success', 'Verification link has been sent to your email address.');
     }
 }
