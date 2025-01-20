@@ -10,7 +10,6 @@ class Location extends Model
     use HasFactory;
 
     // Tentukan nama tabel jika berbeda dengan nama default
-    protected $table = 'locations';
     protected $fillable = ['code', 'detail'];
 
     public function product()
