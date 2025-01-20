@@ -13,18 +13,18 @@ return new class extends Migration
     {
         Schema::create('merchant_profiles', function (Blueprint $table) {
             $table->id();
-            $table->string('nik', 20);
-            $table->string('name');
-            $table->enum('gender', ['Laki - laki', 'Perempuan']);
-            $table->string('phone', 15);
-            $table->unsignedBigInteger('religion_id');
+            $table->string('nik', 20)->nullable();
+            $table->string('name')->nullable();
+            $table->enum('gender', ['Laki - laki', 'Perempuan'])->nullable();
+            $table->string('phone', 15)->nullable();
+            $table->unsignedBigInteger('religion_id')->nullable();
             $table->foreign('religion_id')->references('id')->on('religions')->onUpdate('cascade')->onDelete('cascade');
-            $table->unsignedBigInteger('city_id');
+            $table->unsignedBigInteger('city_id')->nullable();
             $table->foreign('city_id')->references('id')->on('citys')->onUpdate('cascade')->onDelete('cascade');
-            $table->date('date');
-            $table->text('address');
-            $table->string('ktp_picture');
-            $table->unsignedBigInteger('user_id');
+            $table->date('date')->nullable();
+            $table->text('address')->nullable();
+            $table->string('ktp_picture')->nullable();
+            $table->unsignedBigInteger('user_id')->nullable();
             $table->foreign('user_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();
         });

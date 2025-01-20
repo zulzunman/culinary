@@ -13,14 +13,14 @@ return new class extends Migration
     {
         Schema::create('products', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('store_name');
-            $table->string('booth_photo');
-            $table->string('menu_photo');
-            $table->string('product_photo');
-            $table->unsignedBigInteger('location_id');
+            $table->string('name')->nullable();
+            $table->string('store_name')->nullable();
+            $table->string('booth_photo')->nullable();
+            $table->string('menu_photo')->nullable();
+            $table->string('product_photo')->nullable();
+            $table->unsignedBigInteger('location_id')->nullable();
             $table->foreign('location_id')->references('id')->on('locations')->onUpdate('cascade')->onDelete('cascade');
-            $table->unsignedBigInteger('merchant_id');
+            $table->unsignedBigInteger('merchant_id')->nullable();
             $table->foreign('merchant_id')->references('id')->on('merchant_profiles')->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();
         });
