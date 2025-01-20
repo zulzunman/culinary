@@ -23,22 +23,20 @@ class RegisterController extends Controller
     {
         $locations = Location::all();
         // Mengirim data ke view
-        return view('auth.register', compact( 'locations'));
+        return view('auth.register', compact('locations'));
     }
 
     // Register Logic
     public function register(Request $request)
     {
         $request->validate([
-            'username' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email',
-            'password' => 'required|confirmed|min:8',
             'nik' => 'required|min:16|unique:merchant_profiles,nik',
             'name' => 'required|string|max:255',
             'name_product' => 'required|string|max:255',
             'phone' => 'required|string|max:15|regex:/^[0-9]+$/',
             'category' => 'required|string|max:255',
-            'description' => 'required|string|max:255',
+            'desctiption' => 'required|string|max:255',
             'location_id' => 'required|exists:locations,id',
         ]);
 
@@ -64,7 +62,7 @@ class RegisterController extends Controller
             $product = new Product();
             $product->name = $request->input('name_product');
             $product->category = $request->input('category');
-            $product->description = $request->input('description');
+            $product->desctiption = $request->input('desctiption');
             $product->location_id = $request->input('location_id');
             $product->merchant_id = $merchantProfile->id;
             $product->save();
