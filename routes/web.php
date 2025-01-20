@@ -29,7 +29,7 @@ Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 // Route::middleware(['auth'])->group(function () {
 Route::middleware(['auth', 'check.status'])->group(function () {
     Route::get('/', function () {
-        return view('welcome');
+        return view('dashboard');
     })->name('dashboard');
 
     Route::get('/admin/users', [ApprovalController::class, 'index'])->name('users.index');
