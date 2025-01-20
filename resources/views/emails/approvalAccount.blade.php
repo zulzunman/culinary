@@ -11,11 +11,17 @@
             <th>Nama Pedagang</th>
             <th>Email</th>
             <th>Password</th>
+            <th>Status</th>
         </tr>
         <tr>
             <td>{{ $merchantProfile['name'] }}</td>
             <td>{{ $user['email'] }}</td>
             <td>{{ $merchantProfile['nik'] }}</td>
+            @if ($user['status']=='APPROVE')
+                <td>DITERIMA</td>
+            @else
+                <td>DITOLAK</td>
+            @endif
         </tr>
     </table>
     <p>Silakan Untuk Login ke Aplikasi</p>
