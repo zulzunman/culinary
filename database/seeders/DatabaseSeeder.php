@@ -16,6 +16,9 @@ class DatabaseSeeder extends Seeder
             ReligionSeeder::class,
             CitySeeder::class,
             MonthSeeder::class,
+            LocationSeeder::class,
+            UserSeeder::class,
+            ManagementProfileSeeder::class,
         ]);
         // \App\Models\User::factory(10)->create();
 
