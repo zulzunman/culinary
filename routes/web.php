@@ -3,6 +3,8 @@
 use App\Http\Controllers\ApprovalController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\auth\RegisterController;
+use App\Http\Controllers\MerchantController;
+use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -35,4 +37,12 @@ Route::middleware(['auth', 'check.status'])->group(function () {
     Route::get('/admin/users', [ApprovalController::class, 'index'])->name('users.index');
     Route::get('/admin/users/approve/{id}', [ApprovalController::class, 'approve'])->name('users.approve');
     Route::get('/admin/users/reject/{id}', [ApprovalController::class, 'reject'])->name('users.reject');
+
+    Route::get('/merchant/index', [MerchantController::class, 'index'])->name('merchant.index');
+    Route::get('/merchant/create/{id}', [MerchantController::class, 'create'])->name('merchant.create');
+    Route::get('/merchant/update/{id}', [MerchantController::class, 'update'])->name('merchant.create');
+
+    Route::get('/store/index', [ProductController::class, 'index'])->name('store.index');
+    Route::get('/store/create/{id}', [ProductController::class, 'create'])->name('store.create');
+    Route::get('/store/update/{id}', [ProductController::class, 'update'])->name('store.create');
 });
