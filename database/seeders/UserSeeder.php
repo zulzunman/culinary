@@ -21,6 +21,7 @@ class UserSeeder extends Seeder
                 'email' => 'superadmin@example.com',
                 'email_verified_at' => now(),
                 'password' => Hash::make('12345678'),
+                'status' => 'APPROVE',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
@@ -30,6 +31,7 @@ class UserSeeder extends Seeder
                 'email' => 'admin@example.com',
                 'email_verified_at' => now(),
                 'password' => Hash::make('12345678'),
+                'status' => 'APPROVE',
                 'created_at' => now(),
                 'updated_at' => now(),
             ]
