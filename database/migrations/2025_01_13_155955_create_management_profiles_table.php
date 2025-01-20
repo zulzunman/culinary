@@ -13,10 +13,10 @@ return new class extends Migration
     {
         Schema::create('management_profiles', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->enum('gender', ['Laki - laki', 'Perempuan']);
-            $table->string('phone', 15);
-            $table->unsignedBigInteger('user_id');
+            $table->string('name')->nullable();
+            $table->enum('gender', ['Laki - laki', 'Perempuan'])->nullable();
+            $table->string('phone', 15)->nullable();
+            $table->unsignedBigInteger('user_id')->nullable();
             $table->foreign('user_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();
         });
