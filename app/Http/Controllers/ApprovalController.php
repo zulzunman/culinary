@@ -41,12 +41,20 @@ class ApprovalController extends Controller
         $user->status = 'REJECT';
         $user->save();
 
-        $merchantProfile = MerchantProfile::where('user_id', $user->id)->get();
+        $merchantProfile = MerchantProfile::where('user_id', $user->id)->first();
         $product = Product::where('merchant_id', $merchantProfile->id)->get();
 
         // Kirim email verifikasi
         Mail::to($user->email)->send(new ApprovalAccountMail($user, $merchantProfile, $product));
 
+        // Pemanggilan fungsi delete account
+        $this->deleteAccount($user);
+
         return redirect()->back()->with('success', 'User has been rejected.');
+    }
+
+    public function deleteAccount($user)
+    {
+        $user->delete();
     }
 }

@@ -41,7 +41,7 @@
                 @csrf
                 <!-- Personal Information -->
                 <div class="bg-blue-50 p-6 rounded-lg mb-6">
-                    <h3 class="text-xl font-semibold text-blue-800 mb-4">Personal Information</h3>
+                    <h3 class="text-xl font-semibold text-blue-800 mb-4">Informasi Pribadi</h3>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div>
                             <label for="nik" class="block text-sm font-medium text-gray-700">NIK</label>
@@ -80,10 +80,10 @@
 
                 <!-- Store Information -->
                 <div class="bg-green-50 p-6 rounded-lg mb-6">
-                    <h3 class="text-xl font-semibold text-green-800 mb-4">Store Information</h3>
+                    <h3 class="text-xl font-semibold text-green-800 mb-4">Informasi Dagangan</h3>
                     <div class="grid grid-cols-1 gap-6">
                         <div>
-                            <label for="name_product" class="block text-sm font-medium text-gray-700">Nama Toko</label>
+                            <label for="name_product" class="block text-sm font-medium text-gray-700">Nama Dagangan</label>
                             <input type="text" name="name_product" id="name_product" value="{{ old('name_product') }}" required
                                 class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-purple-500 focus:ring-purple-500">
                         </div>
