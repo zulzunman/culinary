@@ -93,9 +93,9 @@
                                 class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-purple-500 focus:ring-purple-500">
                         </div>
                         <div>
-                            <label for="description" class="block text-sm font-medium text-gray-700">Deskripsi Toko</label>
-                            <textarea name="description" id="description" rows="3" required
-                                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-purple-500 focus:ring-purple-500">{{ old('description') }}</textarea>
+                            <label for="desctiption" class="block text-sm font-medium text-gray-700">Deskripsi Toko</label>
+                            <textarea name="desctiption" id="desctiption" rows="3" required
+                                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-purple-500 focus:ring-purple-500">{{ old('desctiption') }}</textarea>
                         </div>
                     </div>
                 </div>
