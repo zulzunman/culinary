@@ -7,7 +7,7 @@
 </head>
 <body>
     <h1>Register</h1>
-    <form action="{{ route('register') }}" method="POST">
+    <form action="{{ route('register') }}" method="POST" enctype="multipart/form-data">
         @csrf
         <label for="username">Username:</label>
         <input type="text" name="username" id="username" value="{{ old('username') }}" >
@@ -67,9 +67,9 @@
 
     <div class="form-group">
         <label for="ktp_picture">KTP Picture</label>
-        <textarea name="ktp_picture" id="ktp_picture" class="form-control" rows="3" >{{ old('ktp_picture') }}</textarea>
-        <!-- <input type="file" name="ktp_picture" id="ktp_picture" class="form-control-file" > -->
-        <!-- @error('ktp_picture') <small class="text-danger">{{ $message }}</small> @enderror -->
+        <!-- <textarea name="ktp_picture" id="ktp_picture" class="form-control" rows="3" >{{ old('ktp_picture') }}</textarea> -->
+        <input type="file" name="ktp_picture" id="ktp_picture" class="form-control-file" >
+        @error('ktp_picture') <small class="text-danger">{{ $message }}</small> @enderror
     </div>
 
     <div class="form-group">
