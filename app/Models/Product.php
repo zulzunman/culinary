@@ -11,7 +11,7 @@ class Product extends Model
 
     // Tentukan nama tabel jika berbeda dengan nama default
     protected $table = 'products';
-    protected $fillable = ['name', 'store_name', 'booth_photo', 'menu_photo', 'product_photo', 'location_id', 'merchant_id'];
+    protected $fillable = ['name', 'store_name', 'category', 'description', 'booth_photo', 'menu_photo', 'product_photo', 'location_id', 'merchant_id'];
 
     // Relasi one-to-one dengan Merchant
     public function merchant()
