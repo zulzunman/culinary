@@ -42,6 +42,6 @@ Route::middleware(['auth', 'check.status'])->group(function () {
     Route::post('/merchant/edit', [MerchantController::class, 'edit'])->name('merchant.edit');
 
     Route::get('/store/index', [ProductController::class, 'index'])->name('store.index');
-    Route::get('/store/create/{id}', [ProductController::class, 'create'])->name('store.create');
-    Route::get('/store/update/{id}', [ProductController::class, 'update'])->name('store.create');
+    Route::get('/store/update', [ProductController::class, 'update'])->name('store.update');
+    Route::post('/store/edit', [ProductController::class, 'edit'])->name('store.edit');
 });
