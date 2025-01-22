@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\MerchantProfile;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -28,7 +29,6 @@ class CheckUserStatus
                 'email' => 'Your account is not approved yet. Please contact the admin.',
             ]);
         }
-
         return $next($request);
     }
 }

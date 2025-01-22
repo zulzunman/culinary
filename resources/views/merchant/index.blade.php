@@ -6,6 +6,9 @@
     <title>Document</title>
 </head>
 <body>
+    <div>
+        <a href="{{ route('merchant.update') }}" class="btn btn-success btn-sm">Edit Biodata</a>
+    </div>
     <table class="table table-bordered" border="2">
         <thead>
             <tr>
