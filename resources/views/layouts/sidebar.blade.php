@@ -34,59 +34,93 @@
     <div class="menu-inner-shadow"></div>
 
     <ul class="menu-inner py-1">
-        <!-- Dashboard Menu -->
-        <li class="menu-item">
-            <a href="javascript:void(0)" class="menu-link menu-toggle">
-                <i class="menu-icon tf-icons bx bx-home-smile"></i>
-                <div class="text-truncate">Menu</div>
-            </a>
-            <ul class="menu-sub">
-                <li class="menu-item active">
-                    <a href="index.html" class="menu-link">
-                        <div class="text-truncate">Dashboard</div>
-                    </a>
-                </li>
+        @auth
+            @if (auth()->user()->username == 'Admin' || auth()->user()->username == 'Super Admin')
+                <!-- Dashboard Menu -->
                 <li class="menu-item">
-                    <a href="#" class="menu-link">
-                        <div class="text-truncate">Biodata</div>
+                    <a href="javascript:void(0)" class="menu-link menu-toggle">
+                        <i class="menu-icon tf-icons bx bx-home-smile"></i>
+                        <div class="text-truncate">Menu</div>
                     </a>
+                    <ul class="menu-sub">
+                        <li class="menu-item active">
+                            <a href="{{ route('dashboard') }}" class="menu-link">
+                                <div class="text-truncate">Dashboard</div>
+                            </a>
+                        </li>
+                        <li class="menu-item">
+                            <a href="{{ route('users.index') }}" class="menu-link">
+                                <div class="text-truncate">Pembayaran</div>
+                            </a>
+                        </li>
+                    </ul>
                 </li>
-                <li class="menu-item">
-                    <a href="#" class="menu-link">
-                        <div class="text-truncate">Pembayaran</div>
-                    </a>
-                </li>
-                <li class="menu-item">
-                    <a href="#" class="menu-link">
-                        <div class="text-truncate">Cetak Kartu Lapak</div>
-                    </a>
-                </li>
-                <li class="menu-item">
-                    <a href="#" class="menu-link">
-                        <div class="text-truncate">Rata</div>
-                    </a>
-                </li>
-            </ul>
-        </li>
 
-        <!-- Other Menu -->
-        <li class="menu-item">
-            <a href="javascript:void(0);" class="menu-link menu-toggle">
-                <i class="menu-icon tf-icons bx bx-layout"></i>
-                <div class="text-truncate">Lainnya</div>
-            </a>
-            <ul class="menu-sub">
+                <!-- Other Menu -->
                 <li class="menu-item">
-                    <a href="layouts-without-menu.html" class="menu-link">
-                        <div class="text-truncate">Informasi</div>
+                    <a href="javascript:void(0);" class="menu-link menu-toggle">
+                        <i class="menu-icon tf-icons bx bx-layout"></i>
+                        <div class="text-truncate">Lainnya</div>
                     </a>
+                    <ul class="menu-sub">
+                        <li class="menu-item">
+                            <a href="layouts-without-menu.html" class="menu-link">
+                                <div class="text-truncate">Informasi</div>
+                            </a>
+                        </li>
+                        <li class="menu-item">
+                            <form action="{{ route('logout') }}" method="POST" class="menu-link">
+                                @csrf
+                                <button type="submit" class="menu-link btn btn-link p-0 m-0 text-truncate">
+                                    Keluar
+                                </button>
+                            </form>
+                        </li>
+                    </ul>
                 </li>
+            @else
                 <li class="menu-item">
-                    <a href="layouts-without-navbar.html" class="menu-link">
-                        <div class="text-truncate">Keluar</div>
+                    <a href="javascript:void(0)" class="menu-link menu-toggle">
+                        <i class="menu-icon tf-icons bx bx-home-smile"></i>
+                        <div class="text-truncate">Menu</div>
                     </a>
+                    <ul class="menu-sub">
+                        <li class="menu-item active">
+                            <a href="{{ route('dashboard') }}" class="menu-link">
+                                <div class="text-truncate">Dashboard</div>
+                            </a>
+                        </li>
+                        <li class="menu-item">
+                            <a href="{{ route('merchant.index') }}" class="menu-link">
+                                <div class="text-truncate">Biodata</div>
+                            </a>
+                        </li>
+                    </ul>
                 </li>
-            </ul>
-        </li>
+
+                <!-- Other Menu -->
+                <li class="menu-item">
+                    <a href="javascript:void(0);" class="menu-link menu-toggle">
+                        <i class="menu-icon tf-icons bx bx-layout"></i>
+                        <div class="text-truncate">Lainnya</div>
+                    </a>
+                    <ul class="menu-sub">
+                        <li class="menu-item">
+                            <a href="layouts-without-menu.html" class="menu-link">
+                                <div class="text-truncate">Informasi</div>
+                            </a>
+                        </li>
+                        <li class="menu-item">
+                            <form action="{{ route('logout') }}" method="POST" class="menu-link">
+                                @csrf
+                                <button type="submit" class="menu-link btn btn-link p-0 m-0 text-truncate">
+                                    Keluar
+                                </button>
+                            </form>
+                        </li>
+                    </ul>
+                </li>
+            @endif
+        @endauth
     </ul>
 </aside>

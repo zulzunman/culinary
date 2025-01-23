@@ -1,40 +1,25 @@
-<!DOCTYPE html>
-<html lang="en">
+@extends('layouts.app')
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
+@section('sidebar')
+    @include('layouts.sidebar')
+@endsection
 
-<body>
-    <div>
-        @if (Route::has('login'))
-            <div class="sm:fixed sm:top-0 sm:right-0 p-6 text-right z-10">
-                @auth
-                    <a href="{{ url('/home') }}"
-                        class="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Home</a>
-                    <form action="{{ route('logout') }}" method="POST" style="display: inline;"
-                        class="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">
-                        @csrf
-                        <button type="submit">Log out</button>
-                    </form>
-                @else
-                    <a href="{{ route('login') }}"
-                        class="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Log
-                        in</a>
-
-                    @if (Route::has('register'))
-                        <a href="{{ route('register') }}"
-                            class="ml-4 font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Register</a>
-                    @endif
-                @endauth
+@section('content')
+    <div class="container d-flex justify-content-center " style="min-height: 100vh;">
+        <div class="page-inner w-100">
+            <div class="row justify-content-center">
+                <div class="col-md-8">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-body">
+                                <div class="table-responsive text-center">
+                                    <h6 class="fw-bold mb-0">Welcome !</h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-        @endif
-        <div>
-            <li><a href="{{ route('users.index') }}">approval</a></li>
         </div>
     </div>
-</body>
-
-</html>
+@endsection

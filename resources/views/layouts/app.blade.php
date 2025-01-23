@@ -38,11 +38,11 @@
 <body>
     <div class="layout-wrapper layout-content-navbar">
         <div class="layout-container">
-            @include('partials.sidebar')
+            @include('layouts.sidebar')
 
             <!-- Layout container -->
             <div class="layout-page">
-                @include('partials.header')
+                @include('layouts.header')
 
                 <!-- Content wrapper -->
                 <div class="content-wrapper">
@@ -51,7 +51,7 @@
                         @yield('content')
                     </div>
 
-                    @include('partials.footer')
+                    @include('layouts.footer')
                 </div>
             </div>
         </div>

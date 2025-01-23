@@ -9,7 +9,7 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class RegisterMail extends Mailable
+class ApprovalAccountMail extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -29,8 +29,8 @@ class RegisterMail extends Mailable
 
     public function build()
     {
-        return $this->subject('Pengajuan Dagang di Lengkong Culinary')
-                    ->view('emails.register')
+        return $this->subject('Persetujuan Pengajuan Dagang')
+                    ->view('emails.approvalAccount')
                     ->with([
                         'user' => $this->user,
                         'product' => $this->product,
