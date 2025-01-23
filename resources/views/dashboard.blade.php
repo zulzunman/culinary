@@ -41,6 +41,11 @@
                                     User Approval
                                 </a>
                             </li>
+                            <li>
+                                <a href="{{ route('store-master.index') }}" class="flex items-center px-4 py-3 bg-white bg-opacity-20 rounded-lg text-white hover:bg-opacity-30 transition duration-300">
+                                    Data Toko
+                                </a>
+                            </li>
                         </ul>
                     </div>
                 @else
