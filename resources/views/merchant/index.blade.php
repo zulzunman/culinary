@@ -4,12 +4,13 @@
 @endsection
 
 @section('content')
-    <div class="card-body">
-        <div class="table-responsive">
-            <table class="table table-bordered" border="2">
+    <div class="card">
+        <h5 class="card-header">Biodata</h5>
+        <div class="table-responsive text-nowrap">
+            <table class="table table-hover">
                 <thead>
                     <tr>
-                        <th>#</th>
+                        <th>No</th>
                         <th>NIK</th>
                         <th>Name</th>
                         <th>Gender</th>
@@ -21,7 +22,7 @@
                         <th>KTP</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody class="table-border-bottom-0">
                     @forelse($data as $item)
                         <tr>
                             <td>{{ $loop->iteration }}</td>
@@ -42,9 +43,6 @@
                     @endforelse
                 </tbody>
             </table>
-            <div>
-                <a href="{{ route('dashboard') }}" class="btn btn-success btn-sm">Back</a>
-            </div>
         </div>
     </div>
 @endsection

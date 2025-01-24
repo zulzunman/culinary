@@ -28,7 +28,6 @@ Route::post('/login', [LoginController::class, 'login'])->name('credential');
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
 // Grup route yang memerlukan autentikasi dan status approved
-// Route::middleware(['auth'])->group(function () {
 Route::middleware(['auth', 'check.status'])->group(function () {
     Route::get('/', function () {
         return view('dashboard');
@@ -39,10 +38,10 @@ Route::middleware(['auth', 'check.status'])->group(function () {
     Route::get('/admin/users/reject/{id}', [ApprovalController::class, 'reject'])->name('users.reject');
 
     Route::get('/merchant/index', [MerchantController::class, 'index'])->name('merchant.index');
-    Route::get('/merchant/create/{id}', [MerchantController::class, 'create'])->name('merchant.create');
-    Route::get('/merchant/update/{id}', [MerchantController::class, 'update'])->name('merchant.create');
+    Route::get('/merchant/update', [MerchantController::class, 'update'])->name('merchant.update');
+    Route::post('/merchant/edit', [MerchantController::class, 'edit'])->name('merchant.edit');
 
     Route::get('/store/index', [ProductController::class, 'index'])->name('store.index');
-    Route::get('/store/create/{id}', [ProductController::class, 'create'])->name('store.create');
-    Route::get('/store/update/{id}', [ProductController::class, 'update'])->name('store.create');
+    Route::get('/store/update', [ProductController::class, 'update'])->name('store.update');
+    Route::post('/store/edit', [ProductController::class, 'edit'])->name('store.edit');
 });

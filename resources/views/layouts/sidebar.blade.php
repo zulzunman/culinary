@@ -95,6 +95,11 @@
                                 <div class="text-truncate">Biodata</div>
                             </a>
                         </li>
+                        <li class="menu-item">
+                            <a href="{{ route('store.index') }}" class="menu-link">
+                                <div class="text-truncate">Dagangan</div>
+                            </a>
+                        </li>
                     </ul>
                 </li>
 
@@ -109,14 +114,6 @@
                             <a href="layouts-without-menu.html" class="menu-link">
                                 <div class="text-truncate">Informasi</div>
                             </a>
-                        </li>
-                        <li class="menu-item">
-                            <form action="{{ route('logout') }}" method="POST" class="menu-link">
-                                @csrf
-                                <button type="submit" class="menu-link btn btn-link p-0 m-0 text-truncate">
-                                    Keluar
-                                </button>
-                            </form>
                         </li>
                     </ul>
                 </li>

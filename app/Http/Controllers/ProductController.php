@@ -7,51 +7,142 @@ use App\Models\MerchantProfile;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class ProductController extends Controller
 {
-    public function showRegister()
+    public function index()
+    {
+        $merchantId = MerchantProfile::where('user_id', Auth::id())->value('id');
+        $data = Product::where('merchant_id', $merchantId)->first();
+
+        // Mengirim data ke view
+        return view('store.index', compact('data'));
+    }
+
+    public function update()
     {
         // Mengambil semua data dari tabel religion
         $locations = Location::all();
-        $merchants = MerchantProfile::all();
+        $merchantId = MerchantProfile::where('user_id', Auth::id())->value('id');
+        $product = Product::where('merchant_id', $merchantId)->first();
 
         // Mengirim data ke view
-        return view('store.create', compact('locations', 'merchants'));
+        return view('store.edit', compact('locations', 'product'));
     }
 
-    function addData(Request $request)
+    public function edit(Request $request)
     {
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'store_name' => 'required|string|max:255',
-            'booth_photo' => 'required|image|mimes:jpeg,png,jpg|max:2048',
-            'menu_photo' => 'required|image|mimes:jpeg,png,jpg|max:2048',
-            'product_photo' => 'required|image|mimes:jpeg,png,jpg|max:2048',
-            'location_id' => 'required|exists:locations,id',
-            'merchant_id' => 'required|exists:merchants,id',
-        ]);
+        try {
+            // Find user by ID
+            $merchantId = MerchantProfile::where('user_id', Auth::id())->value('id');
+            $product = Product::where('merchant_id', $merchantId)->first();
 
-        // Upload file ke public/assets/img/ktp_picture dengan format nik-name-user_id
-        $storeName = $request->store_name;
-        $boothPhoto = $request->file('booth_photo');
-        $menuPhoto = $request->file('menu_photo');
-        $productPhoto = $request->file('product_photo');
-        $merchantID = $request->merchant_id;
+            if (!$product) {
+                return response()->json([
+                    'status' => 'failed',
+                    'message' => 'Data not found',
+                ], 404);
+            }
 
-        // Menyimpan file dengan format nik-name-user_id
-        $boothPhotoName = $storeName . '-' . str_replace(' ', '_', $merchantID) . '.' . $boothPhoto->getClientOriginalExtension();
-        $boothPhotoPath = 'assets/img/ktp_picture/' . $boothPhotoName;
-        $boothPhoto->move(public_path('assets/img/ktp_picture'), $boothPhotoName);
+            $request->validate([
+                'name' => 'sometimes|string|max:255',
+                'store_name' => 'sometimes|string|max:255',
+                'category' => 'sometimes|string|max:255',
+                'desctiption' => 'sometimes|string',
+                'booth_photo' => 'sometimes|image|mimes:jpeg,png,jpg|max:2048',
+                'menu_photo' => 'sometimes|image|mimes:jpeg,png,jpg|max:2048',
+                'product_photo' => 'sometimes|image|mimes:jpeg,png,jpg|max:2048',
+                'location_id' => 'sometimes|exists:locations,id',
+            ]);
 
-        $product = new Product;
-        $product->name = $request->input('name');
-        $product->store_name = $request->input('store_name');
-        $product->booth_photo = $request->input('booth_photo');
-        $product->menu_photo = $request->input('menu_photo');
-        $product->product_photo = $request->input('product_photo');
-        $product->location_id = $request->input('location_id');
-        $product->merchant_id = $request->input('merchant_id');
+            // Start database transaction
+            return DB::transaction(function () use ($request, $product, $merchantId) {
+                // Update basic fields
+                if ($request->has('name')) {
+                    $product->name = $request->name;
+                }
+                if ($request->has('store_name')) {
+                    $product->store_name = $request->store_name;
+                }
+                if ($request->has('category')) {
+                    $product->category = $request->category;
+                }
+                if ($request->has('desctiption')) {
+                    $product->desctiption = $request->desctiption;
+                }
 
+                // Handle booth photo upload
+                if ($request->hasFile('booth_photo')) {
+                    try {
+                        $boothPhoto = $request->file('booth_photo');
+                        $store_name = $request->store_name;
+
+                        // Delete old photo if exists
+                        if ($product->booth_photo && file_exists(public_path($product->booth_photo))) {
+                            unlink(public_path($product->booth_photo));
+                        }
+
+                        $filename = $merchantId . '-' . str_replace(' ', '_', $store_name) . '.' . $boothPhoto->getClientOriginalExtension();
+                        $destinationPath = 'assets/img/booth_photo/' . $filename;
+                        $boothPhoto->move(public_path('assets/img/booth_photo'), $filename);
+                        $product->booth_photo = $destinationPath;
+                    } catch (\Exception $e) {
+                        throw new \Exception('Failed to upload booth photo: ' . $e->getMessage());
+                    }
+                }
+
+                // Handle menu photo upload
+                if ($request->hasFile('menu_photo')) {
+                    try {
+                        $menuPhoto = $request->file('menu_photo');
+                        $store_name = $request->store_name;
+
+                        if ($product->menu_photo && file_exists(public_path($product->menu_photo))) {
+                            unlink(public_path($product->menu_photo));
+                        }
+
+                        $filename = $merchantId . '-' . str_replace(' ', '_', $store_name) . '.' . $menuPhoto->getClientOriginalExtension();
+                        $destinationPath = 'assets/img/menu_photo/' . $filename;
+                        $menuPhoto->move(public_path('assets/img/menu_photo'), $filename);
+                        $product->menu_photo = $destinationPath;
+                    } catch (\Exception $e) {
+                        throw new \Exception('Failed to upload menu photo: ' . $e->getMessage());
+                    }
+                }
+
+                // Handle product photo upload
+                if ($request->hasFile('product_photo')) {
+                    try {
+                        $productPhoto = $request->file('product_photo');
+                        $store_name = $request->store_name;
+
+                        if ($product->product_photo && file_exists(public_path($product->product_photo))) {
+                            unlink(public_path($product->product_photo));
+                        }
+
+                        $filename = $merchantId . '-' . str_replace(' ', '_', $store_name) . '.' . $productPhoto->getClientOriginalExtension();
+                        $destinationPath = 'assets/img/product_photo/' . $filename;
+                        $productPhoto->move(public_path('assets/img/product_photo'), $filename);
+                        $product->product_photo = $destinationPath;
+                    } catch (\Exception $e) {
+                        throw new \Exception('Failed to upload product photo: ' . $e->getMessage());
+                    }
+                }
+
+                $product->save();
+
+                return redirect()->route('store.index')->with('success', 'Berhasil melengkapi data');
+            });
+
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            return redirect()->back()
+                ->withErrors($e->validator)
+                ->withInput();
+        } catch (\Exception $e) {
+            return redirect()->back()
+                ->with('error', 'Terjadi kesalahan saat memperbarui data: ' . $e->getMessage())
+                ->withInput();
+        }
     }
 }
