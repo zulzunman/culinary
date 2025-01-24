@@ -55,7 +55,9 @@
                 <tr>
                     <th>#</th>
                     <th>Name</th>
-                    <th>Email</th>
+                    <th>Nominal</th>
+                    <th>Tanggal Tf</th>
+                    <th>Bukti Tf</th>
                     <th>Status</th>
                     <th>Action</th>
                 </tr>
