@@ -4,6 +4,7 @@ use App\Http\Controllers\ApprovalController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\auth\RegisterController;
 use App\Http\Controllers\MerchantController;
+use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\StoreController;
 use Illuminate\Support\Facades\Route;
@@ -40,7 +41,6 @@ Route::middleware(['auth', 'check.status'])->group(function () {
 
     Route::get('/admin/store-master', [StoreController::class, 'getAll'])->name('store-master.index');
     Route::get('/admin/store-master/detail/{id}', [StoreController::class, 'getDetail'])->name('store-master.detail');
-    // Route::get('/admin/store-master', [StoreController::class, 'reject'])->name('store-master.reject');
 
     Route::get('/merchant/index', [MerchantController::class, 'index'])->name('merchant.index');
     Route::get('/merchant/update', [MerchantController::class, 'update'])->name('merchant.update');
@@ -49,4 +49,8 @@ Route::middleware(['auth', 'check.status'])->group(function () {
     Route::get('/store/index', [ProductController::class, 'index'])->name('store.index');
     Route::get('/store/update', [ProductController::class, 'update'])->name('store.update');
     Route::post('/store/edit', [ProductController::class, 'edit'])->name('store.edit');
+
+    Route::get('/payment/index', [PaymentController::class, 'index'])->name('payment.index');
+    Route::get('/payment/ipay/create', [PaymentController::class, 'createIPay'])->name('ipay.create');
+    Route::post('/payment/ipay/add', [PaymentController::class, 'addIPay'])->name('ipay.add');
 });
