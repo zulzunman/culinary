@@ -38,6 +38,8 @@ Route::middleware(['auth', 'check.status'])->group(function () {
     Route::get('/admin/users', [ApprovalController::class, 'index'])->name('users.index');
     Route::get('/admin/users/approve/{id}', [ApprovalController::class, 'approve'])->name('users.approve');
     Route::get('/admin/users/reject/{id}', [ApprovalController::class, 'reject'])->name('users.reject');
+    Route::get('/admin/ipays/approve/{id}', [ApprovalController::class, 'approveIPay'])->name('ipays.approve');
+    Route::get('/admin/ipays/reject/{id}', [ApprovalController::class, 'rejectIPay'])->name('ipays.reject');
 
     Route::get('/admin/store-master', [StoreController::class, 'getAll'])->name('store-master.index');
     Route::get('/admin/store-master/detail/{id}', [StoreController::class, 'getDetail'])->name('store-master.detail');
