@@ -62,6 +62,11 @@
                                     Dagangan
                                 </a>
                             </li>
+                            <li>
+                                <a href="{{ route('payment.index') }}" class="flex items-center px-4 py-3 bg-white bg-opacity-20 rounded-lg text-white hover:bg-opacity-30 transition duration-300">
+                                    Pembayaran
+                                </a>
+                            </li>
                         </ul>
                     </div>
                 @endif
