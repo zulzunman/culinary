@@ -50,7 +50,12 @@
                         </li>
                         <li class="menu-item">
                             <a href="{{ route('users.index') }}" class="menu-link">
-                                <div class="text-truncate">Pembayaran</div>
+                                <div class="text-truncate">User Approval</div>
+                            </a>
+                        </li>
+                        <li class="menu-item">
+                            <a href="{{ route('store-master.index') }}" class="menu-link">
+                                <div class="text-truncate">Data Toko</div>
                             </a>
                         </li>
                     </ul>
