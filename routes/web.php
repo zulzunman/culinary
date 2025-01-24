@@ -5,6 +5,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\auth\RegisterController;
 use App\Http\Controllers\MerchantController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\StoreController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -36,6 +37,10 @@ Route::middleware(['auth', 'check.status'])->group(function () {
     Route::get('/admin/users', [ApprovalController::class, 'index'])->name('users.index');
     Route::get('/admin/users/approve/{id}', [ApprovalController::class, 'approve'])->name('users.approve');
     Route::get('/admin/users/reject/{id}', [ApprovalController::class, 'reject'])->name('users.reject');
+
+    Route::get('/admin/store-master', [StoreController::class, 'getAll'])->name('store-master.index');
+    Route::get('/admin/store-master/detail/{id}', [StoreController::class, 'getDetail'])->name('store-master.detail');
+    // Route::get('/admin/store-master', [StoreController::class, 'reject'])->name('store-master.reject');
 
     Route::get('/merchant/index', [MerchantController::class, 'index'])->name('merchant.index');
     Route::get('/merchant/update', [MerchantController::class, 'update'])->name('merchant.update');
