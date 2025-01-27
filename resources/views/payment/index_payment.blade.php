@@ -27,5 +27,40 @@
             </tr>
         </tbody>
     </table>
+    <h1>Pembayaran Bulanan</h1>
+    <div>
+        <a href="{{ route('monpay.create') }}" class="btn btn-success btn-sm">Tambah Pembayaran Bulanan</a>
+    </div>
+    <table border="2">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>nominal</th>
+                <th>tanggal tf</th>
+                <th>bukti tf</th>
+                <th>bulan</th>
+                <th>status</th>
+            </tr>
+        </thead>
+        <tbody>
+        @forelse($monPays as $monPay)
+                    <tr>
+                        <td>{{ $loop->iteration }}</td>
+                        <td>{{ $monPay->currency }}</td>
+                        <td>{{ $monPay->date }}</td>
+                        <td>{{ $monPay->photo }}</td>
+                        <td>{{ $monPay->month->name }}</td>
+                        <td>{{ $monPay->status }}</td>
+                    </tr>
+                @empty
+                    <tr>
+                        <td colspan="5" class="text-center">No pending users found.</td>
+                    </tr>
+                @endforelse
+        </tbody>
+    </table>
+    <div>
+        <a href="{{ route('dashboard') }}" class="btn btn-success btn-sm">Back</a>
+    </div>
 </body>
 </html>

@@ -126,7 +126,7 @@
             </tbody>
         </table>
         <div>
-    <a href="{{ route('dashboard') }}" class="btn btn-success btn-sm">Back</a>
+            <a href="{{ route('dashboard') }}" class="btn btn-success btn-sm">Back</a>
         </div>
     </div>
 </body>
