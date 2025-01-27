@@ -46,6 +46,11 @@
                                     Data Toko
                                 </a>
                             </li>
+                            <li>
+                                <a href="{{ route('event.index') }}" class="flex items-center px-4 py-3 bg-white bg-opacity-20 rounded-lg text-white hover:bg-opacity-30 transition duration-300">
+                                    List Event
+                                </a>
+                            </li>
                         </ul>
                     </div>
                 @else
@@ -65,6 +70,11 @@
                             <li>
                                 <a href="{{ route('payment.index') }}" class="flex items-center px-4 py-3 bg-white bg-opacity-20 rounded-lg text-white hover:bg-opacity-30 transition duration-300">
                                     Pembayaran
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ route('event.index') }}" class="flex items-center px-4 py-3 bg-white bg-opacity-20 rounded-lg text-white hover:bg-opacity-30 transition duration-300">
+                                    List Event
                                 </a>
                             </li>
                         </ul>

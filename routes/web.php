@@ -3,6 +3,7 @@
 use App\Http\Controllers\ApprovalController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\auth\RegisterController;
+use App\Http\Controllers\EventController;
 use App\Http\Controllers\MerchantController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProductController;
@@ -45,6 +46,12 @@ Route::middleware(['auth', 'check.status'])->group(function () {
 
     Route::get('/admin/store-master', [StoreController::class, 'getAll'])->name('store-master.index');
     Route::get('/admin/store-master/detail/{id}', [StoreController::class, 'getDetail'])->name('store-master.detail');
+
+    Route::get('/admin/event/index', [EventController::class, 'index'])->name('event.index');
+    Route::get('/admin/event/create', [EventController::class, 'create'])->name('event.create');
+    Route::post('/admin/event/add', [EventController::class, 'add'])->name('event.add');
+    Route::get('/admin/event/update/{id}', [EventController::class, 'update'])->name('event.update');
+    Route::post('/admin/event/edit/{id}', [EventController::class, 'edit'])->name('event.edit');
 
     Route::get('/merchant/index', [MerchantController::class, 'index'])->name('merchant.index');
     Route::get('/merchant/update', [MerchantController::class, 'update'])->name('merchant.update');
