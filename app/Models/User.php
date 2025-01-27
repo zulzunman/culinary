@@ -53,4 +53,8 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->hasOne(InitialPayment::class);
     }
+    public function mounthly()
+    {
+        return $this->hasOne(MounthlyDues::class);
+    }
 }
