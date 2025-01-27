@@ -6,6 +6,7 @@ use App\Mail\ApprovalAccountMail;
 use App\Models\InitialPayment;
 use App\Models\User;
 use App\Models\MerchantProfile;
+use App\Models\MounthlyDues;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
@@ -25,8 +26,15 @@ class ApprovalController extends Controller
                 ->join('merchant_profiles', 'initial_payments.user_id', '=', 'merchant_profiles.user_id') // Join dengan tabel merchants
                 ->where('initial_payments.status', 'Diproses') // Kondisi untuk status 'Diproses'
                 ->get();
+        $monPays = MounthlyDues::select(
+                    'monthly_dues.*', // Mengambil semua kolom dari tabel payments
+                    'merchant_profiles.name as merchant_name' // Mengambil nama pedagang dari merchants
+                )
+                ->join('merchant_profiles', 'monthly_dues.user_id', '=', 'merchant_profiles.user_id') // Join dengan tabel merchants
+                ->where('monthly_dues.status', 'Diproses') // Kondisi untuk status 'Diproses'
+                ->get();
 
-        return view('admin.user_approval', compact('users', 'iPays'));
+        return view('admin.user_approval', compact('users', 'iPays', 'monPays'));
     }
 
     // Approve user
@@ -69,6 +77,20 @@ class ApprovalController extends Controller
         $iPay = InitialPayment::findOrFail($id);
         $iPay->status = 'Lunas';
         $iPay->save();
+
+        // $merchantProfile = MerchantProfile::where('user_id', $user->id)->first();
+        // $product = Product::where('merchant_id', $merchantProfile->id)->get();
+
+        // // Kirim email verifikasi
+        // Mail::to($user->email)->send(new ApprovalAccountMail($user, $merchantProfile, $product));
+
+        return redirect()->back()->with('success', 'User has been approved.');
+    }
+    public function approveMonPay($id)
+    {
+        $monPay = MounthlyDues::findOrFail($id);
+        $monPay->status = 'Lunas';
+        $monPay->save();
 
         // $merchantProfile = MerchantProfile::where('user_id', $user->id)->first();
         // $product = Product::where('merchant_id', $merchantProfile->id)->get();
