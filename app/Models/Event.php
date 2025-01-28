@@ -10,4 +10,9 @@ class Event extends Model
     use HasFactory;
     protected $table = 'events';
     protected $fillable = ['name', 'proposal'];
+
+    public function eventD()
+    {
+        return $this->hasOne(EventDdues::class);
+    }
 }

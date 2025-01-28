@@ -43,6 +43,8 @@ Route::middleware(['auth', 'check.status'])->group(function () {
     Route::get('/admin/ipays/reject/{id}', [ApprovalController::class, 'rejectIPay'])->name('ipays.reject');
     Route::get('/admin/monpays/approve/{id}', [ApprovalController::class, 'approveMonPay'])->name('monpays.approve');
     Route::get('/admin/monpays/reject/{id}', [ApprovalController::class, 'rejectMonPay'])->name('monpays.reject');
+    Route::get('/admin/eventpays/approve/{id}', [ApprovalController::class, 'approveEventPay'])->name('eventpays.approve');
+    Route::get('/admin/eventpays/reject/{id}', [ApprovalController::class, 'rejectEventPay'])->name('eventpays.reject');
 
     Route::get('/admin/store-master', [StoreController::class, 'getAll'])->name('store-master.index');
     Route::get('/admin/store-master/detail/{id}', [StoreController::class, 'getDetail'])->name('store-master.detail');
@@ -66,4 +68,6 @@ Route::middleware(['auth', 'check.status'])->group(function () {
     Route::post('/payment/ipay/add', [PaymentController::class, 'addIPay'])->name('ipay.add');
     Route::get('/payment/monpay/create', [PaymentController::class, 'createMonPay'])->name('monpay.create');
     Route::post('/payment/monpay/add', [PaymentController::class, 'addMonPay'])->name('monpay.add');
+    Route::get('/payment/eventpay/create', [PaymentController::class, 'createEventPay'])->name('eventpay.create');
+    Route::post('/payment/eventpay/add', [PaymentController::class, 'addEventPay'])->name('eventpay.add');
 });

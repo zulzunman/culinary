@@ -62,5 +62,37 @@
     <div>
         <a href="{{ route('dashboard') }}" class="btn btn-success btn-sm">Back</a>
     </div>
+    <h1>Pembayaran Acara</h1>
+    <div>
+        <a href="{{ route('eventpay.create') }}" class="btn btn-success btn-sm">Tambah Pembayaran Acara</a>
+    </div>
+    <table border="2">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>nominal</th>
+                <th>tanggal tf</th>
+                <th>bukti tf</th>
+                <th>nama acara</th>
+                <th>status</th>
+            </tr>
+        </thead>
+        <tbody>
+        @forelse($eventPays as $eventPay)
+                    <tr>
+                        <td>{{ $loop->iteration }}</td>
+                        <td>{{ $eventPay->currency }}</td>
+                        <td>{{ $eventPay->date }}</td>
+                        <td>{{ $eventPay->photo }}</td>
+                        <td>{{ $eventPay->event->name }}</td>
+                        <td>{{ $eventPay->status }}</td>
+                    </tr>
+                @empty
+                    <tr>
+                        <td colspan="5" class="text-center">No pending users found.</td>
+                    </tr>
+                @endforelse
+        </tbody>
+    </table>
 </body>
 </html>
