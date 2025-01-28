@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ApprovalController;
+use App\Http\Controllers\auth\ChangePasswordController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\auth\RegisterController;
 use App\Http\Controllers\EventController;
@@ -35,6 +36,11 @@ Route::middleware(['auth', 'check.status'])->group(function () {
     Route::get('/', function () {
         return view('dashboard');
     })->name('dashboard');
+
+    Route::middleware(['auth'])->group(function () {
+        Route::get('/change-password', [ChangePasswordController::class, 'showChangePasswordForm'])->name('password.change');
+        Route::post('/change-password', [ChangePasswordController::class, 'changePassword'])->name('password.update');
+    });
 
     Route::get('/admin/users', [ApprovalController::class, 'index'])->name('users.index');
     Route::get('/admin/users/approve/{id}', [ApprovalController::class, 'approve'])->name('users.approve');
