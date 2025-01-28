@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Mail\ApprovalAccountMail;
+use App\Models\EventDdues;
 use App\Models\InitialPayment;
 use App\Models\User;
 use App\Models\MerchantProfile;
@@ -33,8 +34,15 @@ class ApprovalController extends Controller
                 ->join('merchant_profiles', 'monthly_dues.user_id', '=', 'merchant_profiles.user_id') // Join dengan tabel merchants
                 ->where('monthly_dues.status', 'Diproses') // Kondisi untuk status 'Diproses'
                 ->get();
+        $eventPays = EventDdues::select(
+                    'event_dues.*', // Mengambil semua kolom dari tabel payments
+                    'merchant_profiles.name as merchant_name' // Mengambil nama pedagang dari merchants
+                )
+                ->join('merchant_profiles', 'event_dues.user_id', '=', 'merchant_profiles.user_id') // Join dengan tabel merchants
+                ->where('event_dues.status', 'Diproses') // Kondisi untuk status 'Diproses'
+                ->get();
 
-        return view('admin.user_approval', compact('users', 'iPays', 'monPays'));
+        return view('admin.user_approval', compact('users', 'iPays', 'monPays', 'eventPays'));
     }
 
     // Approve user
@@ -72,6 +80,7 @@ class ApprovalController extends Controller
         return redirect()->back()->with('success', 'User has been rejected.');
     }
 
+    // Approval Initial Payment
     public function approveIPay($id)
     {
         $iPay = InitialPayment::findOrFail($id);
@@ -86,11 +95,30 @@ class ApprovalController extends Controller
 
         return redirect()->back()->with('success', 'User has been approved.');
     }
+
+    // Approval Monthly Payment
     public function approveMonPay($id)
     {
         $monPay = MounthlyDues::findOrFail($id);
         $monPay->status = 'Lunas';
         $monPay->save();
+
+        // $merchantProfile = MerchantProfile::where('user_id', $user->id)->first();
+        // $product = Product::where('merchant_id', $merchantProfile->id)->get();
+
+        // // Kirim email verifikasi
+        // Mail::to($user->email)->send(new ApprovalAccountMail($user, $merchantProfile, $product));
+
+        return redirect()->back()->with('success', 'User has been approved.');
+    }
+    // public function rejectIPay($id)
+
+    // Approval Event Payment
+    public function approveEventPay($id)
+    {
+        $eventPay = EventDdues::findOrFail($id);
+        $eventPay->status = 'Lunas';
+        $eventPay->save();
 
         // $merchantProfile = MerchantProfile::where('user_id', $user->id)->first();
         // $product = Product::where('merchant_id', $merchantProfile->id)->get();

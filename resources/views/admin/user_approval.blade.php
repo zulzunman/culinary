@@ -129,5 +129,49 @@
             <a href="{{ route('dashboard') }}" class="btn btn-success btn-sm">Back</a>
         </div>
     </div>
+    <div class="container mt-5">
+        <h1 class="mb-4">Pembayaran Acara Approval</h1>
+        @if(session('success'))
+            <div class="alert alert-success">{{ session('success') }}</div>
+        @endif
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Name</th>
+                    <th>Nominal</th>
+                    <th>Tanggal Tf</th>
+                    <th>Bukti Tf</th>
+                    <th>Acara</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @forelse($eventPays as $eventPay)
+                    <tr>
+                        <td>{{ $loop->iteration }}</td>
+                        <td>{{ $eventPay->merchant_name }}</td>
+                        <td>{{ $eventPay->currency }}</td>
+                        <td>{{ $eventPay->date }}</td>
+                        <td>{{ $eventPay->photo }}</td>
+                        <td>{{ $eventPay->event->name }}</td>
+                        <td>{{ $eventPay->status }}</td>
+                        <td>
+                            <a href="{{ route('eventpays.approve', $eventPay->id) }}" class="btn btn-success btn-sm">Approve</a>
+                            <!-- <a href="{{ route('monpays.reject', $iPay->id) }}" class="btn btn-danger btn-sm">Reject</a> -->
+                        </td>
+                    </tr>
+                @empty
+                    <tr>
+                        <td colspan="5" class="text-center">No pending users found.</td>
+                    </tr>
+                @endforelse
+            </tbody>
+        </table>
+        <div>
+            <a href="{{ route('dashboard') }}" class="btn btn-success btn-sm">Back</a>
+        </div>
+    </div>
 </body>
 </html>
