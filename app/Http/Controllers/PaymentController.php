@@ -15,9 +15,10 @@ class PaymentController extends Controller
     {
         $user = Auth::user();
         $iPay = InitialPayment::where('user_id', $user->id)->first();
+        $monPays = MounthlyDues::with('month')->where('user_id', $user->id)->get();
 
         // Mengirim data ke view
-        return view('payment.index_payment', compact('iPay'));
+        return view('payment.index_payment', compact('iPay', 'monPays'));
     }
     public function createIPay()
     {
