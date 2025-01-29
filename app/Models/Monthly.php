@@ -12,10 +12,6 @@ class Monthly extends Model
     protected $fillable = ['name '];
 
     // Relasi one-to-one dengan User
-    public function user()
-    {
-        return $this->belongsTo(User::class);
-    }
     public function mounthly()
     {
         return $this->hasOne(MounthlyDues::class);

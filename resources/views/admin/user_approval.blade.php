@@ -18,6 +18,10 @@
                     <a class="nav-link" id="payment-approval-tab" data-bs-toggle="tab" href="#payment-approval">Pembayaran
                         Bayaran Approval</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="payment-approval-tab" data-bs-toggle="tab" href="#payment-event">Pembayaran
+                        Bayaran Event</a>
+                </li>
             </ul>
         </div>
 
@@ -134,6 +138,49 @@
                             @empty
                                 <tr>
                                     <td colspan="7" class="text-center">No pending payments found.</td>
+                                </tr>
+                            @endforelse
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="tab-pane fade" id="payment-event">
+                <div class="table-responsive text-nowrap">
+                    @if (session('success'))
+                        <div class="alert alert-success">{{ session('success') }}</div>
+                    @endif
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Name</th>
+                                <th>Nominal</th>
+                                <th>Tanggal Tf</th>
+                                <th>Bukti Tf</th>
+                                <th>Acara</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody class="table-border-bottom-0">
+                            @forelse($eventPays as $eventPay)
+                                <tr>
+                                    <td>{{ $loop->iteration }}</td>
+                                    <td>{{ $eventPay->merchant_name }}</td>
+                                    <td>{{ $eventPay->currency }}</td>
+                                    <td>{{ $eventPay->date }}</td>
+                                    <td>{{ $eventPay->photo }}</td>
+                                    <td>{{ $eventPay->event->name }}</td>
+                                    <td>{{ $eventPay->status }}</td>
+                                    <td>
+                                        <a href="{{ route('eventpays.approve', $eventPay->id) }}"
+                                            class="btn btn-success btn-sm">Approve</a>
+                                        <!-- <a href="{{ route('monpays.reject', $iPay->id) }}" class="btn btn-danger btn-sm">Reject</a> -->
+                                    </td>
+                                </tr>
+                            @empty
+                                <tr>
+                                    <td colspan="7" class="text-center">No pending users found.</td>
                                 </tr>
                             @endforelse
                         </tbody>

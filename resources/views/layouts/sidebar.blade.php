@@ -58,6 +58,16 @@
                                 <div class="text-truncate">Data Toko</div>
                             </a>
                         </li>
+                        <li class="menu-item">
+                            <a href="{{ route('event.index') }}" class="menu-link">
+                                <div class="text-truncate">List Event</div>
+                            </a>
+                        </li>
+                        <li class="menu-item">
+                            <a href="{{ route('password.change') }}" class="menu-link">
+                                <div class="text-truncate"> Ubah Password</div>
+                            </a>
+                        </li>
                     </ul>
                 </li>
 
@@ -108,6 +118,16 @@
                         <li class="menu-item">
                             <a href="{{ route('payment.index') }}" class="menu-link">
                                 <div class="text-truncate">Pembayaran</div>
+                            </a>
+                        </li>
+                        <li class="menu-item">
+                            <a href="{{ route('event.index') }}" class="menu-link">
+                                <div class="text-truncate">List Event</div>
+                            </a>
+                        </li>
+                        <li class="menu-item">
+                            <a href="{{ route('password.change') }}" class="menu-link">
+                                <div class="text-truncate"> Ubah Password</div>
                             </a>
                         </li>
                     </ul>

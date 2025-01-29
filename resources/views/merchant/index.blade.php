@@ -51,14 +51,15 @@
                                                         </button>
                                                         <div class="dropdown-menu">
                                                             <a class="dropdown-item" href="javascript:void(0);"
-                                                                data-bs-toggle="modal" data-bs-target="#editMerchantModal">
+                                                                data-bs-toggle="modal"
+                                                                data-bs-target="#editMerchantModal{{ $item->id }}">
                                                                 <i class="bx bx-edit-alt me-1"></i> Edit
                                                             </a>
                                                         </div>
                                                     </div>
                                                 </td>
                                             </tr>
-                                            @include('merchant.edit')
+                                            @include('merchant.edit', ['merchantProfile' => $item])
                                         @empty
                                             <tr>
                                                 <td colspan="10" class="text-center">No merchant profiles found.</td>

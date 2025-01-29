@@ -15,6 +15,10 @@
                     <a class="nav-link" id="monthly-payment-tab" data-bs-toggle="tab" href="#monthly-payment">Pembayaran
                         Bulanan</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="acara-payment-tab" data-bs-toggle="tab" href="#acara-payment">Pembayaran
+                        Acara</a>
+                </li>
             </ul>
         </div>
 
@@ -83,6 +87,43 @@
                                 @empty
                                     <tr>
                                         <td colspan="6" class="text-center">No pending users found.</td>
+                                    </tr>
+                                @endforelse
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane fade" id="acara-payment">
+                <div class="card-body">
+                    <div class="mb-3">
+                        <a href="{{ route('eventpay.create') }}" class="btn btn-success btn-sm">Tambah Pembayaran Acara</a>
+                    </div>
+                    <div class="table-responsive text-nowrap">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>nominal</th>
+                                    <th>tanggal tf</th>
+                                    <th>bukti tf</th>
+                                    <th>nama acara</th>
+                                    <th>status</th>
+                                </tr>
+                            </thead>
+                            <tbody class="table-border-bottom-0">
+                                @forelse($eventPays as $eventPay)
+                                    <tr>
+                                        <td>{{ $loop->iteration }}</td>
+                                        <td>{{ $eventPay->currency }}</td>
+                                        <td>{{ $eventPay->date }}</td>
+                                        <td>{{ $eventPay->photo }}</td>
+                                        <td>{{ $eventPay->event->name }}</td>
+                                        <td>{{ $eventPay->status }}</td>
+                                    </tr>
+                                @empty
+                                    <tr>
+                                        <td colspan="5" class="text-center">No pending users found.</td>
                                     </tr>
                                 @endforelse
                             </tbody>
