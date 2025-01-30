@@ -14,14 +14,22 @@ class LocationSeeder extends Seeder
      */
     public function run()
     {
-        $faker = Faker ::create();
+        $faker = Faker::create();
+
+        // Batasan area kawasan Lengkong Culinary
+        // Batasan koordinat sepanjang Jalan Lengkong Kecil
+        $minLat = -6.9270; // Selatan
+        $maxLat = -6.9215; // Utara
+        $baseLng = 107.6110; // Longitude utama di tengah jalan
 
         $locations = [];
-        for ($i = 1; $i <= 150; $i++) {
+        for ($i = 1; $i <= 105; $i++) {
             $locations[] = [
                 'id' => $i,
-                'code' => sprintf('LC%03d', $i), // Format seperti LCU001, LCU002, dst.
+                'code' => sprintf('LC%03d', $i), // Format seperti LC001, LC002, dst.
                 'detail' => $faker->address, // Generate random address
+                'latitude' => $faker->randomFloat(7, $minLat, $maxLat), // Acak di sepanjang jalan
+                'longitude' => $faker->randomFloat(7, $baseLng, $baseLng + 0.0008), // Geser ke kanan jalan
                 'created_at' => now(),
                 'updated_at' => now(),
             ];

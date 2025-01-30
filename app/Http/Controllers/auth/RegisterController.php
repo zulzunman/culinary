@@ -21,7 +21,12 @@ class RegisterController extends Controller
     // Register View
     public function showRegister()
     {
-        $locations = Location::all();
+        // Ambil ID lokasi yang sudah digunakan di tabel products
+        $usedLocationIds = Product::pluck('location_id');
+
+        // Ambil lokasi yang belum digunakan di tabel products
+        $locations = Location::whereNotIn('id', $usedLocationIds)->get();
+
         // Mengirim data ke view
         return view('auth.register', compact('locations'));
     }
@@ -77,5 +82,11 @@ class RegisterController extends Controller
             DB::rollBack(); // Membatalkan semua perubahan jika terjadi error
             return back()->withErrors(['error' => 'Registration failed: ' . $e->getMessage()]);
         }
+    }
+
+    public function showForm($id)
+    {
+        $location = Location::findOrFail($id);
+        return view('auth.register-lokasi', compact('location'));
     }
 }
