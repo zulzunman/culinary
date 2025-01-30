@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\MerchantProfile;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -22,11 +23,29 @@ class LoginController extends Controller
             'password' => 'required',
         ]);
 
-        if (Auth::attempt($request->only('email', 'password'))) {
-            return redirect()->route('dashboard');
+        $credentials = [
+            'email' => $request->input('email'),
+            'password' => $request->input('password'),
+        ];
+
+        // Jika user tidak ditemukan atau password salah
+        if (!Auth::attempt($credentials)) {
+            return back()->withErrors(['email' => 'Invalid credentials.']);
+        }
+        $user = Auth::user();
+
+        // Cek apakah status user bukan 'approved'
+        if ($user->status !== 'APPROVE') {
+            return back()->withErrors(['email' => 'Akun Anda belum disetujui oleh admin.'])->withInput();
         }
 
-        return back()->withErrors(['email' => 'Invalid credentials.']);
+        $merchant = MerchantProfile::where('user_id', $user->id)->first();
+
+        if ($merchant->ktp_picture == null) {
+            return redirect()->route('ipay.create');
+        }
+
+        return redirect()->route('dashboard');
     }
 
     // Logout Logic
@@ -39,11 +58,20 @@ class LoginController extends Controller
     // Dashboard berdasarkan role
     public function dashboard()
     {
-        $role = Auth::user()->role;
-        $userData = auth()->user(); // Mendapatkan pengguna yang sedang login
-        // $username = Auth::user()->username;
+        $user = Auth::user();
 
-        return view('dashboard', ['role' => $role, 'userData' => $userData]);
+        // Cek apakah status user bukan 'approved'
+        if ($user->status !== 'APPROVE') {
+            return back()->withErrors(['email' => 'Akun Anda belum disetujui oleh admin.'])->withInput();
+        }
+
+        $merchant = MerchantProfile::where('user_id', $user->id)->first();
+
+        if ($merchant->ktp_picture == null) {
+            return redirect()->route('ipay.create');
+        }
+
+        return redirect()->route('dashboard');
     }
 
     public function error()

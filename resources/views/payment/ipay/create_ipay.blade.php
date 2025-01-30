@@ -28,4 +28,8 @@
 
         <button type="submit" class="btn btn-primary">Submit Payment</button>
     </form>
+    <form action="{{ route('logout') }}" method="POST" class="inline-block">
+        @csrf
+        <button type="submit" class="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition duration-300">Log out</button>
+    </form>
 </div>
