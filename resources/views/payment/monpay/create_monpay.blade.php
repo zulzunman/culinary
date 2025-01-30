@@ -47,10 +47,12 @@
                         <div class="form-group row mb-3">
                             <label for="month_id" class="col-md-4 col-form-label text-md-right">Month</label>
                             <div class="col-md-6">
-                                <select name="month_id" class="form-control @error('month_id') is-invalid @enderror" required>
+                                <select name="month_id" class="form-control @error('month_id') is-invalid @enderror"
+                                    required>
                                     <option value="">Select Month</option>
-                                    @foreach($months as $month)
-                                        <option value="{{ $month->id }}" {{ old('month_id') == $month->id ? 'selected' : '' }}>
+                                    @foreach ($months as $month)
+                                        <option value="{{ $month->id }}"
+                                            {{ old('month_id') == $month->id ? 'selected' : '' }}>
                                             {{ $month->name }}
                                         </option>
                                     @endforeach

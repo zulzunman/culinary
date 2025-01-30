@@ -23,7 +23,7 @@ class RegisterController extends Controller
     {
         $locations = Location::all();
         // Mengirim data ke view
-        return view('auth.register', compact( 'locations'));
+        return view('auth.register', compact('locations'));
     }
 
     // Register Logic

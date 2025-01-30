@@ -14,15 +14,16 @@ class MerchantController extends Controller
     public function index()
     {
         $data = MerchantProfile::all();
+        $religions = Religion::all();
+        $cities = City::all();
 
         // Mengirim data ke view
-        return view('merchant.index', compact('data'));
+        return view('merchant.index', compact('data', 'cities', 'religions'));
     }
 
     public function update()
     {
-        $religions = Religion::all();
-        $cities = City::all();
+
         $user = Auth::user()->id;
         $merchantProfile = MerchantProfile::where('user_id', $user)->first();
 

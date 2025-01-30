@@ -1,8 +1,10 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>Pengajuan Akun Pedagang</title>
 </head>
+
 <body>
     <h1>Halo, {{ $merchantProfile['name'] }}</h1>
     <p>Pengajuan Dagang dengan detail sebagai berikut : </p>
@@ -17,7 +19,7 @@
             <td>{{ $merchantProfile['name'] }}</td>
             <td>{{ $user['email'] }}</td>
             <td>{{ $merchantProfile['nik'] }}</td>
-            @if ($user['status']=='APPROVE')
+            @if ($user['status'] == 'APPROVE')
                 <td>DITERIMA</td>
             @else
                 <td>DITOLAK</td>
@@ -27,4 +29,5 @@
     <p>Silakan Untuk Login ke Aplikasi</p>
     <p>Terima Kasih</p>
 </body>
+
 </html>

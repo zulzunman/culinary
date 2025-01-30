@@ -43,7 +43,7 @@ class LoginController extends Controller
         $userData = auth()->user(); // Mendapatkan pengguna yang sedang login
         // $username = Auth::user()->username;
 
-        return view('index', ['role' => $role, 'userData' => $userData]);
+        return view('dashboard', ['role' => $role, 'userData' => $userData]);
     }
 
     public function error()

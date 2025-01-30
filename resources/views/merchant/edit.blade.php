@@ -1,150 +1,116 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Update Profile Merchant</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.0/flowbite.min.css" rel="stylesheet" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.0/flowbite.min.js"></script>
-</head>
-<body class="bg-gray-50">
-    <div class="container mx-auto px-4 py-8">
-        <div class="max-w-2xl mx-auto bg-white p-8 rounded-lg shadow">
-            <h1 class="text-2xl font-bold mb-6">Update Profile Merchant</h1>
-
-            @if(session('success'))
-                <div class="p-4 mb-4 text-sm text-green-700 bg-green-100 rounded-lg">
-                    {{ session('success') }}
-                </div>
-            @endif
-
-            @if($errors->any())
-                <div class="p-4 mb-4 text-sm text-red-700 bg-red-100 rounded-lg">
-                    <ul>
-                        @foreach($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
-                </div>
-            @endif
-
+<div class="modal fade" id="editMerchantModal{{ $item->id }}" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Edit Merchant</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
             <form action="{{ route('merchant.edit') }}" method="POST" enctype="multipart/form-data">
                 @csrf
-                <div class="grid gap-6 mb-6">
-                    <!-- NIK -->
-                    <div>
-                        <label for="nik" class="block mb-2 text-sm font-medium text-gray-900">NIK</label>
-                        <input type="text" id="nik" name="nik"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                            value="{{ $merchantProfile->nik }}">
-                    </div>
-
-                    <!-- Name -->
-                    <div>
-                        <label for="name" class="block mb-2 text-sm font-medium text-gray-900">Nama Lengkap</label>
-                        <input type="text" id="name" name="name"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                            value="{{ $merchantProfile->name }}">
-                    </div>
-
-                    <!-- Gender -->
-                    <div>
-                        <label class="block mb-2 text-sm font-medium text-gray-900">Jenis Kelamin</label>
-                        <div class="flex gap-4">
-                            <div class="flex items-center">
-                                <input type="radio" name="gender" value="Laki - laki"
-                                    class="w-4 h-4 text-blue-600"
-                                    {{ ( $merchantProfile->gender == 'Laki - laki') ? 'checked' : '' }}>
-                                <label class="ml-2 text-sm font-medium text-gray-900">Laki-laki</label>
-                            </div>
-                            <div class="flex items-center">
-                                <input type="radio" name="gender" value="Perempuan"
-                                    class="w-4 h-4 text-blue-600"
-                                    {{ ( $merchantProfile->gender == 'Perempuan') ? 'checked' : '' }}>
-                                <label class="ml-2 text-sm font-medium text-gray-900">Perempuan</label>
+                <div class="modal-body">
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <div class="form-floating">
+                                <input type="text" class="form-control" id="nik" name="nik"
+                                    value="{{ $merchantProfile->nik }}">
+                                <label for="nik">NIK</label>
                             </div>
                         </div>
-                    </div>
 
-                    <!-- Phone -->
-                    <div>
-                        <label for="phone" class="block mb-2 text-sm font-medium text-gray-900">Nomor Telepon</label>
-                        <input type="tel" id="phone" name="phone"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                            value="{{ old('phone', $merchantProfile->phone ?? '') }}">
-                    </div>
-
-                    <!-- Birth Date -->
-                    <div>
-                        <label for="date" class="block mb-2 text-sm font-medium text-gray-900">Tanggal Lahir</label>
-                        <input type="date" id="date" name="date"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                            value="{{ old('date', $merchantProfile->date ?? '') }}">
-                    </div>
-
-                    <!-- Religion -->
-                    <div>
-                        <label for="religion_id" class="block mb-2 text-sm font-medium text-gray-900">Agama</label>
-                        <select id="religion_id" name="religion_id"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
-                            <option value="">Pilih Agama</option>
-                            @foreach($religions as $religion)
-                                <option value="{{ $religion->id }}"
-                                    {{ (old('religion_id', $merchantProfile->religion_id ?? '') == $religion->id) ? 'selected' : '' }}>
-                                    {{ $religion->name }}
-                                </option>
-                            @endforeach
-                        </select>
-                    </div>
-
-                    <!-- City -->
-                    <div>
-                        <label for="city_id" class="block mb-2 text-sm font-medium text-gray-900">Kota</label>
-                        <select id="city_id" name="city_id"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
-                            <option value="">Pilih Kota</option>
-                            @foreach($cities as $city)
-                                <option value="{{ $city->id }}"
-                                    {{ (old('city_id', $merchantProfile->city_id ?? '') == $city->id) ? 'selected' : '' }}>
-                                    {{ $city->name }}
-                                </option>
-                            @endforeach
-                        </select>
-                    </div>
-
-                    <!-- Address -->
-                    <div>
-                        <label for="address" class="block mb-2 text-sm font-medium text-gray-900">Alamat</label>
-                        <textarea id="address" name="address" rows="3"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">{{ old('address', $merchantProfile->address ?? '') }}</textarea>
-                    </div>
-
-                    <!-- KTP Picture -->
-                    <div>
-                        <label class="block mb-2 text-sm font-medium text-gray-900">Foto KTP</label>
-                        @if($merchantProfile->ktp_picture)
-                            <div class="mb-3">
-                                <img src="{{ asset($merchantProfile->ktp_picture) }}" alt="KTP" class="max-w-xs rounded">
+                        <div class="col-md-6">
+                            <div class="form-floating">
+                                <input type="text" class="form-control" id="name" name="name"
+                                    value="{{ $merchantProfile->name }}">
+                                <label for="name">Nama Lengkap</label>
                             </div>
-                        @endif
-                        <input type="file" id="ktp_picture" name="ktp_picture" accept="image/jpeg,image/png,image/jpg"
-                            class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none">
-                        <p class="mt-1 text-sm text-gray-500">PNG, JPG atau JPEG (MAX. 2MB)</p>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label d-block">Jenis Kelamin</label>
+                            <div class="form-check form-check-inline mt-2">
+                                <input type="radio" class="form-check-input" name="gender" value="Laki - laki"
+                                    id="male" {{ $merchantProfile->gender == 'Laki - laki' ? 'checked' : '' }}>
+                                <label class="form-check-label" for="male">Laki-laki</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input type="radio" class="form-check-input" name="gender" value="Perempuan"
+                                    id="female" {{ $merchantProfile->gender == 'Perempuan' ? 'checked' : '' }}>
+                                <label class="form-check-label" for="female">Perempuan</label>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-floating">
+                                <input type="tel" class="form-control" id="phone" name="phone"
+                                    value="{{ $merchantProfile->phone }}">
+                                <label for="phone">Nomor Telepon</label>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-floating">
+                                <input type="date" class="form-control" id="date" name="date"
+                                    value="{{ $merchantProfile->date }}">
+                                <label for="date">Tanggal Lahir</label>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-floating">
+                                <select class="form-select" id="religion_id" name="religion_id">
+                                    <option value="">Pilih Agama</option>
+                                    @foreach ($religions as $religion)
+                                        <option value="{{ $religion->id }}"
+                                            {{ $merchantProfile->religion_id == $religion->id ? 'selected' : '' }}>
+                                            {{ $religion->name }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                                <label for="religion_id">Agama</label>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-floating">
+                                <select class="form-select" id="city_id" name="city_id">
+                                    <option value="">Pilih Kota</option>
+                                    @foreach ($cities as $city)
+                                        <option value="{{ $city->id }}"
+                                            {{ $merchantProfile->city_id == $city->id ? 'selected' : '' }}>
+                                            {{ $city->name }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                                <label for="city_id">Kota</label>
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            <div class="form-floating">
+                                <textarea class="form-control" id="address" name="address" style="height: 100px">{{ $merchantProfile->address }}</textarea>
+                                <label for="address">Alamat</label>
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            <label class="form-label">Foto KTP</label>
+                            @if ($merchantProfile->ktp_picture)
+                                <div class="mb-3">
+                                    <img src="{{ asset($merchantProfile->ktp_picture) }}" alt="KTP"
+                                        class="d-block rounded" height="100">
+                                </div>
+                            @endif
+                            <input type="file" class="form-control" name="ktp_picture"
+                                accept="image/jpeg,image/png,image/jpg">
+                            <div class="form-text">PNG, JPG atau JPEG (MAX. 2MB)</div>
+                        </div>
                     </div>
                 </div>
-
-                <!-- Submit Button -->
-                <div class="flex justify-end">
-                    <a href="{{ route('merchant.index') }}" class="button">
-                        Kembali
-                    </a>
-                    <button type="submit"
-                        class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
-                        Update Profile
-                    </button>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save changes</button>
                 </div>
             </form>
         </div>
     </div>
-</body>
-</html>
+</div>
