@@ -33,9 +33,7 @@ Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
 // Grup route yang memerlukan autentikasi dan status approved
 Route::middleware(['auth', 'check.status'])->group(function () {
-    Route::get('/', function () {
-        return view('dashboard');
-    })->name('dashboard');
+    Route::get('/', [LoginController::class, 'dashboard'])->name('dashboard');
 
     Route::middleware(['auth'])->group(function () {
         Route::get('/change-password', [ChangePasswordController::class, 'showChangePasswordForm'])->name('password.change');
