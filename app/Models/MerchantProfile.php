@@ -21,7 +21,7 @@ class MerchantProfile extends Model
 
     public function product()
     {
-        return $this->hasOne(Product::class);
+        return $this->hasOne(Product::class, 'merchant_id', 'id');
     }
 
     // Relasi one-to-one dengan User
