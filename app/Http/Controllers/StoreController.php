@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\MerchantProfile;
 use App\Models\Product;
 use App\Models\User;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class StoreController extends Controller
@@ -32,5 +34,27 @@ class StoreController extends Controller
 
         // Mengirim data ke view
         return view('admin.detail_store', compact('product', 'merchant'));
+    }
+
+    public function printCard()
+    {
+        $user = Auth::user();
+        // Ambil data produk
+        $merchant = MerchantProfile::where('user_id', $user->id)->first();
+        $product = Product::where('merchant_id', $merchant->id)->first();
+
+        // Load view untuk PDF
+        $pdf = Pdf::loadView('store.print', [
+            'product' => $product,
+            'merchant' => $merchant,
+            'judul' => 'Kartu Lapak'
+        ]);
+
+        // Pilihan generate PDF
+        // Download langsung
+        // return $pdf->download('kartu_lapak.pdf');
+
+        // Atau tampilkan di browser
+        return $pdf->stream('kartu_lapak.pdf');
     }
 }

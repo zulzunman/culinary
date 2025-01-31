@@ -51,6 +51,9 @@
                                     <a class="dropdown-item" href="{{ route('store.update') }}"><i
                                             class="bx bx-edit-alt me-1"></i>
                                         Edit</a>
+                                    <a class="dropdown-item" href="{{ route('store.print') }}"><i
+                                            class="bx bx-print-alt me-2"></i>
+                                        Cetak</a>
                                 </div>
                             </div>
                         </td>

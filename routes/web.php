@@ -59,6 +59,7 @@ Route::middleware(['auth', 'check.status'])->group(function () {
 
     Route::get('/admin/store-master', [StoreController::class, 'getAll'])->name('store-master.index');
     Route::get('/admin/store-master/detail/{id}', [StoreController::class, 'getDetail'])->name('store-master.detail');
+    Route::get('/cetak-pdf', [StoreController::class, 'printCard'])->name('store.print');
 
     Route::get('/admin/event/index', [EventController::class, 'index'])->name('event.index');
     Route::get('/admin/event/create', [EventController::class, 'create'])->name('event.create');

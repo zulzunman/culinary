@@ -3,10 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Mail\ApprovalAccountMail;
+use App\Mail\ApprovalEventpayMail;
+use App\Mail\ApprovalIpayMail;
+use App\Mail\ApprovalMonpayMail;
+use App\Models\Event;
 use App\Models\EventDdues;
 use App\Models\InitialPayment;
 use App\Models\User;
 use App\Models\MerchantProfile;
+use App\Models\Monthly;
 use App\Models\MounthlyDues;
 use App\Models\Product;
 use Illuminate\Http\Request;
@@ -87,11 +92,11 @@ class ApprovalController extends Controller
         $iPay->status = 'Lunas';
         $iPay->save();
 
-        // $merchantProfile = MerchantProfile::where('user_id', $user->id)->first();
-        // $product = Product::where('merchant_id', $merchantProfile->id)->get();
+        $user = User::where('id', $iPay->user_id)->first();
+        $merchantProfile = MerchantProfile::where('user_id', $user->id)->first();
 
-        // // Kirim email verifikasi
-        // Mail::to($user->email)->send(new ApprovalAccountMail($user, $merchantProfile, $product));
+        // Kirim email verifikasi
+        Mail::to($user->email)->send(new ApprovalIpayMail($user, $merchantProfile, $iPay));
 
         return redirect()->back()->with('success', 'User has been approved.');
     }
@@ -103,11 +108,12 @@ class ApprovalController extends Controller
         $monPay->status = 'Lunas';
         $monPay->save();
 
-        // $merchantProfile = MerchantProfile::where('user_id', $user->id)->first();
-        // $product = Product::where('merchant_id', $merchantProfile->id)->get();
+        $user = User::where('id', $monPay->user_id)->first();
+        $merchantProfile = MerchantProfile::where('user_id', $user->id)->first();
+        $month = Monthly::where('id', $monPay->month_id)->first();
 
         // // Kirim email verifikasi
-        // Mail::to($user->email)->send(new ApprovalAccountMail($user, $merchantProfile, $product));
+        Mail::to($user->email)->send(new ApprovalMonpayMail($user, $merchantProfile, $month));
 
         return redirect()->back()->with('success', 'User has been approved.');
     }
@@ -120,11 +126,12 @@ class ApprovalController extends Controller
         $eventPay->status = 'Lunas';
         $eventPay->save();
 
-        // $merchantProfile = MerchantProfile::where('user_id', $user->id)->first();
-        // $product = Product::where('merchant_id', $merchantProfile->id)->get();
+        $user = User::where('id', $eventPay->user_id)->first();
+        $merchantProfile = MerchantProfile::where('user_id', $user->id)->first();
+        $event = Event::where('id', $eventPay->event_id)->first();
 
         // // Kirim email verifikasi
-        // Mail::to($user->email)->send(new ApprovalAccountMail($user, $merchantProfile, $product));
+        Mail::to($user->email)->send(new ApprovalEventpayMail($user, $merchantProfile, $event));
 
         return redirect()->back()->with('success', 'User has been approved.');
     }
