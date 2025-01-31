@@ -115,11 +115,13 @@
                                 <div class="text-truncate">Dagangan</div>
                             </a>
                         </li>
-                        <li class="menu-item">
-                            <a href="{{ route('payment.index') }}" class="menu-link">
-                                <div class="text-truncate">Pembayaran</div>
-                            </a>
-                        </li>
+                        @if ($condition)
+                            <li class="menu-item">
+                                <a href="{{ route('payment.index') }}" class="menu-link">
+                                    <div class="text-truncate">Pembayaran</div>
+                                </a>
+                            </li>
+                        @endif
                         <li class="menu-item">
                             <a href="{{ route('event.index') }}" class="menu-link">
                                 <div class="text-truncate">List Event</div>

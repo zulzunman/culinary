@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\City;
 use App\Models\MerchantProfile;
+use App\Models\Product;
 use App\Models\Religion;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -16,9 +17,12 @@ class MerchantController extends Controller
         $data = MerchantProfile::all();
         $religions = Religion::all();
         $cities = City::all();
+        $user = Auth::user();
+        $merchant = $user->merchant;
+        $condition = $merchant?->ktp_picture && $merchant->product?->booth_photo;
 
         // Mengirim data ke view
-        return view('merchant.index', compact('data', 'cities', 'religions'));
+        return view('merchant.index', compact('data', 'cities', 'religions', 'condition'));
     }
 
     public function update()

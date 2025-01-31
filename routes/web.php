@@ -5,6 +5,7 @@ use App\Http\Controllers\auth\ChangePasswordController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\auth\RegisterController;
 use App\Http\Controllers\EventController;
+use App\Http\Controllers\ManagementController;
 use App\Http\Controllers\MapController;
 use App\Http\Controllers\MerchantController;
 use App\Http\Controllers\PaymentController;
@@ -22,6 +23,8 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+Route::get('/locations/upload', [ManagementController::class, 'showUploadForm'])->name('locations.upload.form');
+Route::post('/locations/upload', [ManagementController::class, 'uploadLocations'])->name('locations.upload');
 
 // Route untuk register
 Route::get('/register', [RegisterController::class, 'showRegister'])->name('register');

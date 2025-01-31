@@ -13,9 +13,10 @@ class StoreController extends Controller
     public function getAll()
     {
         $data = DB::table('products')
-            ->join('merchant_profiles', 'products.merchant_id', '=', 'merchant_profiles.id')
-            ->select('products.*', 'merchant_profiles.name as merchant_name', 'merchant_profiles.phone as merchant_phone')
-            ->get();
+                ->join('merchant_profiles', 'products.merchant_id', '=', 'merchant_profiles.id')
+                ->select('products.*', 'merchant_profiles.name as merchant_name', 'merchant_profiles.phone as merchant_phone')
+                ->whereNotNull('products.booth_photo') // Menyaring data agar booth_photo tidak null
+                ->get();
 
         // Mengirim data ke view
         return view('admin.store_master', compact('data'));

@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\InitialPayment;
 use App\Models\MerchantProfile;
+use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -39,13 +41,16 @@ class LoginController extends Controller
             return back()->withErrors(['email' => 'Akun Anda belum disetujui oleh admin.'])->withInput();
         }
 
-        $merchant = MerchantProfile::where('user_id', $user->id)->first();
+        $iPay = InitialPayment::where('user_id', $user->id)->first();
 
-        if ($merchant->ktp_picture == null) {
-            return redirect()->route('ipay.create');
+        if ($user->username == 'Super Admin' || $user->username == 'Admin') {
+            return redirect()->route('dashboard');
+        } else {
+            if (!$iPay || $iPay->status !== 'Lunas') {
+                return redirect()->route('ipay.create');
+            }
+            return redirect()->route('dashboard');
         }
-
-        return redirect()->route('dashboard');
     }
 
     // Logout Logic
@@ -65,13 +70,19 @@ class LoginController extends Controller
             return back()->withErrors(['email' => 'Akun Anda belum disetujui oleh admin.'])->withInput();
         }
 
-        $merchant = MerchantProfile::where('user_id', $user->id)->first();
+        $merchant = $user->merchant;
+        $condition = $merchant?->ktp_picture && $merchant->product?->booth_photo;
 
-        if ($merchant->ktp_picture == null) {
-            return redirect()->route('ipay.create');
+        $iPay = InitialPayment::where('user_id', $user->id)->first();
+
+        if ($user->username == 'Super Admin' || $user->username == 'Admin') {
+            return view('dashboard');
+        } else {
+            if (!$iPay || $iPay->status !== 'Lunas') {
+                return redirect()->route('ipay.create');
+            }
+            return view('dashboard', compact('condition'));
         }
-
-        return redirect()->route('dashboard');
     }
 
     public function error()
