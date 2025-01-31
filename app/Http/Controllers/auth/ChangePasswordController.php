@@ -12,7 +12,10 @@ class ChangePasswordController extends Controller
 {
     public function showChangePasswordForm()
     {
-        return view('auth.change-password');
+        $user = Auth::user();
+        $merchant = $user->merchant;
+        $condition = $merchant?->ktp_picture && $merchant->product?->booth_photo;
+        return view('auth.change-password', compact('condition'));
     }
 
     public function changePassword(Request $request)

@@ -15,9 +15,12 @@ class ProductController extends Controller
     {
         $merchantId = MerchantProfile::where('user_id', Auth::id())->value('id');
         $data = Product::where('merchant_id', $merchantId)->first();
+        $user = Auth::user();
+        $merchant = $user->merchant;
+        $condition = $merchant?->ktp_picture && $merchant->product?->booth_photo;
 
         // Mengirim data ke view
-        return view('store.index', compact('data'));
+        return view('store.index', compact('data', 'condition'));
     }
 
     public function update()
