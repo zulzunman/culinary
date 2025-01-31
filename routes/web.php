@@ -5,6 +5,7 @@ use App\Http\Controllers\auth\ChangePasswordController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\auth\RegisterController;
 use App\Http\Controllers\EventController;
+use App\Http\Controllers\MapController;
 use App\Http\Controllers\MerchantController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProductController;
@@ -25,17 +26,18 @@ use Illuminate\Support\Facades\Route;
 // Route untuk register
 Route::get('/register', [RegisterController::class, 'showRegister'])->name('register');
 Route::post('/register', [RegisterController::class, 'register']);
+Route::get('/register/{id}', [RegisterController::class, 'showForm'])->name('form.lokasi');
 
 // Route untuk login
 Route::get('/login', [LoginController::class, 'showLogin'])->name('login');
 Route::post('/login', [LoginController::class, 'login'])->name('credential');
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
+Route::get('/locations', [MapController::class, 'getLocations']);
+
 // Grup route yang memerlukan autentikasi dan status approved
 Route::middleware(['auth', 'check.status'])->group(function () {
-    Route::get('/', function () {
-        return view('dashboard');
-    })->name('dashboard');
+    Route::get('/', [LoginController::class, 'dashboard'])->name('dashboard');
 
     Route::middleware(['auth'])->group(function () {
         Route::get('/change-password', [ChangePasswordController::class, 'showChangePasswordForm'])->name('password.change');
