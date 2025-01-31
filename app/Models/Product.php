@@ -16,7 +16,7 @@ class Product extends Model
     // Relasi one-to-one dengan Merchant
     public function merchant()
     {
-        return $this->belongsTo(MerchantProfile::class);
+        return $this->belongsTo(MerchantProfile::class, 'merchant_id', 'id');
     }
 
     // Relasi one-to-one dengan Location

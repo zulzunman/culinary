@@ -19,10 +19,20 @@ class PaymentController extends Controller
         $iPay = InitialPayment::where('user_id', $user->id)->first();
         $monPays = MounthlyDues::with('month')->where('user_id', $user->id)->get();
         $eventPays = EventDdues::with('event')->where('user_id', $user->id)->get();
+        $merchant = $user->merchant;
         $months = Monthly::all();
-        $events = Event::all(); // Tambahkan ini
+        $events = Event::all();
+        // Pastikan merchant ada sebelum mengakses relasi
+        if ($merchant) {
+            $hasKtp = !is_null($merchant->ktp_picture);
+            $hasBoothPhoto = !is_null(optional($merchant->product)->booth_photo);
 
-        return view('payment.index_payment', compact('iPay', 'monPays', 'eventPays', 'months', 'events'));
+            $condition = $hasKtp && $hasBoothPhoto;
+        } else {
+            $condition = false;
+        }
+
+        return view('payment.index_payment', compact('iPay', 'monPays', 'eventPays', 'months', 'events', 'condition'));
     }
     public function createIPay()
     {
