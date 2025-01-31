@@ -19,7 +19,15 @@ class MerchantController extends Controller
         $cities = City::all();
         $user = Auth::user();
         $merchant = $user->merchant;
-        $condition = $merchant?->ktp_picture && $merchant->product?->booth_photo;
+        // Pastikan merchant ada sebelum mengakses relasi
+        if ($merchant) {
+            $hasKtp = !is_null($merchant->ktp_picture);
+            $hasBoothPhoto = !is_null(optional($merchant->product)->booth_photo);
+
+            $condition = $hasKtp && $hasBoothPhoto;
+        } else {
+            $condition = false;
+        }
 
         // Mengirim data ke view
         return view('merchant.index', compact('data', 'cities', 'religions', 'condition'));
@@ -27,7 +35,6 @@ class MerchantController extends Controller
 
     public function update()
     {
-
         $user = Auth::user()->id;
         $merchantProfile = MerchantProfile::where('user_id', $user)->first();
 

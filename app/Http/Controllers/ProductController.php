@@ -17,7 +17,15 @@ class ProductController extends Controller
         $data = Product::where('merchant_id', $merchantId)->first();
         $user = Auth::user();
         $merchant = $user->merchant;
-        $condition = $merchant?->ktp_picture && $merchant->product?->booth_photo;
+        // Pastikan merchant ada sebelum mengakses relasi
+        if ($merchant) {
+            $hasKtp = !is_null($merchant->ktp_picture);
+            $hasBoothPhoto = !is_null(optional($merchant->product)->booth_photo);
+
+            $condition = $hasKtp && $hasBoothPhoto;
+        } else {
+            $condition = false;
+        }
 
         // Mengirim data ke view
         return view('store.index', compact('data', 'condition'));
