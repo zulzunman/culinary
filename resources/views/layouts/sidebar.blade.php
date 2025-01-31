@@ -50,7 +50,7 @@
                         </li>
                         <li class="menu-item">
                             <a href="{{ route('users.index') }}" class="menu-link">
-                                <div class="text-truncate">User Approval</div>
+                                <div class="text-truncate">Approval Pembayaran</div>
                             </a>
                         </li>
                         <li class="menu-item">
@@ -70,37 +70,10 @@
                         </li>
                     </ul>
                 </li>
-
-                <!-- Other Menu -->
-                <li class="menu-item">
-                    <a href="javascript:void(0);" class="menu-link menu-toggle">
-                        <i class="menu-icon tf-icons bx bx-layout"></i>
-                        <div class="text-truncate">Lainnya</div>
-                    </a>
-                    <ul class="menu-sub">
-                        <li class="menu-item">
-                            <a href="layouts-without-menu.html" class="menu-link">
-                                <div class="text-truncate">Informasi</div>
-                            </a>
-                        </li>
-                        <li class="menu-item">
-                            <form action="{{ route('logout') }}" method="POST" class="menu-link">
-                                @csrf
-                                <button type="submit" class="menu-link btn btn-link p-0 m-0 text-truncate">
-                                    Keluar
-                                </button>
-                            </form>
-                        </li>
-                    </ul>
-                </li>
             @else
                 <li class="menu-item">
-                    <a href="javascript:void(0)" class="menu-link menu-toggle">
-                        <i class="menu-icon tf-icons bx bx-home-smile"></i>
-                        <div class="text-truncate">Menu</div>
-                    </a>
-                    <ul class="menu-sub">
-                        <li class="menu-item active">
+                    <ul class="">
+                        <li class="menu-item ">
                             <a href="{{ route('dashboard') }}" class="menu-link">
                                 <div class="text-truncate">Dashboard</div>
                             </a>
@@ -112,7 +85,7 @@
                         </li>
                         <li class="menu-item">
                             <a href="{{ route('store.index') }}" class="menu-link">
-                                <div class="text-truncate">Dagangan</div>
+                                <div class="text-truncate">Data Toko</div>
                             </a>
                         </li>
                         @if ($condition)
@@ -125,26 +98,6 @@
                         <li class="menu-item">
                             <a href="{{ route('event.index') }}" class="menu-link">
                                 <div class="text-truncate">List Event</div>
-                            </a>
-                        </li>
-                        <li class="menu-item">
-                            <a href="{{ route('password.change') }}" class="menu-link">
-                                <div class="text-truncate"> Ubah Password</div>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-
-                <!-- Other Menu -->
-                <li class="menu-item">
-                    <a href="javascript:void(0);" class="menu-link menu-toggle">
-                        <i class="menu-icon tf-icons bx bx-layout"></i>
-                        <div class="text-truncate">Lainnya</div>
-                    </a>
-                    <ul class="menu-sub">
-                        <li class="menu-item">
-                            <a href="layouts-without-menu.html" class="menu-link">
-                                <div class="text-truncate">Informasi</div>
                             </a>
                         </li>
                     </ul>
