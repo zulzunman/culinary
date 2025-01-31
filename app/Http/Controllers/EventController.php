@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Event;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class EventController extends Controller
@@ -11,8 +12,11 @@ class EventController extends Controller
     public function index()
     {
         $events = Event::all();
+        $user = Auth::user();
+        $merchant = $user->merchant;
+        $condition = $merchant?->ktp_picture && $merchant->product?->booth_photo;
 
-        return view('admin.event.list_event', compact('events'));
+        return view('admin.event.list_event', compact('events', 'condition'));
     }
 
     public function create()
