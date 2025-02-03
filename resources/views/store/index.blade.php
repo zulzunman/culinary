@@ -1,4 +1,5 @@
 @extends('layouts.app')
+
 @section('sidebar')
     @include('layouts.sidebar')
 @endsection
@@ -7,11 +8,17 @@
     <div class="card">
         <div class="card-header d-flex justify-content-between align-items-center">
             <h3 class="mb-0">Data Toko</h3>
-            <button type="button" class="btn rounded-pill btn-primary" data-bs-toggle="modal"
-                data-bs-target="#editModal{{ $data->id }}">
-                <i class="fas fa-edit"></i> Edit Data Toko
-            </button>
+            <div class="d-flex gap-2">
+                <button type="button" class="btn rounded-pill btn-primary" data-bs-toggle="modal"
+                    data-bs-target="#editModal{{ $data->id }}">
+                    <i class="fas fa-edit me-1"></i> Edit Data Toko
+                </button>
+                <a href="{{ route('store.print') }}" class="btn rounded-pill btn-primary">
+                    <i class="fas fa-print me-1"></i> Cetak
+                </a>
+            </div>
         </div>
+
         <div class="table-responsive text-nowrap">
             <table class="table table-hover mb-0">
                 <tbody class="table-border-bottom-0">

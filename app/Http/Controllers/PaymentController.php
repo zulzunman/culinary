@@ -32,7 +32,8 @@ class PaymentController extends Controller
             $condition = false;
         }
 
-        return view('payment.index_payment', compact('iPay', 'monPays', 'eventPays', 'months', 'events', 'condition'));
+        // Mengirim data ke view
+        return view('payment.index_payment', compact('iPay', 'monPays', 'eventPays', 'condition'));
     }
     public function createIPay()
     {
