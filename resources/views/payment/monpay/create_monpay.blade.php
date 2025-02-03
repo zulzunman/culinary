@@ -1,55 +1,43 @@
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">Create Monthly Payment</div>
-
-                <div class="card-body">
-                    @if ($errors->any())
-                        <div class="alert alert-danger">
-                            <ul>
-                                @foreach ($errors->all() as $error)
-                                    <li>{{ $error }}</li>
-                                @endforeach
-                            </ul>
-                        </div>
-                    @endif
-
-                    <form method="POST" action="{{ route('monpay.add') }}" enctype="multipart/form-data">
-                        @csrf
-
-                        <div class="form-group row mb-3">
-                            <label for="currency" class="col-md-4 col-form-label text-md-right">Currency Amount</label>
-                            <div class="col-md-6">
+<!-- Modal -->
+<div class="modal fade" id="createMonthlyPaymentModal" tabindex="-1" aria-labelledby="createMonthlyPaymentModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="createMonthlyPaymentModalLabel">Tambah Pembayaran Bulanan</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form action="{{ route('monpay.add') }}" method="POST" enctype="multipart/form-data">
+                @csrf
+                <div class="modal-body">
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <div class="form-floating">
                                 <input type="number" class="form-control @error('currency') is-invalid @enderror"
-                                    name="currency" value="{{ old('currency') }}" required>
+                                    id="currency" name="currency" value="{{ old('currency') }}" required>
+                                <label for="currency">Nominal</label>
                                 @error('currency')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
+                                    <span class="invalid-feedback">{{ $message }}</span>
                                 @enderror
                             </div>
                         </div>
 
-                        <div class="form-group row mb-3">
-                            <label for="date" class="col-md-4 col-form-label text-md-right">Payment Date</label>
-                            <div class="col-md-6">
+                        <div class="col-md-6">
+                            <div class="form-floating">
                                 <input type="date" class="form-control @error('date') is-invalid @enderror"
-                                    name="date" value="{{ old('date') }}" required>
+                                    id="date" name="date" value="{{ old('date') }}" required>
+                                <label for="date">Tanggal Transfer</label>
                                 @error('date')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
+                                    <span class="invalid-feedback">{{ $message }}</span>
                                 @enderror
                             </div>
                         </div>
 
-                        <div class="form-group row mb-3">
-                            <label for="month_id" class="col-md-4 col-form-label text-md-right">Month</label>
-                            <div class="col-md-6">
-                                <select name="month_id" class="form-control @error('month_id') is-invalid @enderror"
-                                    required>
-                                    <option value="">Select Month</option>
+                        <div class="col-md-12">
+                            <div class="form-floating">
+                                <select class="form-select @error('month_id') is-invalid @enderror" id="month_id"
+                                    name="month_id" required>
+                                    <option value="">Pilih Bulan</option>
                                     @foreach ($months as $month)
                                         <option value="{{ $month->id }}"
                                             {{ old('month_id') == $month->id ? 'selected' : '' }}>
@@ -57,41 +45,30 @@
                                         </option>
                                     @endforeach
                                 </select>
+                                <label for="month_id">Bulan</label>
                                 @error('month_id')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
+                                    <span class="invalid-feedback">{{ $message }}</span>
                                 @enderror
                             </div>
                         </div>
 
-                        <div class="form-group row mb-3">
-                            <label for="photo" class="col-md-4 col-form-label text-md-right">Payment Proof</label>
-                            <div class="col-md-6">
+                        <div class="col-12">
+                            <div class="mb-3">
+                                <label for="photo" class="form-label">Bukti Transfer</label>
                                 <input type="file" class="form-control @error('photo') is-invalid @enderror"
-                                    name="photo" accept="image/jpeg,image/png,image/jpg">
-                                <small class="text-muted">Max file size: 2MB (JPG, JPEG, PNG)</small>
+                                    id="photo" name="photo" accept="image/jpeg,image/png,image/jpg">
+                                <div class="form-text">Format: PNG, JPG atau JPEG (Maksimal 2MB)</div>
                                 @error('photo')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
+                                    <span class="invalid-feedback">{{ $message }}</span>
                                 @enderror
                             </div>
                         </div>
-
-                        <div class="form-group row mb-0">
-                            <div class="col-md-6 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
-                                    Submit Payment
-                                </button>
-                                <a href="{{ url()->previous() }}" class="btn btn-secondary">
-                                    Cancel
-                                </a>
-                            </div>
-                        </div>
-                    </form>
+                    </div>
                 </div>
-            </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn rounded-pill btn-primary">Simpan</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>

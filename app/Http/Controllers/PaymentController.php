@@ -20,6 +20,8 @@ class PaymentController extends Controller
         $monPays = MounthlyDues::with('month')->where('user_id', $user->id)->get();
         $eventPays = EventDdues::with('event')->where('user_id', $user->id)->get();
         $merchant = $user->merchant;
+        $months = Monthly::all();
+        $events = Event::all();
         // Pastikan merchant ada sebelum mengakses relasi
         if ($merchant) {
             $hasKtp = !is_null($merchant->ktp_picture);
@@ -31,7 +33,7 @@ class PaymentController extends Controller
         }
 
         // Mengirim data ke view
-        return view('payment.index_payment', compact('iPay', 'monPays', 'eventPays', 'condition'));
+        return view('payment.index_payment', compact('iPay', 'monPays', 'eventPays', 'condition', 'months', 'events'));
     }
     public function createIPay()
     {
@@ -103,9 +105,24 @@ class PaymentController extends Controller
 
             DB::commit();
 
+            if ($request->ajax()) {
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Payment created successfully'
+                ]);
+            }
+
             return redirect()->route('dashboard')->with('success', 'Payment created successfully');
         } catch (\Exception $e) {
             DB::rollBack();
+
+            if ($request->ajax()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Failed to create payment: ' . $e->getMessage()
+                ], 422);
+            }
+
             return back()->with('error', 'Failed to create payment: ' . $e->getMessage());
         }
     }
@@ -124,11 +141,11 @@ class PaymentController extends Controller
                 'currency' => 'required',
                 'date' => 'required|date',
                 'photo' => 'sometimes|image|mimes:jpeg,png,jpg|max:2048',
-                // 'event_id ' => 'required|exists:events,id',
+                'event_id' => 'required|exists:events,id', // Perbaiki validasi
             ]);
 
             $eventPay_Picture = $request->file('photo');
-            $filename = 'img' . '-' . str_replace(' ', '_', 'eventPayment') . '-' . $request->input('event_id') .'-' . $user->id . '.' . $eventPay_Picture->getClientOriginalExtension();
+            $filename = 'img' . '-' . str_replace(' ', '_', 'eventPayment') . '-' . $request->input('event_id') . '-' . $user->id . '.' . $eventPay_Picture->getClientOriginalExtension();
             $destinationPath = 'assets/img/eventPay/' . $filename;
             $eventPay_Picture->move(public_path('assets/img/eventPay'), $filename);
 
@@ -142,9 +159,24 @@ class PaymentController extends Controller
 
             DB::commit();
 
+            if ($request->ajax()) {
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Payment created successfully'
+                ]);
+            }
+
             return redirect()->route('dashboard')->with('success', 'Payment created successfully');
         } catch (\Exception $e) {
             DB::rollBack();
+
+            if ($request->ajax()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Failed to create payment: ' . $e->getMessage()
+                ], 422);
+            }
+
             return back()->with('error', 'Failed to create payment: ' . $e->getMessage());
         }
     }

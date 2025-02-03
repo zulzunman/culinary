@@ -4,74 +4,41 @@
 @endsection
 
 @section('content')
-    <div class="container">
-        <div class="page-inner">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="card">
-                        <div class="card-header">
-                            <div class="d-flex align-items-center">
-                                <h4 class="card-title">Merchant Profiles</h4>
-                            </div>
+    <div class="container py-4">
+        <div class="row justify-content-center">
+            @forelse($data as $item)
+                <div class="col-md-4 mb-4">
+                    <div class="card shadow-sm">
+                        <div class="bg-primary text-white text-center p-3">
+                            <img src="{{ asset($item->ktp_picture) }}" class="rounded-circle mb-2" width="120" height="120"
+                                alt="Profile">
+                            <h5 class="mb-1">{{ $item->name }}</h5>
+                            <small>NIK: {{ $item->nik }}</small>
                         </div>
                         <div class="card-body">
-                            <div class="table-responsive">
-                                <table id="merchant-table" class="display table table-striped table-hover">
-                                    <thead>
-                                        <tr>
-                                            <th>NIK</th>
-                                            <th>Name</th>
-                                            <th>Gender</th>
-                                            <th>Phone</th>
-                                            <th>Religion</th>
-                                            <th>City</th>
-                                            <th>Date</th>
-                                            <th>Address</th>
-                                            <th>KTP</th>
-                                            <th>Actions</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @forelse($data as $item)
-                                            <tr>
-                                                <td>{{ $item->nik }}</td>
-                                                <td>{{ $item->name }}</td>
-                                                <td>{{ $item->gender }}</td>
-                                                <td>{{ $item->phone }}</td>
-                                                <td>{{ $item->religion_id }}</td>
-                                                <td>{{ $item->city_id }}</td>
-                                                <td>{{ $item->date }}</td>
-                                                <td>{{ $item->address }}</td>
-                                                <td>{{ $item->ktp_picture }}</td>
-                                                <td>
-                                                    <div class="dropdown">
-                                                        <button type="button" class="btn p-0 dropdown-toggle hide-arrow"
-                                                            data-bs-toggle="dropdown">
-                                                            <i class="bx bx-dots-vertical-rounded"></i>
-                                                        </button>
-                                                        <div class="dropdown-menu">
-                                                            <a class="dropdown-item" href="javascript:void(0);"
-                                                                data-bs-toggle="modal"
-                                                                data-bs-target="#editMerchantModal{{ $item->id }}">
-                                                                <i class="bx bx-edit-alt me-1"></i> Edit
-                                                            </a>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            @include('merchant.edit', ['merchantProfile' => $item])
-                                        @empty
-                                            <tr>
-                                                <td colspan="10" class="text-center">No merchant profiles found.</td>
-                                            </tr>
-                                        @endforelse
-                                    </tbody>
-                                </table>
-                            </div>
+                            <ul class="list-unstyled">
+                                <li class="mb-2"><strong>Gender:</strong> {{ $item->gender }}</li>
+                                <li class="mb-2"><strong>Phone:</strong> {{ $item->phone }}</li>
+                                <li class="mb-2"><strong>City:</strong> {{ $item->city_id }}</li>
+                                <li class="mb-2"><strong>Religion:</strong> {{ $item->religion_id }}</li>
+                            </ul>
+                            <hr>
+                            <p class="text-muted">deskripsi: {{ $item->address }}</p>
+                        </div>
+                        <div class="card-footer text-center ">
+                            <button class="btn rounded-pill btn-primary" data-bs-toggle="modal"
+                                data-bs-target="#editMerchantModal{{ $item->id }}">
+                                Edit Profile
+                            </button>
                         </div>
                     </div>
+                    @include('merchant.edit', ['merchantProfile' => $item])
                 </div>
-            </div>
+            @empty
+                <div class="col-12 text-center">
+                    <div class="alert alert-info">No merchant profiles found.</div>
+                </div>
+            @endforelse
         </div>
     </div>
 @endsection

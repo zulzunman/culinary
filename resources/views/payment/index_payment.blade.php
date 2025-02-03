@@ -59,8 +59,11 @@
             <!-- Pembayaran Bulanan Tab -->
             <div class="tab-pane fade" id="monthly-payment">
                 <div class="card-body">
-                    <div class="mb-3">
-                        <a href="{{ route('monpay.create') }}" class="btn btn-success btn-sm">Tambah Pembayaran Bulanan</a>
+                    <div class="mb-3 d-flex justify-content-end">
+                        <button type="button" class="btn rounded-pill btn-primary" data-bs-toggle="modal"
+                            data-bs-target="#createMonthlyPaymentModal">
+                            Tambah Pembayaran Bulanan
+                        </button>
                     </div>
                     <div class="table-responsive text-nowrap">
                         <table class="table table-hover">
@@ -94,10 +97,15 @@
                     </div>
                 </div>
             </div>
+            @include('payment.monpay.create_monpay', ['months' => $months])
+
             <div class="tab-pane fade" id="acara-payment">
                 <div class="card-body">
-                    <div class="mb-3">
-                        <a href="{{ route('eventpay.create') }}" class="btn btn-success btn-sm">Tambah Pembayaran Acara</a>
+                    <div class="mb-3 d-flex justify-content-end">
+                        <button type="button" class="btn rounded-pill btn-primary" data-bs-toggle="modal"
+                            data-bs-target="#createEventPaymentModal">
+                            Tambah Pembayaran Event
+                        </button>
                     </div>
                     <div class="table-responsive text-nowrap">
                         <table class="table table-hover">
@@ -132,6 +140,7 @@
                 </div>
             </div>
         </div>
+        @include('payment.eventpay.create_eventpay', ['events' => $events])
     </div>
 @endsection
 

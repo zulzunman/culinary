@@ -1,11 +1,11 @@
 <div class="container">
     <h2>Initial Payment Form</h2>
 
-    @if(session('success'))
+    @if (session('success'))
         <div class="alert alert-success">{{ session('success') }}</div>
     @endif
 
-    @if(session('error'))
+    @if (session('error'))
         <div class="alert alert-danger">{{ session('error') }}</div>
     @endif
 
@@ -30,6 +30,7 @@
     </form>
     <form action="{{ route('logout') }}" method="POST" class="inline-block">
         @csrf
-        <button type="submit" class="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition duration-300">Log out</button>
+        <button type="submit"
+            class="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition duration-300">Log out</button>
     </form>
 </div>
