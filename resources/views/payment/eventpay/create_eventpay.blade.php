@@ -1,88 +1,74 @@
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">
-                    <h4 class="mb-0">Create Event Payment</h4>
-                </div>
-
-                <div class="card-body">
-                    @if (session('error'))
-                        <div class="alert alert-danger">
-                            {{ session('error') }}
-                        </div>
-                    @endif
-
-                    <form action="{{ route('eventpay.add') }}" method="POST" enctype="multipart/form-data">
-                        @csrf
-
-                        <div class="form-group mb-3">
-                            <label for="event_id">Select Event<span class="text-danger">*</span></label>
-                            <select name="event_id" class="form-control @error('event_id') is-invalid @enderror"
-                                required>
-                                <option value="">Choose Event</option>
-                                @foreach ($events as $event)
-                                    <option value="{{ $event->id }}"
-                                        {{ old('event_id') == $event->id ? 'selected' : '' }}>
-                                        {{ $event->name }}
-                                    </option>
-                                @endforeach
-                            </select>
-                            @error('event_id')
-                                <div class="invalid-feedback">
-                                    {{ $message }}
-                                </div>
-                            @enderror
-                        </div>
-
-                        <div class="form-group mb-3">
-                            <label for="currency">Amount<span class="text-danger">*</span></label>
-                            <div class="input-group">
-                                <span class="input-group-text">Rp</span>
-                                <input type="number" class="form-control @error('currency') is-invalid @enderror"
-                                    name="currency" value="{{ old('currency') }}" placeholder="Enter amount" required>
-                            </div>
-                            @error('currency')
-                                <div class="invalid-feedback">
-                                    {{ $message }}
-                                </div>
-                            @enderror
-                        </div>
-
-                        <div class="form-group mb-3">
-                            <label for="date">Payment Date<span class="text-danger">*</span></label>
-                            <input type="date" class="form-control @error('date') is-invalid @enderror"
-                                name="date" value="{{ old('date', date('Y-m-d')) }}" required>
-                            @error('date')
-                                <div class="invalid-feedback">
-                                    {{ $message }}
-                                </div>
-                            @enderror
-                        </div>
-
-                        <div class="form-group mb-3">
-                            <label for="photo">Payment Proof<span class="text-danger">*</span></label>
-                            <input type="file" class="form-control @error('photo') is-invalid @enderror"
-                                name="photo" accept="image/jpeg,image/png,image/jpg" required>
-                            <small class="text-muted">Maximum file size: 2MB (JPG, JPEG, PNG)</small>
-                            @error('photo')
-                                <div class="invalid-feedback">
-                                    {{ $message }}
-                                </div>
-                            @enderror
-                        </div>
-
-                        <div class="form-group d-flex justify-content-between">
-                            <button type="submit" class="btn btn-primary">
-                                Submit Payment
-                            </button>
-                            <a href="{{ route('dashboard') }}" class="btn btn-secondary">
-                                Cancel
-                            </a>
-                        </div>
-                    </form>
-                </div>
+<!-- Modal -->
+<div class="modal fade" id="createEventPaymentModal" tabindex="-1" aria-labelledby="createEventPaymentModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="createEventPaymentModalLabel">Tambah Pembayaran Event</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
+            <form action="{{ route('eventpay.add') }}" method="POST" enctype="multipart/form-data">
+                @csrf
+                <div class="modal-body">
+                    <div class="row g-3">
+                        <div class="col-md-12">
+                            <div class="form-floating">
+                                <select class="form-select @error('event_id') is-invalid @enderror" id="event_id"
+                                    name="event_id" required>
+                                    <option value="">Pilih Event</option>
+                                    @foreach ($events as $event)
+                                        <option value="{{ $event->id }}"
+                                            {{ old('event_id') == $event->id ? 'selected' : '' }}>
+                                            {{ $event->name }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                                <label for="event_id">Event</label>
+                                @error('event_id')
+                                    <span class="invalid-feedback">{{ $message }}</span>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-floating">
+                                <input type="number" class="form-control @error('currency') is-invalid @enderror"
+                                    id="currency" name="currency" value="{{ old('currency') }}" required>
+                                <label for="currency">Nominal</label>
+                                @error('currency')
+                                    <span class="invalid-feedback">{{ $message }}</span>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-floating">
+                                <input type="date" class="form-control @error('date') is-invalid @enderror"
+                                    id="date" name="date" value="{{ old('date') }}" required>
+                                <label for="date">Tanggal Transfer</label>
+                                @error('date')
+                                    <span class="invalid-feedback">{{ $message }}</span>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            <div class="mb-3">
+                                <label for="photo" class="form-label">Bukti Transfer</label>
+                                <input type="file" class="form-control @error('photo') is-invalid @enderror"
+                                    id="photo" name="photo" accept="image/jpeg,image/png,image/jpg">
+                                <div class="form-text">Format: PNG, JPG atau JPEG (Maksimal 2MB)</div>
+                                @error('photo')
+                                    <span class="invalid-feedback">{{ $message }}</span>
+                                @enderror
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn rounded-pill btn-primary">Simpan</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>
@@ -90,11 +76,11 @@
 @push('scripts')
     <script>
         // Preview image before upload
-        document.querySelector('input[name="photo"]').addEventListener('change', function(e) {
+        document.querySelector('#photo').addEventListener('change', function(e) {
             const file = e.target.files[0];
             if (file) {
                 if (file.size > 2048 * 1024) {
-                    alert('File size must be less than 2MB');
+                    alert('Ukuran file harus kurang dari 2MB');
                     this.value = '';
                 }
             }

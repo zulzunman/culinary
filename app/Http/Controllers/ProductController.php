@@ -13,6 +13,7 @@ class ProductController extends Controller
 {
     public function index()
     {
+        $locations = Location::all(); // Add this line
         $merchantId = MerchantProfile::where('user_id', Auth::id())->value('id');
         $data = Product::where('merchant_id', $merchantId)->first();
         $user = Auth::user();
@@ -28,17 +29,21 @@ class ProductController extends Controller
         }
 
         // Mengirim data ke view
-        return view('store.index', compact('data', 'condition'));
+        return view('store.index', compact('data', 'condition', 'locations'));
     }
 
     public function update()
     {
-        // Mengambil semua data dari tabel religion
+        // Fetch all locations
         $locations = Location::all();
+
+        // Fetch the merchant ID
         $merchantId = MerchantProfile::where('user_id', Auth::id())->value('id');
+
+        // Fetch the product
         $product = Product::where('merchant_id', $merchantId)->first();
 
-        // Mengirim data ke view
+        // Send data to view, including locations
         return view('store.edit', compact('locations', 'product'));
     }
 
@@ -145,7 +150,6 @@ class ProductController extends Controller
 
                 return redirect()->route('store.index')->with('success', 'Berhasil melengkapi data');
             });
-
         } catch (\Illuminate\Validation\ValidationException $e) {
             return redirect()->back()
                 ->withErrors($e->validator)

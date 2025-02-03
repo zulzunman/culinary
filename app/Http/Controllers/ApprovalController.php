@@ -26,26 +26,26 @@ class ApprovalController extends Controller
         // $iPays = InitialPayment::where('status', 'Diproses')->get();
         // Query untuk join dan mengambil nama pedagang dari merchants dan semua data dari payments
         $iPays = InitialPayment::select(
-                    'initial_payments.*', // Mengambil semua kolom dari tabel payments
-                    'merchant_profiles.name as merchant_name' // Mengambil nama pedagang dari merchants
-                )
-                ->join('merchant_profiles', 'initial_payments.user_id', '=', 'merchant_profiles.user_id') // Join dengan tabel merchants
-                ->where('initial_payments.status', 'Diproses') // Kondisi untuk status 'Diproses'
-                ->get();
+            'initial_payments.*', // Mengambil semua kolom dari tabel payments
+            'merchant_profiles.name as merchant_name' // Mengambil nama pedagang dari merchants
+        )
+            ->join('merchant_profiles', 'initial_payments.user_id', '=', 'merchant_profiles.user_id') // Join dengan tabel merchants
+            ->where('initial_payments.status', 'Diproses') // Kondisi untuk status 'Diproses'
+            ->get();
         $monPays = MounthlyDues::select(
-                    'monthly_dues.*', // Mengambil semua kolom dari tabel payments
-                    'merchant_profiles.name as merchant_name' // Mengambil nama pedagang dari merchants
-                )
-                ->join('merchant_profiles', 'monthly_dues.user_id', '=', 'merchant_profiles.user_id') // Join dengan tabel merchants
-                ->where('monthly_dues.status', 'Diproses') // Kondisi untuk status 'Diproses'
-                ->get();
+            'monthly_dues.*', // Mengambil semua kolom dari tabel payments
+            'merchant_profiles.name as merchant_name' // Mengambil nama pedagang dari merchants
+        )
+            ->join('merchant_profiles', 'monthly_dues.user_id', '=', 'merchant_profiles.user_id') // Join dengan tabel merchants
+            ->where('monthly_dues.status', 'Diproses') // Kondisi untuk status 'Diproses'
+            ->get();
         $eventPays = EventDdues::select(
-                    'event_dues.*', // Mengambil semua kolom dari tabel payments
-                    'merchant_profiles.name as merchant_name' // Mengambil nama pedagang dari merchants
-                )
-                ->join('merchant_profiles', 'event_dues.user_id', '=', 'merchant_profiles.user_id') // Join dengan tabel merchants
-                ->where('event_dues.status', 'Diproses') // Kondisi untuk status 'Diproses'
-                ->get();
+            'event_dues.*', // Mengambil semua kolom dari tabel payments
+            'merchant_profiles.name as merchant_name' // Mengambil nama pedagang dari merchants
+        )
+            ->join('merchant_profiles', 'event_dues.user_id', '=', 'merchant_profiles.user_id') // Join dengan tabel merchants
+            ->where('event_dues.status', 'Diproses') // Kondisi untuk status 'Diproses'
+            ->get();
 
         return view('admin.user_approval', compact('users', 'iPays', 'monPays', 'eventPays'));
     }

@@ -38,113 +38,72 @@
             @if (auth()->user()->username == 'Admin' || auth()->user()->username == 'Super Admin')
                 <!-- Dashboard Menu -->
                 <li class="menu-item">
-                    <a href="javascript:void(0)" class="menu-link menu-toggle">
-                        <i class="menu-icon tf-icons bx bx-home-smile"></i>
-                        <div class="text-truncate">Menu</div>
-                    </a>
-                    <ul class="menu-sub">
-                        <li class="menu-item active">
+                    <ul class="">
+                        <li class="menu-item">
                             <a href="{{ route('dashboard') }}" class="menu-link">
+                                <i class="fa fa-home me-2"></i>
                                 <div class="text-truncate">Dashboard</div>
                             </a>
                         </li>
                         <li class="menu-item">
                             <a href="{{ route('users.index') }}" class="menu-link">
-                                <div class="text-truncate">User Approval</div>
+                                <i class="fa fa-credit-card me-2"></i>
+                                <div class="text-truncate">Approval Pembayaran</div>
                             </a>
                         </li>
                         <li class="menu-item">
                             <a href="{{ route('store-master.index') }}" class="menu-link">
+                                <i class="fa fa-store me-2"></i>
                                 <div class="text-truncate">Data Toko</div>
                             </a>
                         </li>
                         <li class="menu-item">
                             <a href="{{ route('event.index') }}" class="menu-link">
+                                <i class="fa fa-calendar me-2"></i>
                                 <div class="text-truncate">List Event</div>
                             </a>
                         </li>
                         <li class="menu-item">
                             <a href="{{ route('password.change') }}" class="menu-link">
-                                <div class="text-truncate"> Ubah Password</div>
+                                <i class="fa fa-lock me-2"></i>
+                                <div class="text-truncate">Ubah Password</div>
                             </a>
-                        </li>
-                    </ul>
-                </li>
-
-                <!-- Other Menu -->
-                <li class="menu-item">
-                    <a href="javascript:void(0);" class="menu-link menu-toggle">
-                        <i class="menu-icon tf-icons bx bx-layout"></i>
-                        <div class="text-truncate">Lainnya</div>
-                    </a>
-                    <ul class="menu-sub">
-                        <li class="menu-item">
-                            <a href="layouts-without-menu.html" class="menu-link">
-                                <div class="text-truncate">Informasi</div>
-                            </a>
-                        </li>
-                        <li class="menu-item">
-                            <form action="{{ route('logout') }}" method="POST" class="menu-link">
-                                @csrf
-                                <button type="submit" class="menu-link btn btn-link p-0 m-0 text-truncate">
-                                    Keluar
-                                </button>
-                            </form>
                         </li>
                     </ul>
                 </li>
             @else
                 <li class="menu-item">
-                    <a href="javascript:void(0)" class="menu-link menu-toggle">
-                        <i class="menu-icon tf-icons bx bx-home-smile"></i>
-                        <div class="text-truncate">Menu</div>
-                    </a>
-                    <ul class="menu-sub">
-                        <li class="menu-item active">
+                    <ul class="">
+                        <li class="menu-item ">
                             <a href="{{ route('dashboard') }}" class="menu-link">
+                                <i class="fa fa-home me-2"></i>
                                 <div class="text-truncate">Dashboard</div>
                             </a>
                         </li>
                         <li class="menu-item">
                             <a href="{{ route('merchant.index') }}" class="menu-link">
+                                <i class="fa fa-user me-2"></i>
                                 <div class="text-truncate">Biodata</div>
                             </a>
                         </li>
                         <li class="menu-item">
                             <a href="{{ route('store.index') }}" class="menu-link">
-                                <div class="text-truncate">Dagangan</div>
+                                <i class="fa fa-store me-2"></i>
+                                <div class="text-truncate">Data Toko</div>
                             </a>
                         </li>
                         @if ($condition)
                             <li class="menu-item">
                                 <a href="{{ route('payment.index') }}" class="menu-link">
+                                    <i class="fa fa-credit-card me-2"></i>
                                     <div class="text-truncate">Pembayaran</div>
                                 </a>
                             </li>
                         @endif
                         <li class="menu-item">
                             <a href="{{ route('event.index') }}" class="menu-link">
+                                <i class="fa fa-calendar me-2"></i>
                                 <div class="text-truncate">List Event</div>
-                            </a>
-                        </li>
-                        <li class="menu-item">
-                            <a href="{{ route('password.change') }}" class="menu-link">
-                                <div class="text-truncate"> Ubah Password</div>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-
-                <!-- Other Menu -->
-                <li class="menu-item">
-                    <a href="javascript:void(0);" class="menu-link menu-toggle">
-                        <i class="menu-icon tf-icons bx bx-layout"></i>
-                        <div class="text-truncate">Lainnya</div>
-                    </a>
-                    <ul class="menu-sub">
-                        <li class="menu-item">
-                            <a href="layouts-without-menu.html" class="menu-link">
-                                <div class="text-truncate">Informasi</div>
                             </a>
                         </li>
                     </ul>
@@ -152,4 +111,19 @@
             @endif
         @endauth
     </ul>
+    <style>
+        .menu-link {
+            display: flex;
+            align-items: center;
+            padding-left: 0 !important;
+            /* Remove any existing padding */
+        }
+
+        .menu-link i {
+            margin-right: 10px;
+            width: 20px;
+            /* Ensure consistent icon positioning */
+            text-align: left;
+        }
+    </style>
 </aside>

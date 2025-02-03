@@ -28,7 +28,7 @@
                             <td>{{ $item->merchant_phone }}</td>
                             <td>
                                 <a href="{{ route('store-master.detail', $item->id) }}"
-                                    class="btn btn-success btn-sm">Detail</a>
+                                    class="btn rounded-pill btn-info">Detail</a>
                             </td>
                         </tr>
                     @empty
