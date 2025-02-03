@@ -59,8 +59,8 @@
             <!-- Pembayaran Bulanan Tab -->
             <div class="tab-pane fade" id="monthly-payment">
                 <div class="card-body">
-                    <div class="mb-3">
-                        <button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal"
+                    <div class="mb-3 d-flex justify-content-end">
+                        <button type="button" class="btn rounded-pill btn-primary" data-bs-toggle="modal"
                             data-bs-target="#createMonthlyPaymentModal">
                             Tambah Pembayaran Bulanan
                         </button>
@@ -101,8 +101,8 @@
 
             <div class="tab-pane fade" id="acara-payment">
                 <div class="card-body">
-                    <div class="mb-3">
-                        <button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal"
+                    <div class="mb-3 d-flex justify-content-end">
+                        <button type="button" class="btn rounded-pill btn-primary" data-bs-toggle="modal"
                             data-bs-target="#createEventPaymentModal">
                             Tambah Pembayaran Event
                         </button>

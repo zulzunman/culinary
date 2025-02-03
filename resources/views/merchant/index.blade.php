@@ -25,8 +25,8 @@
                             <hr>
                             <p class="text-muted">deskripsi: {{ $item->address }}</p>
                         </div>
-                        <div class="card-footer text-center">
-                            <button class="btn btn-primary" data-bs-toggle="modal"
+                        <div class="card-footer text-center ">
+                            <button class="btn rounded-pill btn-primary" data-bs-toggle="modal"
                                 data-bs-target="#editMerchantModal{{ $item->id }}">
                                 Edit Profile
                             </button>

@@ -46,8 +46,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <button type="submit" class="btn btn-primary">Update Event</button>
+                    <button type="submit" class="btn rounded-pill btn-primary">Update Event</button>
                 </div>
             </form>
         </div>
@@ -67,11 +66,10 @@
                 Are you sure you want to delete the event "{{ $event->name }}"?
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                 <form action="#" method="POST" class="d-inline">
                     @csrf
                     @method('DELETE')
-                    <button type="submit" class="btn btn-danger">Delete Event</button>
+                    <button type="submit" class="btn rounded-pill btn-danger">Delete Event</button>
                 </form>
             </div>
         </div>

@@ -48,7 +48,7 @@
                                         name="new_password_confirmation" required>
                                 </div>
 
-                                <button type="submit" class="btn btn-primary">Ubah Password</button>
+                                <button type="submit" class="btn rounded-pill btn-primary">Ubah Password</button>
                             </form>
                         </div>
                     </div>

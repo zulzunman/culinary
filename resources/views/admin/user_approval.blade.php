@@ -52,9 +52,9 @@
                                     <td>{{ $user->status }}</td>
                                     <td>
                                         <a href="{{ route('users.approve', $user->id) }}"
-                                            class="btn btn-success btn-sm">Approve</a>
+                                            class="btn rounded-pill btn-success">Approve</a>
                                         <a href="{{ route('users.reject', $user->id) }}"
-                                            class="btn btn-danger btn-sm">Reject</a>
+                                            class="btn rounded-pill btn-danger">Reject</a>
                                     </td>
                                 </tr>
                             @empty
@@ -93,7 +93,7 @@
                                     <td>{{ $iPay->status }}</td>
                                     <td>
                                         <a href="{{ route('ipays.approve', $iPay->id) }}"
-                                            class="btn btn-success btn-sm">Approve</a>
+                                            class="btn rounded-pill btn-success">Approve</a>
                                     </td>
                                 </tr>
                             @empty
@@ -132,7 +132,7 @@
                                     <td>{{ $monPay->status }}</td>
                                     <td>
                                         <a href="{{ route('monpays.approve', $monPay->id) }}"
-                                            class="btn btn-success btn-sm">Approve</a>
+                                            class="btn rounded-pill btn-success">Approve</a>
                                     </td>
                                 </tr>
                             @empty

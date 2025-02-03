@@ -35,8 +35,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <button type="submit" class="btn btn-primary">Create Event</button>
+                    <button type="submit" class="btn rounded-pill btn-primary">Create Event</button>
                 </div>
             </form>
         </div>

@@ -15,9 +15,9 @@
                                 @auth
                                     @if (auth()->user()->username == 'Admin' || auth()->user()->username == 'Super Admin')
                                         <div class="ms-auto">
-                                            <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
+                                            <button type="button" class="btn rounded-pill btn-primary" data-bs-toggle="modal"
                                                 data-bs-target="#createEventModal">
-                                                <i class="fas fa-plus"></i> Create New Event
+                                                <i class="fas fa-plus me-1"></i> Create New Event
                                             </button>
                                         </div>
                                     @endif
@@ -53,23 +53,24 @@
                                                 <td>{{ $event->name }}</td>
                                                 <td>
                                                     <a href="{{ asset($event->proposal) }}" target="_blank"
-                                                        class="btn btn-info btn-sm">
-                                                        <i class="fas fa-file-pdf"></i> View Proposal
+                                                        class="btn rounded-pill btn-info btn-sm">
+                                                        <i class="fas fa-file-pdf me-1"></i> View Proposal
                                                     </a>
+
                                                 </td>
                                                 <td>{{ $event->created_at->format('d M Y H:i') }}</td>
                                                 @auth
                                                     @if (auth()->user()->username == 'Admin' || auth()->user()->username == 'Super Admin')
                                                         <td>
-                                                            <button type="button" class="btn btn-warning btn-sm"
+                                                            <button type="button" class="btn rounded-pill btn-warning btn-sm"
                                                                 data-bs-toggle="modal"
                                                                 data-bs-target="#editEventModal{{ $event->id }}">
-                                                                <i class="fas fa-edit"></i> Edit
+                                                                <i class="fas fa-edit me-1"></i> Edit
                                                             </button>
-                                                            <button type="button" class="btn btn-danger btn-sm"
+                                                            <button type="button" class="btn rounded-pill btn-danger btn-sm"
                                                                 data-bs-toggle="modal"
                                                                 data-bs-target="#deleteEventModal{{ $event->id }}">
-                                                                <i class="fas fa-trash"></i> Delete
+                                                                <i class="fas fa-trash me-1"></i> Delete
                                                             </button>
                                                         </td>
                                                     @endif

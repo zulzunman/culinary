@@ -138,8 +138,8 @@
 
             <!-- Action Buttons -->
             <div class="d-flex justify-content-between">
-                <a href="{{ route('login') }}" class="btn btn-outline-secondary">Back</a>
-                <button type="submit" class="btn btn-primary">Register</button>
+                <a href="{{ route('login') }}" class="btn rounded-pill btn-secondary">Back</a>
+                <button type="submit" class="btn rounded-pill btn-primary">Register</button>
             </div>
         </form>
     </div>
