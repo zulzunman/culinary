@@ -116,6 +116,6 @@
     </div>
 
     <div class="mt-3">
-        <a href="{{ route('store-master.index') }}" class="btn btn-success btn-sm">Back</a>
+        <a href="{{ route('store-master.index') }}" class="btn rounded-pill btn-success">Back</a>
     </div>
 @endsection

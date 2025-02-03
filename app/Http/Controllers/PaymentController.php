@@ -33,7 +33,7 @@ class PaymentController extends Controller
         }
 
         // Mengirim data ke view
-        return view('payment.index_payment', compact('iPay', 'monPays', 'eventPays', 'condition'));
+        return view('payment.index_payment', compact('iPay', 'monPays', 'eventPays', 'condition', 'months', 'events'));
     }
     public function createIPay()
     {
