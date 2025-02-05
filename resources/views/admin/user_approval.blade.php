@@ -25,10 +25,6 @@
             </ul>
         </div>
 
-        @if (session('success'))
-            <div class="alert alert-success">{{ session('success') }}</div>
-        @endif
-
         <div class="tab-content">
             <!-- User Approval Tab -->
             <div class="tab-pane fade show active" id="user-approval">
@@ -146,9 +142,6 @@
             </div>
             <div class="tab-pane fade" id="payment-event">
                 <div class="table-responsive text-nowrap">
-                    @if (session('success'))
-                        <div class="alert alert-success">{{ session('success') }}</div>
-                    @endif
                     <table class="table table-hover">
                         <thead>
                             <tr>

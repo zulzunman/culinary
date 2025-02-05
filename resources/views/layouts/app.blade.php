@@ -30,6 +30,7 @@
     <link rel="stylesheet" href="{{ asset('style/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css') }}">
     <link rel="stylesheet" href="{{ asset('style/assets/vendor/libs/apex-charts/apex-charts.css') }}">
 
+
     <!-- Leaflet CSS -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 
@@ -112,7 +113,6 @@
     <script src="{{ asset('style/assets/vendor/js/bootstrap.js') }}"></script>
     <script src="{{ asset('style/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js') }}"></script>
     <script src="{{ asset('style/assets/vendor/js/menu.js') }}"></script>
-
     <!-- Vendors JS -->
     <script src="{{ asset('style/assets/vendor/libs/apex-charts/apexcharts.js') }}"></script>
 

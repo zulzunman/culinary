@@ -13,7 +13,7 @@
                     <div class="row g-3">
                         <div class="col-md-6">
                             <div class="form-floating">
-                                <input type="number" class="form-control @error('currency') is-invalid @enderror"
+                                <input type="text" class="form-control @error('currency') is-invalid @enderror"
                                     id="currency" name="currency" value="{{ old('currency') }}" required>
                                 <label for="currency">Nominal</label>
                                 @error('currency')
@@ -72,3 +72,36 @@
         </div>
     </div>
 </div>
+
+<!-- Script untuk format currency -->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const currencyInput = document.getElementById('currency');
+
+        // Format initial value if exists
+        if (currencyInput.value) {
+            currencyInput.value = formatNumber(currencyInput.value);
+        }
+
+        currencyInput.addEventListener('input', function(e) {
+            // Remove any non-digit characters
+            let value = e.target.value.replace(/\D/g, '');
+
+            // Format the number
+            if (value) {
+                e.target.value = formatNumber(value);
+            }
+        });
+
+        // Handle form submission
+        currencyInput.form.addEventListener('submit', function(e) {
+            // Remove dots before submitting
+            currencyInput.value = currencyInput.value.replace(/\./g, '');
+        });
+    });
+
+    function formatNumber(number) {
+        // Convert to string and add thousand separator
+        return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    }
+</script>

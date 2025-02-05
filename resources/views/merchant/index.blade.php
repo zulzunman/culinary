@@ -1,44 +1,78 @@
 @extends('layouts.app')
+
 @section('sidebar')
     @include('layouts.sidebar')
 @endsection
 
 @section('content')
-    <div class="container py-4">
-        <div class="row justify-content-center">
-            @forelse($data as $item)
-                <div class="col-md-4 mb-4">
-                    <div class="card shadow-sm">
-                        <div class="bg-primary text-white text-center p-3">
-                            <img src="{{ asset($item->ktp_picture) }}" class="rounded-circle mb-2" width="120" height="120"
-                                alt="Profile">
-                            <h5 class="mb-1">{{ $item->name }}</h5>
-                            <small>NIK: {{ $item->nik }}</small>
-                        </div>
-                        <div class="card-body">
-                            <ul class="list-unstyled">
-                                <li class="mb-2"><strong>Gender:</strong> {{ $item->gender }}</li>
-                                <li class="mb-2"><strong>Phone:</strong> {{ $item->phone }}</li>
-                                <li class="mb-2"><strong>City:</strong> {{ $item->city_id }}</li>
-                                <li class="mb-2"><strong>Religion:</strong> {{ $item->religion_id }}</li>
-                            </ul>
-                            <hr>
-                            <p class="text-muted">deskripsi: {{ $item->address }}</p>
-                        </div>
-                        <div class="card-footer text-center ">
-                            <button class="btn rounded-pill btn-primary" data-bs-toggle="modal"
-                                data-bs-target="#editMerchantModal{{ $item->id }}">
-                                Edit Profile
-                            </button>
-                        </div>
+    <div class="card">
+        @forelse($data as $merchant)
+            <div class="table-responsive text-nowrap">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h4 class="mb-0">Detail Merchant</h4>
+                    <div class="d-flex gap-2">
+                        <button type="button" class="btn rounded-pill btn-primary" data-bs-toggle="modal"
+                            data-bs-target="#editMerchantModal{{ $merchant->id }}">
+                            <i class="fas fa-edit me-1"></i> Edit Data Merchant
+                        </button>
                     </div>
-                    @include('merchant.edit', ['merchantProfile' => $item])
                 </div>
-            @empty
-                <div class="col-12 text-center">
-                    <div class="alert alert-info">No merchant profiles found.</div>
+
+                <table class="table table-hover mb-0">
+                    <tbody class="table-border-bottom-0">
+                        <tr>
+                            <td>Nama</td>
+                            <td>{{ $merchant->name }}</td>
+                        </tr>
+                        <tr>
+                            <td>NIK</td>
+                            <td>{{ $merchant->nik }}</td>
+                        </tr>
+                        <tr>
+                            <td>Jenis Kelamin</td>
+                            <td>{{ $merchant->gender }}</td>
+                        </tr>
+                        <tr>
+                            <td>Telepon</td>
+                            <td>{{ $merchant->phone }}</td>
+                        </tr>
+                        <tr>
+                            <td>Kota</td>
+                            <td>{{ optional($merchant->city)->name }}</td>
+                        </tr>
+                        <tr>
+                            <td>Agama</td>
+                            <td>{{ optional($merchant->religion)->name }}</td>
+                        </tr>
+                        <tr>
+                            <td>Alamat</td>
+                            <td>{{ $merchant->address }}</td>
+                        </tr>
+                        <tr>
+                            <td>Foto KTP</td>
+                            <td>
+                                <img src="{{ asset($merchant->ktp_picture) }}" class="preview-image" id="ktp_preview"
+                                    alt="KTP Preview" width="100">
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Modal for each merchant -->
+            <div class="modal fade" id="editMerchantModal{{ $merchant->id }}" tabindex="-1" aria-hidden="true">
+                @include('merchant.edit', [
+                    'merchantProfile' => $merchant,
+                    'religions ' => $religions,
+                    'cities' => $cities,
+                ])
+            </div>
+        @empty
+            <div class="card-body">
+                <div class="alert alert-info text-center">
+                    Tidak ada data merchant ditemukan.
                 </div>
-            @endforelse
-        </div>
+            </div>
+        @endforelse
     </div>
 @endsection

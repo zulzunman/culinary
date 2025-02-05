@@ -32,8 +32,9 @@
 
                         <div class="col-md-6">
                             <div class="form-floating">
-                                <input type="number" class="form-control @error('currency') is-invalid @enderror"
-                                    id="currency" name="currency" value="{{ old('currency') }}" required>
+                                <input type="text" class="form-control @error('currency') is-invalid @enderror"
+                                    id="currency" name="currency"
+                                    value="{{ number_format(old('currency') ?? 0, 0, ',', '.') }}" required>
                                 <label for="currency">Nominal</label>
                                 @error('currency')
                                     <span class="invalid-feedback">{{ $message }}</span>
@@ -72,18 +73,36 @@
         </div>
     </div>
 </div>
+{{-- <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const currencyInput = document.getElementById('currency');
 
-@push('scripts')
-    <script>
-        // Preview image before upload
-        document.querySelector('#photo').addEventListener('change', function(e) {
-            const file = e.target.files[0];
-            if (file) {
-                if (file.size > 2048 * 1024) {
-                    alert('Ukuran file harus kurang dari 2MB');
-                    this.value = '';
-                }
-            }
+        function formatRupiah(angka) {
+            // Pastikan angka adalah string
+            let numberString = angka.toString();
+
+            // Hapus semua karakter kecuali angka
+            let number = numberString.replace(/[^\d]/g, '');
+
+            // Format dengan titik sebagai pemisah ribuan
+            return number.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+        }
+
+        // Format saat input
+        currencyInput.addEventListener('input', function(e) {
+            // Simpan posisi kursor
+            let cursorPosition = this.selectionStart;
+
+            // Format angka
+            this.value = formatRupiah(this.value);
+
+            // Kembalikan posisi kursor
+            this.setSelectionRange(cursorPosition, cursorPosition);
         });
-    </script>
-@endpush
+
+        // Sebelum submit, hapus titik
+        currencyInput.closest('form').addEventListener('submit', function() {
+            currencyInput.value = currencyInput.value.replace(/\./g, '');
+        });
+    });
+</script> --}}
