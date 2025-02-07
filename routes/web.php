@@ -11,6 +11,7 @@ use App\Http\Controllers\MerchantController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\StoreController;
+use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -23,6 +24,7 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+
 Route::get('/locations/upload', [ManagementController::class, 'showUploadForm'])->name('locations.upload.form');
 Route::post('/locations/upload', [ManagementController::class, 'uploadLocations'])->name('locations.upload');
 
@@ -40,7 +42,7 @@ Route::get('/locations', [MapController::class, 'getLocations']);
 
 // Grup route yang memerlukan autentikasi dan status approved
 Route::middleware(['auth', 'check.status'])->group(function () {
-    Route::get('/', [LoginController::class, 'dashboard'])->name('dashboard');
+    Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
 
     Route::middleware(['auth'])->group(function () {
         Route::get('/change-password', [ChangePasswordController::class, 'showChangePasswordForm'])->name('password.change');
