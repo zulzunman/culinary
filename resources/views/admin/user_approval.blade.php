@@ -8,15 +8,12 @@
         <div class="card-header">
             <ul class="nav nav-tabs card-header-tabs">
                 <li class="nav-item">
-                    <a class="nav-link active" id="user-tab" data-bs-toggle="tab" href="#user-approval">User Approval</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" id="first-payment-tab" data-bs-toggle="tab" href="#first-payment">Pembayaran
+                    <a class="nav-link active" id="first-payment-tab" data-bs-toggle="tab" href="#first-payment">Pembayaran
                         Pertama</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" id="payment-approval-tab" data-bs-toggle="tab" href="#payment-approval">Pembayaran
-                        Bayaran Approval</a>
+                        Bulanan Approval</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" id="payment-approval-tab" data-bs-toggle="tab" href="#payment-event">Pembayaran
@@ -25,50 +22,9 @@
             </ul>
         </div>
 
-        @if (session('success'))
-            <div class="alert alert-success">{{ session('success') }}</div>
-        @endif
-
         <div class="tab-content">
-            <!-- User Approval Tab -->
-            <div class="tab-pane fade show active" id="user-approval">
-                <div class="table-responsive text-nowrap">
-                    <table class="table table-hover">
-                        <thead>
-                            <tr>
-                                <th>No</th>
-                                <th>Username</th>
-                                <th>Email</th>
-                                <th>Status</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody class="table-border-bottom-0">
-                            @forelse($users as $user)
-                                <tr>
-                                    <td>{{ $loop->iteration }}</td>
-                                    <td>{{ $user->username }}</td>
-                                    <td>{{ $user->email }}</td>
-                                    <td>{{ $user->status }}</td>
-                                    <td>
-                                        <a href="{{ route('users.approve', $user->id) }}"
-                                            class="btn rounded-pill btn-success">Approve</a>
-                                        <a href="{{ route('users.reject', $user->id) }}"
-                                            class="btn rounded-pill btn-danger">Reject</a>
-                                    </td>
-                                </tr>
-                            @empty
-                                <tr>
-                                    <td colspan="5" class="text-center">No pending users found.</td>
-                                </tr>
-                            @endforelse
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-
             <!-- Pembayaran Pertama Tab -->
-            <div class="tab-pane fade" id="first-payment">
+            <div class="tab-pane fade show active" id="first-payment">
                 <div class="table-responsive text-nowrap">
                     <table class="table table-hover">
                         <thead>
@@ -89,7 +45,14 @@
                                     <td>{{ $iPay->merchant_name }}</td>
                                     <td>{{ $iPay->currency }}</td>
                                     <td>{{ $iPay->date }}</td>
-                                    <td>{{ $iPay->photo }}</td>
+                                    <td>
+                                        @if ($iPay->photo)
+                                            <img src="{{ asset($iPay->photo) }}" class="preview-image" id="booth_preview"
+                                                alt="Transfer Proof" width="100">
+                                        @else
+                                            No image available
+                                        @endif
+                                    </td>
                                     <td>{{ $iPay->status }}</td>
                                     <td>
                                         <a href="{{ route('ipays.approve', $iPay->id) }}"
@@ -106,7 +69,7 @@
                 </div>
             </div>
 
-            <!-- Pembayaran Bayaran Approval Tab -->
+            <!-- Pembayaran Bulanan Approval Tab -->
             <div class="tab-pane fade" id="payment-approval">
                 <div class="table-responsive text-nowrap">
                     <table class="table table-hover">
@@ -128,11 +91,18 @@
                                     <td>{{ $monPay->merchant_name }}</td>
                                     <td>{{ $monPay->currency }}</td>
                                     <td>{{ $monPay->date }}</td>
-                                    <td>{{ $monPay->photo }}</td>
+                                    <td>
+                                        @if ($monPay->photo)
+                                            <img src="{{ asset($monPay->photo) }}" class="preview-image" id="booth_preview"
+                                                alt="Transfer Proof" width="100">
+                                        @else
+                                            No image available
+                                        @endif
+                                    </td>
                                     <td>{{ $monPay->status }}</td>
                                     <td>
                                         <a href="{{ route('monpays.approve', $monPay->id) }}"
-                                            class="btn rounded-pill btn-success">Approve</a>
+                                            class="btn rounded-pill btn-success btn-sm">Approve</a>
                                     </td>
                                 </tr>
                             @empty
@@ -146,9 +116,6 @@
             </div>
             <div class="tab-pane fade" id="payment-event">
                 <div class="table-responsive text-nowrap">
-                    @if (session('success'))
-                        <div class="alert alert-success">{{ session('success') }}</div>
-                    @endif
                     <table class="table table-hover">
                         <thead>
                             <tr>
@@ -169,13 +136,20 @@
                                     <td>{{ $eventPay->merchant_name }}</td>
                                     <td>{{ $eventPay->currency }}</td>
                                     <td>{{ $eventPay->date }}</td>
-                                    <td>{{ $eventPay->photo }}</td>
+                                    <td>
+                                        @if ($eventPay->photo)
+                                            <img src="{{ asset($eventPay->photo) }}" class="preview-image"
+                                                id="booth_preview" alt="Transfer Proof" width="100">
+                                        @else
+                                            No image available
+                                        @endif
+                                    </td>
                                     <td>{{ $eventPay->event->name }}</td>
                                     <td>{{ $eventPay->status }}</td>
                                     <td>
                                         <a href="{{ route('eventpays.approve', $eventPay->id) }}"
                                             class="btn btn-success btn-sm">Approve</a>
-                                        <!-- <a href="{{ route('monpays.reject', $iPay->id) }}" class="btn btn-danger btn-sm">Reject</a> -->
+                                        {{-- <!-- <a href="{{ route('monpays.reject', $iPay->id) }}" class="btn btn-danger btn-sm">Reject</a> --> --}}
                                     </td>
                                 </tr>
                             @empty

@@ -83,7 +83,14 @@
                                         <td>{{ $loop->iteration }}</td>
                                         <td>{{ $monPay->currency }}</td>
                                         <td>{{ $monPay->date }}</td>
-                                        <td>{{ $monPay->photo }}</td>
+                                        <td>
+                                            @if ($monPay->photo)
+                                                <img src="{{ asset($monPay->photo) }}" class="preview-image"
+                                                    id="booth_preview" alt="Transfer Proof" width="100">
+                                            @else
+                                                No image available
+                                            @endif
+                                        </td>
                                         <td>{{ $monPay->month->name }}</td>
                                         <td>{{ $monPay->status }}</td>
                                     </tr>
@@ -125,7 +132,14 @@
                                         <td>{{ $loop->iteration }}</td>
                                         <td>{{ $eventPay->currency }}</td>
                                         <td>{{ $eventPay->date }}</td>
-                                        <td>{{ $eventPay->photo }}</td>
+                                        <td>
+                                            @if ($eventPay->photo)
+                                                <img src="{{ asset($eventPay->photo) }}" class="preview-image"
+                                                    id="booth_preview" alt="Transfer Proof" width="100">
+                                            @else
+                                                No image available
+                                            @endif
+                                        </td>
                                         <td>{{ $eventPay->event->name }}</td>
                                         <td>{{ $eventPay->status }}</td>
                                     </tr>

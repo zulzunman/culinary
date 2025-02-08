@@ -1,38 +1,78 @@
 @extends('layouts.app')
+
 @section('sidebar')
     @include('layouts.sidebar')
 @endsection
 
 @section('content')
-    <div class="container py-4">
-        <div class="row justify-content-center">
-            <div class="col-md-4 mb-4">
-                <div class="card shadow-sm">
-                    <div class="bg-primary text-white text-center p-3">
-                        <img src="{{ asset($data->ktp_picture) }}" class="rounded-circle mb-2" width="120" height="120"
-                            alt="Profile">
-                        <h5 class="mb-1">{{ $data->name }}</h5>
-                        <small>NIK: {{ $data->nik }}</small>
-                    </div>
-                    <div class="card-body">
-                        <ul class="list-unstyled">
-                            <li class="mb-2"><strong>Gender:</strong> {{ $data->gender }}</li>
-                            <li class="mb-2"><strong>Phone:</strong> {{ $data->phone }}</li>
-                            <li class="mb-2"><strong>City:</strong> {{ $data->city_id }}</li>
-                            <li class="mb-2"><strong>Religion:</strong> {{ $data->religion_id }}</li>
-                        </ul>
-                        <hr>
-                        <p class="text-muted">deskripsi: {{ $data->address }}</p>
-                    </div>
-                    <div class="card-footer text-center ">
-                        <button class="btn rounded-pill btn-primary" data-bs-toggle="modal"
+    <div class="card">
+        @if ($data)
+            <div class="table-responsive text-nowrap">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h4 class="mb-0">Detail Merchant</h4>
+                    <div class="d-flex gap-2">
+                        <button type="button" class="btn rounded-pill btn-primary" data-bs-toggle="modal"
                             data-bs-target="#editMerchantModal{{ $data->id }}">
-                            Edit Profile
+                            <i class="fas fa-edit me-1"></i> Edit Data Merchant
                         </button>
                     </div>
                 </div>
-                @include('merchant.edit', ['merchantProfile' => $data])
+
+                <table class="table table-hover mb-0">
+                    <tbody class="table-border-bottom-0">
+                        <tr>
+                            <td>Nama</td>
+                            <td>{{ $data->name }}</td>
+                        </tr>
+                        <tr>
+                            <td>NIK</td>
+                            <td>{{ $data->nik }}</td>
+                        </tr>
+                        <tr>
+                            <td>Jenis Kelamin</td>
+                            <td>{{ $data->gender }}</td>
+                        </tr>
+                        <tr>
+                            <td>Telepon</td>
+                            <td>{{ $data->phone }}</td>
+                        </tr>
+                        <tr>
+                            <td>Kota</td>
+                            <td>{{ optional($data->city)->name }}</td>
+                        </tr>
+                        <tr>
+                            <td>Agama</td>
+                            <td>{{ optional($data->religion)->name }}</td>
+                        </tr>
+                        <tr>
+                            <td>Alamat</td>
+                            <td>{{ $data->address }}</td>
+                        </tr>
+                        <tr>
+                            <td>Foto KTP</td>
+                            <td>
+                                <img src="{{ asset($data->ktp_picture) }}" class="preview-image" id="ktp_preview"
+                                    alt="KTP Preview" width="100">
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
-        </div>
+
+            <!-- Modal for each merchant -->
+            <div class="modal fade" id="editMerchantModal{{ $data->id }}" tabindex="-1" aria-hidden="true">
+                @include('merchant.edit', [
+                    'merchantProfile' => $data,
+                    'religions ' => $religions,
+                    'cities' => $cities,
+                ])
+            </div>
+        @else
+            <div class="card-body">
+                <div class="alert alert-info text-center">
+                    Tidak ada data merchant ditemukan.
+                </div>
+            </div>
+        @endif
     </div>
 @endsection

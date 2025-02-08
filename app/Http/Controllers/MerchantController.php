@@ -19,6 +19,7 @@ class MerchantController extends Controller
         $religions = Religion::all();
         $cities = City::all();
         $merchant = $user->merchant;
+
         // Pastikan merchant ada sebelum mengakses relasi
         if ($merchant) {
             $hasKtp = !is_null($merchant->ktp_picture);
@@ -37,9 +38,11 @@ class MerchantController extends Controller
     {
         $user = Auth::user()->id;
         $merchantProfile = MerchantProfile::where('user_id', $user)->first();
+        $religions = Religion::all(); // Add this line
+        $cities = City::all(); // Add this line
 
         // Mengirim data ke view
-        return view('merchant.edit', compact('religions', 'cities', 'user', 'merchantProfile'));
+        return view('merchant.edit', compact('user', 'merchantProfile', 'religions', 'cities'));
     }
 
     public function edit(Request $request)
