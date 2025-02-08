@@ -27,9 +27,8 @@
                                     </div>
                                 </div>
                                 <div class="flex-grow-1">
-                                    {{-- <span class="fw-medium d-block">{{ $user->name }}</span> --}}
+                                    <span class="fw-medium d-block"> {{ auth()->user()->username }}</span>
                                 </div>
-
                             </div>
                         </a>
                     </li>
