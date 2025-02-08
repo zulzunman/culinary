@@ -14,10 +14,10 @@ class MerchantController extends Controller
 {
     public function index()
     {
-        $data = MerchantProfile::all();
-        $religions = Religion::all(); // Make sure this line is present
-        $cities = City::all(); // And this line
         $user = Auth::user();
+        $data = MerchantProfile::where('user_id', $user->id)->first();
+        $religions = Religion::all();
+        $cities = City::all();
         $merchant = $user->merchant;
 
         // Pastikan merchant ada sebelum mengakses relasi

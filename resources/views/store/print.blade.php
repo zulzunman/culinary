@@ -9,7 +9,7 @@
             border-collapse: collapse;
         }
         table, th, td {
-            border: 1px solid black;
+            /* border: 1px solid black; */
             padding: 10px;
         }
         .header {
@@ -31,25 +31,32 @@
             <td>
                 <table style="border-collapse: collapse; height: 90px;"  >
                     <tr>
-                        <td class="text-center" style="padding:10px; border: 1px solid #333;">
+                        <td class="text-center" style="padding:10px;" colspan="2">
                             <p>gambar</p>
-                        </td>
-                        <td colspan="2" class="text-center" style="border: 1px solid #333;">
-                            <p><b>Pemerintah Kota Bandung</b></p>
-                            <p><b>Pedagang Kaki Lima (PKL)</b></p>
-                            <p><b>Binaan Satgas PKL</b></p>
-                            <p><b>Kota Bandung</b></p>
-                        </td>
-                        <td class="text-center" style="padding:10px; border: 1px solid #333;">
-                            {{ $product->location->code }}
                         </td>
                     </tr>
                     <tr>
-                        <td style="padding-left:5px; border: 1px solid #333;" colspan="2">
-                            <p>Nama Toko : {{ $product->nama_toko }}</p>
+                        <td class="text-center" style="padding:10px;" colspan="2">
+                            <p><b>Pemerintah Kota</b></p>
+                            <p><b>Bandung</b></p>
                         </td>
-                        <td style="padding-left:5px; border: 1px solid #333;" colspan="2">
-                            <p>Nama Pelanggan : {{ $merchant->nama_pedagang }}</p>
+                    </tr>
+                    <tr>
+                        <td colspan="2" class="text-center" >
+                            <p><b>PEDAGANG KAKI LIMA (PKL)</b></p>
+                            <p><b>BINAAN SATGAS PKL</b></p>
+                            <p><b>KOTA BANDUNG</b></p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="padding-left:5px;">
+                            <p>Nama Toko : {{ $product->store_name }}</p>
+                            <p>Nama Pelanggan : {{ $merchant->name }}</p>
+                            <p>Jenis Dagangan : {{ $product->category }}</p>
+                            <p>Deskripsi Dagangan : {{ $product->desctiption }}</p>
+                        </td>
+                        <td class="text-center" style="padding:50px; border: 1px solid #333;">
+                            {{ $product->location->code }}
                         </td>
                     </tr>
                 </table>
