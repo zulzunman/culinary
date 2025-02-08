@@ -6,8 +6,8 @@
 
 @section('content')
     <div class="container-fluid px-4 py-5">
-        @if (auth()->user()->role === 'super_admin')
-            {{-- Super Admin View - Approve Users --}}
+        @if (auth()->user()->email === 'superadmin@example.com' || auth()->user()->email === 'admin@example.com')
+            {{-- Admin & Super Admin View - Approve Users --}}
             <div class="row g-4">
                 @forelse($users as $user)
                     <div class="col-12 col-md-6 col-lg-4">
