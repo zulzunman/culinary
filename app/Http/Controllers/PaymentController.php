@@ -35,6 +35,14 @@ class PaymentController extends Controller
         // Mengirim data ke view
         return view('payment.index_payment', compact('iPay', 'monPays', 'eventPays', 'condition', 'months', 'events'));
     }
+
+    public function indexAdmin()
+    {
+        $monPays = MounthlyDues::all();
+        $eventPays = EventDdues::all();
+
+        return view('admin.index_payment', compact('monPays', 'eventPays'));
+    }
     public function createIPay()
     {
         return view('payment.ipay.create_ipay');
