@@ -77,6 +77,7 @@ Route::middleware(['auth', 'check.status'])->group(function () {
     Route::get('/store/update', [ProductController::class, 'update'])->name('store.update');
     Route::post('/store/edit', [ProductController::class, 'edit'])->name('store.edit');
 
+    Route::get('/admin/payment', [PaymentController::class, 'indexAdmin'])->name('payment.indexAdmin');
     Route::get('/payment/index', [PaymentController::class, 'index'])->name('payment.index');
     Route::get('/payment/ipay/create', [PaymentController::class, 'createIPay'])->name('ipay.create');
     Route::post('/payment/ipay/add', [PaymentController::class, 'addIPay'])->name('ipay.add');
