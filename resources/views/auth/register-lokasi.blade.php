@@ -11,6 +11,18 @@
 
 <body>
     <div class="container py-5">
+        <!-- Location Box - Positioned at top right -->
+        <div class="position-absolute top-0 end-0 p-3 bg-light border rounded" style="width: 250px; z-index: 1000;">
+            <h3 class="text-center mb-4"><strong>{{ $location->code }}</strong></h3>
+            <input type="hidden" name="location_id" id="location_id"
+                class="form-control @error('location_id') is-invalid @enderror" value="{{ $location->id }}"
+                required>
+            @error('location_id')
+                <div class="invalid-feedback">
+                    {{ $message }}
+                </div>
+            @enderror
+        </div>
         <h2 class="text-center mb-4">Pengajuan Lapak</h2>
         <h2 class="text-center mb-4">Silakan isi data pengajuan</h2>
 
@@ -71,18 +83,6 @@
                             class="form-control @error('phone') is-invalid @enderror" value="{{ old('phone') }}"
                             required>
                         @error('phone')
-                            <div class="invalid-feedback">
-                                {{ $message }}
-                            </div>
-                        @enderror
-                    </div>
-                    <div class="col-md-12">
-                        <label for="location_id" class="form-label">Lokasi</label>
-                        <p><strong>Kode:</strong> {{ $location->code }}</p>
-                        <input type="hidden" name="location_id" id="location_id"
-                            class="form-control @error('location_id') is-invalid @enderror" value="{{ $location->id }}"
-                            required>
-                        @error('location_id')
                             <div class="invalid-feedback">
                                 {{ $message }}
                             </div>
