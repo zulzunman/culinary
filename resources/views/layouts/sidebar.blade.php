@@ -58,6 +58,12 @@
                             </a>
                         </li>
                         <li class="menu-item">
+                            <a href="{{ route('payment.indexAdmin') }}" class="menu-link">
+                                <i class="fa fa-store me-2"></i>
+                                <div class="text-truncate">Data Pembayaran</div>
+                            </a>
+                        </li>
+                        <li class="menu-item">
                             <a href="{{ route('event.index') }}" class="menu-link">
                                 <i class="fa fa-calendar me-2"></i>
                                 <div class="text-truncate">List Event</div>
