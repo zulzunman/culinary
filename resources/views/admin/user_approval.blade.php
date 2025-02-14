@@ -85,12 +85,19 @@
                             </tr>
                         </thead>
                         <tbody class="table-border-bottom-0">
-                            @forelse($monPays as $monPay)
+                            @php
+                                // Convert collection to array and sort by date
+                                $sortedPayments = $monPays->sortBy(function ($payment) {
+                                    return strtotime($payment->date);
+                                });
+                            @endphp
+
+                            @forelse($sortedPayments as $monPay)
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
                                     <td>{{ $monPay->merchant_name }}</td>
                                     <td>{{ $monPay->currency }}</td>
-                                    <td>{{ $monPay->date }}</td>
+                                    <td>{{ date('d-m-Y', strtotime($monPay->date)) }}</td>
                                     <td>
                                         @if ($monPay->photo)
                                             <img src="{{ asset($monPay->photo) }}" class="preview-image" id="booth_preview"
@@ -114,6 +121,8 @@
                     </table>
                 </div>
             </div>
+
+            <!-- Pembayaran Event Approval Tab -->
             <div class="tab-pane fade" id="payment-event">
                 <div class="table-responsive text-nowrap">
                     <table class="table table-hover">
