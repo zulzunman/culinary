@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Event;
 use App\Models\EventDdues;
 use App\Models\InitialPayment;
+use App\Models\MerchantProfile;
 use App\Models\Monthly;
 use App\Models\MounthlyDues;
 use Illuminate\Http\Request;
@@ -38,8 +39,13 @@ class PaymentController extends Controller
 
     public function indexAdmin()
     {
-        $monPays = MounthlyDues::all();
-        $eventPays = EventDdues::all();
+        $monPays = MounthlyDues::join('merchant_profiles', 'monthly_dues.user_id', '=', 'merchant_profiles.user_id')
+            ->select('monthly_dues.*', 'merchant_profiles.name as merchant_name')
+            ->get();
+        $eventPays = EventDdues::join('merchant_profiles', 'event_dues.user_id', '=', 'merchant_profiles.user_id')
+            ->select('event_dues.*', 'merchant_profiles.name as merchant_name')
+            ->get();
+        $merchant_profiles = MerchantProfile::all();
 
         return view('admin.index_payment', compact('monPays', 'eventPays'));
     }
