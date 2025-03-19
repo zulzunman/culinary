@@ -23,6 +23,70 @@
             background-color: #f8f9fa;
         }
 
+        .bg-teal {
+            background-color: #2F4F4F;
+            color: white;
+            padding: 40px 20px;
+        }
+
+        .grid-container {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 30px;
+        }
+
+        @media (min-width: 992px) {
+            .grid-container {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        .info-section {
+            margin-bottom: 40px;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .section-header h2 {
+            font-size: 28px;
+            margin: 0;
+        }
+
+        .info-content {
+            margin-left: 45px;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+
+        .hours-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            font-size: 18px;
+        }
+
+        .map-container {
+            background-color: #f0f0f0;
+            border-radius: 8px;
+            overflow: hidden;
+            min-height: 400px;
+        }
+
+        .bi {
+            font-size: 24px;
+        }
+
         /* Map Container Styles */
         .map-section {
             padding-bottom: 40px;
@@ -177,12 +241,68 @@
             </button>
         </div>
 
-        <!-- Map Container -->
-        <div class="map-section">
-            <h3 class="text-center">Peta Lokasi Lapak</h3>
-            <div id="map"></div>
-        </div>
+        <div class="bg-teal">
+            <div class="container">
+                <div class="grid-container">
+                    <!-- Left Section - Info -->
+                    <div>
+                        <!-- Location Section -->
+                        <div class="info-section">
+                            <div class="section-header">
+                                <i class="bi bi-geo-alt-fill"></i>
+                                <h2>Location</h2>
+                            </div>
+                            <div class="info-content">
+                                <div class="contact-item">
+                                    <i class="bi bi-house-fill"></i>
+                                    <p>Jl. Lengkong Kota Bandung</p>
+                                </div>
+                                <div class="contact-item">
+                                    <i class="bi bi-telephone-fill"></i>
+                                    <p>+62 899-2310-069</p>
+                                </div>
+                                <div class="contact-item">
+                                    <i class="bi bi-envelope-fill"></i>
+                                    <p>lengkongpride@gmail.com</p>
+                                </div>
+                            </div>
+                        </div>
 
+                        <!-- Opening Hours Section -->
+                        <div class="info-section">
+                            <div class="section-header">
+                                <i class="bi bi-clock-fill"></i>
+                                <h2>Opening Hours</h2>
+                            </div>
+                            <div class="info-content">
+                                <div class="hours-grid">
+                                    <div>Monday</div>
+                                    <div>10:00 - 21:00</div>
+                                    <div>Tuesday</div>
+                                    <div>10:00 - 21:00</div>
+                                    <div>Wednesday</div>
+                                    <div>10:00 - 21:00</div>
+                                    <div>Thursday</div>
+                                    <div>10:00 - 21:00</div>
+                                    <div>Friday</div>
+                                    <div>10:00 - 21:00</div>
+                                    <div>Saturday</div>
+                                    <div>10:00 - 21:00</div>
+                                    <div>Sunday</div>
+                                    <div>10:00 - 21:00</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Map Container -->
+                    <div class="map-section">
+                        <h3 class="text-center">Peta Lokasi Lapak</h3>
+                        <div id="map"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <!-- Login Modal -->
@@ -217,7 +337,8 @@
                                 </div>
                             </div>
                             <div class="mb-3">
-                                <button class="btn rounded-pill btn-primary d-grid w-100" type="submit">Login</button>
+                                <button class="btn rounded-pill btn-primary d-grid w-100"
+                                    type="submit">Login</button>
                             </div>
                         </form>
                     </div>
