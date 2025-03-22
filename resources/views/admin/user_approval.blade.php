@@ -157,7 +157,7 @@
                                     <td>{{ $eventPay->status }}</td>
                                     <td>
                                         <a href="{{ route('eventpays.approve', $eventPay->id) }}"
-                                            class="btn btn-success btn-sm">Approve</a>
+                                            class="btn rounded-pill btn-success btn-sm">Approve</a>
                                         {{-- <!-- <a href="{{ route('monpays.reject', $iPay->id) }}" class="btn btn-danger btn-sm">Reject</a> --> --}}
                                     </td>
                                 </tr>

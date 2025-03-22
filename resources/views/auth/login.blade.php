@@ -12,37 +12,169 @@
     <!-- Leaflet CSS -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
     <style>
-        #map {
-            height: 500px;
-            width: 100%;
-            margin-bottom: 30px;
+        /* Base Styles and Variables */
+        :root {
+            --primary-color: #2F4F4F;
+            --primary-light: #4d7a7a;
+            --secondary-color: #f8f9fa;
+            --accent-color: #FF6B6B;
+            --text-dark: #333;
+            --text-light: #f8f9fa;
+            --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.1);
+            --shadow-md: 0 4px 8px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 8px 16px rgba(0, 0, 0, 0.1);
+            --radius-sm: 4px;
+            --radius-md: 8px;
+            --radius-lg: 12px;
+            --transition: all 0.3s ease;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            background-color: #f5f5f5;
+        }
+
+        /* Navbar Styling */
+        .navbar {
+            box-shadow: var(--shadow-sm);
+            padding: 12px 0;
+            background-color: white !important;
+        }
+
+        .navbar-brand {
+            font-weight: 700;
+            font-size: 1.5rem;
+            transition: var(--transition);
+        }
+
+        .navbar-brand:hover {
+            color: var(--primary-light);
+        }
+
+        .navbar-nav .nav-item {
+            margin-left: 10px;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+            padding: 8px 20px;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-light);
+            border-color: var(--primary-light);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        /* Carousel Styling */
+        .carousel {
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            box-shadow: var(--shadow-md);
+            margin-bottom: 40px;
         }
 
         .carousel-item {
-            height: 400px;
-            background-color: #f8f9fa;
+            height: 450px;
+            background-color: var(--secondary-color);
+            position: relative;
+            overflow: hidden;
         }
 
-        .bg-teal {
-            background-color: #2F4F4F;
+        .carousel-item::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.4));
+            z-index: 1;
+        }
+
+        .carousel-item h3 {
+            position: relative;
+            z-index: 2;
             color: white;
-            padding: 40px 20px;
+            font-size: 2.5rem;
+            font-weight: 700;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .carousel-control-prev,
+        .carousel-control-next {
+            width: 50px;
+            height: 50px;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 50%;
+            top: 50%;
+            transform: translateY(-50%);
+            opacity: 1;
+            box-shadow: var(--shadow-md);
+            transition: var(--transition);
+            z-index: 10;
+        }
+
+        .carousel-control-prev {
+            left: 20px;
+        }
+
+        .carousel-control-next {
+            right: 20px;
+        }
+
+        .carousel-control-prev:hover,
+        .carousel-control-next:hover {
+            background: white;
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        .carousel-control-prev-icon,
+        .carousel-control-next-icon {
+            width: 20px;
+            height: 20px;
+            filter: invert(1) grayscale(100%);
+        }
+
+        /* Info Section Styling */
+        .bg-teal {
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+            color: var(--text-light);
+            padding: 50px 20px;
+            margin-bottom: 50px;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-lg);
         }
 
         .grid-container {
             display: grid;
             grid-template-columns: 1fr;
-            gap: 30px;
+            gap: 40px;
         }
 
         @media (min-width: 992px) {
             .grid-container {
-                grid-template-columns: 1fr 1fr;
+                grid-template-columns: 0.5fr 1.5fr;
             }
         }
 
         .info-section {
             margin-bottom: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: var(--radius-md);
+            transition: var(--transition);
+        }
+
+        .info-section:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-5px);
         }
 
         .section-header {
@@ -50,15 +182,18 @@
             align-items: center;
             gap: 15px;
             margin-bottom: 20px;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+            padding-bottom: 10px;
         }
 
         .section-header h2 {
             font-size: 28px;
             margin: 0;
+            font-weight: 600;
         }
 
         .info-content {
-            margin-left: 45px;
+            margin-left: 10px;
         }
 
         .contact-item {
@@ -67,6 +202,11 @@
             gap: 15px;
             margin-bottom: 15px;
             font-size: 18px;
+            transition: var(--transition);
+        }
+
+        .contact-item:hover {
+            transform: translateX(5px);
         }
 
         .hours-grid {
@@ -76,94 +216,107 @@
             font-size: 18px;
         }
 
-        .map-container {
-            background-color: #f0f0f0;
-            border-radius: 8px;
-            overflow: hidden;
-            min-height: 400px;
+        .hours-grid div:nth-child(odd) {
+            font-weight: 600;
         }
 
         .bi {
             font-size: 24px;
         }
 
-        /* Map Container Styles */
+        /* Map Styling */
         .map-section {
+            width: 100%;
             padding-bottom: 40px;
-            /* Kurangi padding bottom */
             margin-bottom: 20px;
-            /* Kurangi margin bottom */
         }
 
-        /* Rest of your carousel control styles remain the same */
-        .carousel-control-prev,
-        .carousel-control-next {
-            width: 60px;
-            height: 60px;
-            background: linear-gradient(145deg, #ffffff, #e6e6e6);
-            border-radius: 50%;
-            top: 50%;
-            transform: translateY(-50%);
-            opacity: 1;
-            box-shadow: 5px 5px 10px #d1d1d1,
-                -5px -5px 10px #ffffff;
-            transition: all 0.3s ease;
+        .map-section h3 {
+            margin-bottom: 20px;
+            text-align: center;
+            font-weight: 600;
+            color: white;
         }
 
-        .carousel-control-prev {
-            left: 25px;
+        #map {
+            height: 500px;
+            width: 100%;
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-md);
+            overflow: hidden;
+            border: 4px solid rgba(255, 255, 255, 0.2);
         }
 
-        .carousel-control-next {
-            right: 25px;
+        /* Login Modal Styling */
+        .modal-content {
+            border: none;
+            border-radius: var(--radius-lg);
+            overflow: hidden;
         }
 
-        .carousel-control-prev:hover,
-        .carousel-control-next:hover {
-            background: linear-gradient(145deg, #e6e6e6, #ffffff);
-            transform: translateY(-50%) scale(1.1);
-            box-shadow: 3px 3px 6px #d1d1d1,
-                -3px -3px 6px #ffffff;
+        .card {
+            border: none;
+            box-shadow: none;
         }
 
-        .carousel-control-prev-icon,
-        .carousel-control-next-icon {
-            width: 25px;
-            height: 25px;
-            background-color: #333;
-            border-radius: 50%;
-            position: relative;
-        }
-
-        .carousel-control-prev-icon {
-            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23fff'%3e%3cpath d='M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z'/%3e%3c/svg%3e");
-        }
-
-        .carousel-control-next-icon {
-            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23fff'%3e%3cpath d='M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e");
-        }
-
-        .carousel-control-prev:active,
-        .carousel-control-next:active {
-            background: linear-gradient(145deg, #e6e6e6, #ffffff);
-            box-shadow: inset 5px 5px 10px #d1d1d1,
-                inset -5px -5px 10px #ffffff;
-        }
-
-        .app-brand a {
-            text-decoration: none !important;
-            /* Paksa menghapus garis bawah */
+        .card-body {
+            padding: 30px;
         }
 
         .app-brand-text {
             font-size: 28px;
-            /* Sesuaikan ukuran */
-            color: black !important;
-            /* Paksa warna hitam */
+            color: var(--primary-color) !important;
+            font-weight: 700;
+        }
+
+        .form-control {
+            padding: 12px;
+            border-radius: var(--radius-md);
+            border: 1px solid #ddd;
+            transition: var(--transition);
+        }
+
+        .form-control:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 0.25rem rgba(47, 79, 79, 0.25);
+        }
+
+        .input-group-text {
+            background-color: white;
+            border-color: #ddd;
+        }
+
+        .btn-outline-secondary {
+            border-color: #ddd;
+            color: #777;
+        }
+
+        .btn-outline-secondary:hover {
+            background-color: #f8f9fa;
+            color: #555;
+        }
+
+        /* Responsive Adjustments */
+        @media (max-width: 768px) {
+            .carousel-item {
+                height: 300px;
+            }
+
+            .section-header h2 {
+                font-size: 24px;
+            }
+
+            .contact-item,
+            .hours-grid {
+                font-size: 16px;
+            }
+
+            #map {
+                height: 400px;
+            }
         }
     </style>
 </head>
-
 
 <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -212,7 +365,7 @@
     </nav>
 
     <!-- Carousel -->
-    <div class="container mt-4">
+    <div class="container mt-4  mb-5">
         <div id="carouselExample" class="carousel slide mb-4">
             <div class="carousel-inner">
                 <div class="carousel-item active">

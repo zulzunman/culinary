@@ -39,15 +39,26 @@ class PaymentController extends Controller
 
     public function indexAdmin()
     {
+        // Get all monthly payments with merchant names
         $monPays = MounthlyDues::join('merchant_profiles', 'monthly_dues.user_id', '=', 'merchant_profiles.user_id')
             ->select('monthly_dues.*', 'merchant_profiles.name as merchant_name')
+            ->with('month')  // Make sure to eager load the month relationship
             ->get();
+
+        // Get all event payments with merchant names
         $eventPays = EventDdues::join('merchant_profiles', 'event_dues.user_id', '=', 'merchant_profiles.user_id')
             ->select('event_dues.*', 'merchant_profiles.name as merchant_name')
+            ->with('event')  // Make sure to eager load the event relationship
             ->get();
+
+        // Get all merchant profiles for displaying complete list
         $merchant_profiles = MerchantProfile::all();
 
-        return view('admin.index_payment', compact('monPays', 'eventPays'));
+        // Get all months and events for filtering
+        $months = Monthly::all();
+        $events = Event::all();
+
+        return view('admin.index_payment', compact('monPays', 'eventPays', 'merchant_profiles', 'months', 'events'));
     }
     public function createIPay()
     {
