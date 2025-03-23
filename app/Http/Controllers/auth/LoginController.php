@@ -4,6 +4,8 @@ namespace App\Http\Controllers\auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\InitialPayment;
+use App\Models\MerchantProfile;
+use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -41,10 +43,20 @@ class LoginController extends Controller
         if ($user->username == 'Super Admin' || $user->username == 'Admin') {
             return redirect()->route('dashboard');
         } else {
+            $merchant = MerchantProfile::where('user_id',$user->id)->first();
+            $product = Product::where('merchant_id',$merchant->id)->first();
             if (!$iPay || $iPay->status !== 'Lunas') {
                 return redirect()->route('ipay.create');
+            } else {
+                if ($merchant->ktp_picture == null) {
+                    return redirect()->route('merchant.edit-after-regist');
+                } else {
+                    if ($product->name == null) {
+                        return redirect()->route('store.edit-after-regist');
+                    }
+                    return redirect()->route('dashboard');
+                }
             }
-            return redirect()->route('dashboard');
         }
     }
 

@@ -1,3 +1,5 @@
+// user approval view
+
 @extends('layouts.app')
 @section('sidebar')
     @include('layouts.sidebar')
@@ -9,15 +11,15 @@
             <ul class="nav nav-tabs card-header-tabs">
                 <li class="nav-item">
                     <a class="nav-link active" id="first-payment-tab" data-bs-toggle="tab" href="#first-payment">Pembayaran
-                        Pertama</a>
+                        Registrasi</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" id="payment-approval-tab" data-bs-toggle="tab" href="#payment-approval">Pembayaran
-                        Bulanan Approval</a>
+                        Bulanan</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" id="payment-approval-tab" data-bs-toggle="tab" href="#payment-event">Pembayaran
-                        Bayaran Event</a>
+                        Event</a>
                 </li>
             </ul>
         </div>

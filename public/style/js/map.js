@@ -1,13 +1,23 @@
 document.addEventListener("DOMContentLoaded", function () {
   var map = L.map('map'); // Jangan setView dulu, nanti pakai fitBounds
   var bounds = []; // Array untuk menyimpan semua koordinat marker
-  var markers = []; // Menyimpan semua marker agar bisa diubah ukurannya
+  var markers = []; // Menyimpan semua marker
 
   // Tambahkan layer peta dari OpenStreetMap
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '&copy; OpenStreetMap contributors',
-      maxZoom : 23
+      maxZoom: 23
   }).addTo(map);
+
+  // Definisikan ikon untuk marker merah (untuk lokasi yang sudah digunakan)
+  var redIcon = new L.Icon({
+    iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png',
+    shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+    iconSize: [25, 41],
+    iconAnchor: [12, 41],
+    popupAnchor: [1, -34],
+    shadowSize: [41, 41]
+  });
 
   // Ambil data lokasi dari API Laravel
   fetch('/locations')
@@ -31,68 +41,32 @@ document.addEventListener("DOMContentLoaded", function () {
       })
       .catch(error => console.error('Error fetching locations:', error));
 
-  // Fungsi untuk membuat marker dengan ukuran yang disesuaikan
+  // Fungsi untuk membuat marker
   function createMarker(lat, lng, isUsed, code, detail, id) {
-      let zoom = map.getZoom(); // Ambil zoom level saat ini
-      let size = getMarkerSize(zoom); // Tentukan ukuran berdasarkan zoom level
+      // Tentukan icon berdasarkan status isUsed
+      let markerOptions = {
+          isUsed: isUsed
+      };
 
-      // Tentukan iconUrl berdasarkan isUsed
-      let iconUrl = isUsed ? '/assets/img/icon/store-red.png' : '/assets/img/icon/store-blue.png';
-
-      let markerIcon = L.icon({
-          iconUrl: iconUrl, // Gunakan icon yang sesuai dengan isUsed
-          iconSize: [size, size],
-          iconAnchor: [size / 2, size],
-          popupAnchor: [0, -size]
-      });
+      // Jika lokasi sudah digunakan, gunakan ikon merah
+      if (isUsed) {
+          markerOptions.icon = redIcon;
+      }
 
       let popupContent = isUsed
-          ? `<div style="padding:5px; background-color: #dc3545; color: white; text-align:center; border-radius: 5px;">
-                <b>Lokasi Sudah Digunakan</b>
+          ? `${detail}<br><div style="padding:5px; background-color: #dc3545; color: white; text-align:center; border-radius: 5px;">
+                <b>Lokasi Sudah DiTempati</b>
               </div>`
           : `<b>${code}</b><br>${detail}<br>
-                <button onclick="goToForm(${id})" class="btn btn-primary btn-sm mt-2">Pilih Lokasi</button>`;
+                <button onclick="goToForm(${id})" class="btn btn-primary btn-sm mt-2">Booking Sekarang</button>`;
 
-      // Membuat marker dengan menambahkan isUsed pada options
-      let marker = L.marker([lat, lng], {
-          icon: markerIcon,
-          isUsed: isUsed  // Simpan status isUsed dalam marker
-      })
-      .addTo(map)
-      .bindPopup(popupContent);
+      // Membuat marker
+      let marker = L.marker([lat, lng], markerOptions)
+          .addTo(map)
+          .bindPopup(popupContent);
 
       return marker;
   }
-
-  // Fungsi untuk mendapatkan ukuran marker berdasarkan zoom level
-  function getMarkerSize(zoom) {
-      return Math.max(10, Math.min(20, zoom * 2)); // Ukuran antara 10 - 40px
-  }
-
-  // Event listener untuk mengubah ukuran marker saat zoom berubah
-  map.on("zoomend", function () {
-      let zoom = map.getZoom();
-      markers.forEach(marker => {
-          let size = getMarkerSize(zoom);  // Ukuran marker berdasarkan zoom level
-
-          // Ambil status isUsed dari marker (simpan status ini saat marker dibuat)
-          let isUsed = marker.options.isUsed;
-
-          // Tentukan iconUrl berdasarkan isUsed
-          let iconUrl = isUsed ? '/assets/img/icon/store-red.png' : '/assets/img/icon/store-blue.png';
-
-          // Buat ikon baru dengan ukuran dan icon yang sesuai
-          let newIcon = L.icon({
-              iconUrl: iconUrl,  // Gunakan icon berdasarkan isUsed
-              iconSize: [size, size],
-              iconAnchor: [size / 2, size],
-              popupAnchor: [0, -size]
-          });
-
-          // Set ikon baru ke marker
-          marker.setIcon(newIcon);
-      });
-  });
 });
 
 // Fungsi untuk pindah ke halaman form dengan ID lokasi
