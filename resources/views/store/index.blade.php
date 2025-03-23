@@ -40,7 +40,7 @@
                     </tr>
                     <tr>
                         <td>Kode Lokasi Lapak</td>
-                        <td>{{ $data->location_id }}</td>
+                        <td>{{ $data->location->code }}</td>
                     </tr>
                     <tr>
                         <td>Foto Lapak</td>

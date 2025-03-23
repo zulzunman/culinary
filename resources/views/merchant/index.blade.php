@@ -9,11 +9,11 @@
         @if ($data)
             <div class="table-responsive text-nowrap">
                 <div class="card-header d-flex justify-content-between align-items-center">
-                    <h4 class="mb-0">Detail Merchant</h4>
+                    <h4 class="mb-0">Detail Pedagang</h4>
                     <div class="d-flex gap-2">
                         <button type="button" class="btn rounded-pill btn-primary" data-bs-toggle="modal"
                             data-bs-target="#editMerchantModal{{ $data->id }}">
-                            <i class="fas fa-edit me-1"></i> Edit Data Merchant
+                            <i class="fas fa-edit me-1"></i> Edit Data Pedagang
                         </button>
                     </div>
                 </div>

@@ -65,7 +65,7 @@ class RegisterController extends Controller
 
             // Membuat data toko
             $product = new Product();
-            $product->name = $request->input('name_product');
+            $product->store_name = $request->input('name_product');
             $product->category = $request->input('category');
             $product->desctiption = $request->input('desctiption');
             $product->location_id = $request->input('location_id');

@@ -72,10 +72,21 @@ Route::middleware(['auth', 'check.status'])->group(function () {
     Route::get('/merchant/index', [MerchantController::class, 'index'])->name('merchant.index');
     Route::get('/merchant/update', [MerchantController::class, 'update'])->name('merchant.update');
     Route::post('/merchant/edit', [MerchantController::class, 'edit'])->name('merchant.edit');
+    // Route untuk menampilkan form edit setelah registrasi
+    Route::get('/merchant/edit-after-regist', [MerchantController::class, 'updateAfterRegist'])
+        ->name('merchant.edit-after-regist');
+
+    // Route untuk memproses form edit setelah registrasi
+    Route::post('/merchant/edit-after-regist', [MerchantController::class, 'editAfterRegist'])
+        ->name('merchant.update-after-regist');
 
     Route::get('/store/index', [ProductController::class, 'index'])->name('store.index');
     Route::get('/store/update', [ProductController::class, 'update'])->name('store.update');
     Route::post('/store/edit', [ProductController::class, 'edit'])->name('store.edit');
+    Route::get('/store/edit-after-regist', [ProductController::class, 'updateAfterRegist'])
+        ->name('store.edit-after-regist');
+    Route::post('/store/edit-after-regist', [ProductController::class, 'editAfterRegist'])
+        ->name('store.update-after-regist');
 
     Route::get('/admin/payment', [PaymentController::class, 'indexAdmin'])->name('payment.indexAdmin');
     Route::get('/payment/index', [PaymentController::class, 'index'])->name('payment.index');

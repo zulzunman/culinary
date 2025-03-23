@@ -68,13 +68,19 @@ class PaymentController extends Controller
     {
         try {
             DB::beginTransaction();
-
             $user = Auth::user();
             $request->validate([
-                'currency' => 'required',
+                'currency' => 'required|numeric',
                 'date' => 'required|date',
                 'photo' => 'sometimes|image|mimes:jpeg,png,jpg|max:2048',
             ]);
+
+            // Cek apakah user ini sudah memiliki initial payment yang sedang diproses
+            $existingPayment = InitialPayment::where('user_id', $user->id)->first();
+
+            if ($existingPayment) {
+                return back()->with('error', 'Data pembayaran Anda sedang diproses. Silahkan tunggu email persetujuan.');
+            }
 
             $iPay_Picture = $request->file('photo');
             $filename = 'img' . '-' . str_replace(' ', '_', 'iPayment') . '-' . $user->id . '.' . $iPay_Picture->getClientOriginalExtension();
@@ -89,7 +95,6 @@ class PaymentController extends Controller
             $iPay->save();
 
             DB::commit();
-
             return redirect()->route('dashboard')->with('success', 'Payment created successfully');
         } catch (\Exception $e) {
             DB::rollBack();
