@@ -1,0 +1,146 @@
+body {
+    font-family: 'Montserrat', sans-serif;
+    background-color: #fffaf0;
+    color: #5a3921;
+    margin: 0;
+    padding: 20px;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    background-color: #fff;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    overflow: hidden;
+    border: 2px solid #e8c288;
+}
+
+.header-banner {
+    background: linear-gradient(135deg, #ff7e5f, #feb47b);
+    color: white;
+    padding: 15px;
+    text-align: center;
+    border-bottom: 3px dashed #e8c288;
+}
+
+.header-section {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px;
+    margin: 10px 0;
+}
+
+.logo-placeholder {
+    width: 80px;
+    height: 80px;
+    background-color: #f8f1e5;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid #e8c288;
+    flex-shrink: 0;
+}
+
+.city-title {
+    text-align: center;
+    color: #5a3921;
+    flex-grow: 1;
+    padding: 0 15px;
+}
+
+.city-title h2 {
+    margin: 5px 0;
+    font-size: 18px;
+}
+
+.main-title {
+    text-align: center;
+    background-color: #5a3921;
+    color: #fff;
+    padding: 10px 0;
+    margin: 15px 0;
+}
+
+.main-title p {
+    margin: 5px 0;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.content {
+    display: flex;
+    padding: 15px;
+    background-color: #f8f1e5;
+}
+
+.details {
+    flex: 3;
+    padding: 10px;
+}
+
+.details p {
+    margin: 8px 0;
+    font-size: 13px;
+    position: relative;
+    padding-left: 25px;
+}
+
+.details p:before {
+    content: "•";
+    color: #ff7e5f;
+    font-size: 18px;
+    position: absolute;
+    left: 10px;
+}
+
+.code-box {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 2px dashed #5a3921;
+    padding: 15px;
+    margin-left: 10px;
+    background-color: white;
+    font-weight: bold;
+    font-size: 16px;
+    min-height: 100px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.decoration {
+    position: relative;
+}
+
+.decoration:after {
+    content: "";
+    position: absolute;
+    bottom: -15px;
+    left: 0;
+    width: 100%;
+    height: 10px;
+    background: repeating-linear-gradient(
+        45deg,
+        #ff7e5f,
+        #ff7e5f 10px,
+        #feb47b 10px,
+        #feb47b 20px
+    );
+}
+
+.food-icon {
+    font-size: 24px;
+    margin: 0 5px;
+}
+
+.footer {
+    text-align: center;
+    padding: 10px;
+    font-size: 11px;
+    color: #888;
+    border-top: 2px dashed #e8c288;
+    background-color: #f8f1e5;
+}
