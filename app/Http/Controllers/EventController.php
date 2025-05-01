@@ -55,7 +55,7 @@ class EventController extends Controller
 
             DB::commit();
 
-            return redirect()->route('dashboard')->with('success', 'Payment created successfully');
+            return redirect()->route('event.index')->with('success', 'Event created successfully');
         } catch (\Exception $e) {
             DB::rollBack();
             return back()->with('error', 'Failed to create payment: ' . $e->getMessage());
@@ -103,5 +103,13 @@ class EventController extends Controller
             DB::rollBack();
             return back()->with('error', 'Failed to update event: ' . $e->getMessage());
         }
+    }
+
+    public function delete($id)
+    {
+        $event = Event::findOrFail($id);
+        $event->delete();
+
+        return redirect()->route('event.index')->with('success', 'Event deleted successfully');
     }
 }

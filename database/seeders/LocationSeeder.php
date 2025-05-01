@@ -23,7 +23,7 @@ class LocationSeeder extends Seeder
         $baseLng = 107.6110; // Longitude utama di tengah jalan
 
         $locations = [];
-        for ($i = 1; $i <= 153; $i++) {
+        for ($i = 1; $i <= 76; $i++) {
             $locations[] = [
                 'id' => $i,
                 'code' => sprintf('LC%03d', $i), // Format seperti LC001, LC002, dst.

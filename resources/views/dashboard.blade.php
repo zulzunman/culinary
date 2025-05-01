@@ -23,6 +23,14 @@
                                         <span>{{ $user->email }}</span>
                                     </div>
                                     <div class="detail-item">
+                                        <i class="fa fa-store me-2"></i>
+                                        <span>{{ $user->merchant->product->store_name }}</span>
+                                    </div>
+                                    <div class="detail-item">
+                                        <i class='bx bx-food-menu me-2'></i>
+                                        <span>{{ $user->merchant->product->desctiption }}</span>
+                                    </div>
+                                    <div class="detail-item">
                                         <i class="bx bx-check-circle me-2"></i>
                                         <span>Status: {{ $user->status }}</span>
                                     </div>
