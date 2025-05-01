@@ -6,7 +6,7 @@
 @section('content')
     <div class="card">
         <div class="table-responsive text-nowrap">
-            <h5 class="card-header">User Approval</h5>
+            <h5 class="card-header">Data Toko</h5>
             <table class="table table-hover">
                 <thead>
                     <tr>
@@ -29,6 +29,8 @@
                             <td>
                                 <a href="{{ route('store-master.detail', $item->id) }}"
                                     class="btn rounded-pill btn-info">Detail</a>
+                                <a href="{{ route('users.delete', $item->id) }}"
+                                    class="btn rounded-pill btn-danger">Delete</a>
                             </td>
                         </tr>
                     @empty
