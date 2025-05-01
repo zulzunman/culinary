@@ -58,7 +58,7 @@
                                                     </a>
 
                                                 </td>
-                                                <td>{{ $event->created_at->format('d M Y H:i') }}</td>
+                                                <td>{{ $event->created_at->format('d M Y') }}</td>
                                                 @auth
                                                     @if (auth()->user()->username == 'Admin' || auth()->user()->username == 'Super Admin')
                                                         <td>

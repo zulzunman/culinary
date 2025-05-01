@@ -22,8 +22,10 @@ class ApprovalController extends Controller
     // Tampilkan halaman daftar user
     public function index()
     {
-        $users = User::where('status', 'PENDING')->get();
-        // $iPays = InitialPayment::where('status', 'Diproses')->get();
+        $users = User::where('status', 'PENDING')->with('merchant', 'merchant.product')->get();
+        // $users = User::where('status', 'PENDING')->get();
+        // $detailmerchant = MerchantProfile::with('')
+        // dd($users->merchant->name);
         // Query untuk join dan mengambil nama pedagang dari merchants dan semua data dari payments
         $iPays = InitialPayment::select(
             'initial_payments.*', // Mengambil semua kolom dari tabel payments

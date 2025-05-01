@@ -68,6 +68,7 @@ Route::middleware(['auth', 'check.status'])->group(function () {
     Route::post('/admin/event/add', [EventController::class, 'add'])->name('event.add');
     Route::get('/admin/event/update/{id}', [EventController::class, 'update'])->name('event.update');
     Route::post('/admin/event/edit/{id}', [EventController::class, 'edit'])->name('event.edit');
+    Route::post('/admin/event/delete/{id}', [EventController::class, 'delete'])->name('event.delete');
 
     Route::get('/merchant/index', [MerchantController::class, 'index'])->name('merchant.index');
     Route::get('/merchant/update', [MerchantController::class, 'update'])->name('merchant.update');

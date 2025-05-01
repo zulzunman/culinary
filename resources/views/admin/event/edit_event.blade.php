@@ -66,9 +66,9 @@
                 Are you sure you want to delete the event "{{ $event->name }}"?
             </div>
             <div class="modal-footer">
-                <form action="#" method="POST" class="d-inline">
+                <form action="{{ route('event.delete', $event->id) }}" method="POST" class="d-inline">
                     @csrf
-                    @method('DELETE')
+                    @method('POST')
                     <button type="submit" class="btn rounded-pill btn-danger">Delete Event</button>
                 </form>
             </div>

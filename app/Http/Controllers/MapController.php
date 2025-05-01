@@ -7,17 +7,35 @@ use Illuminate\Http\Request;
 
 class MapController extends Controller
 {
+    // public function getLocations()
+    // {
+    //     // $locations = Location::all(); // Ambil semua data lokasi
+    //     $locations = Location::all()->map(function ($loc) {
+    //     // $locations = Location::with('product')->map(function ($loc) {
+    //         return [
+    //             'id' => $loc->id,
+    //             'code' => $loc->code,
+    //             'detail' => $loc->detail,
+    //             'latitude' => $loc->latitude,
+    //             'longitude' => $loc->longitude,
+    //             'is_used' => $loc->isUsed(), // Tambahkan status apakah sudah dipakai
+    //             // 'store_name' => $loc->product ? $loc->product->store_name : null,
+    //         ];
+    //     });
+    //     return response()->json($locations);
+    // }
     public function getLocations()
     {
-        // $locations = Location::all(); // Ambil semua data lokasi
-        $locations = Location::all()->map(function ($loc) {
+        $locations = Location::with('product')->get()->map(function ($loc) {
             return [
                 'id' => $loc->id,
                 'code' => $loc->code,
                 'detail' => $loc->detail,
                 'latitude' => $loc->latitude,
                 'longitude' => $loc->longitude,
-                'is_used' => $loc->isUsed(), // Tambahkan status apakah sudah dipakai
+                'is_used' => $loc->isUsed(),
+                'store_name' => $loc->product ? $loc->product->store_name : null,
+                'image' => $loc->product ? $loc->product->menu_photo : null, // Ambil gambar dari produk
             ];
         });
         return response()->json($locations);
