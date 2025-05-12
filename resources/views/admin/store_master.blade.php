@@ -37,7 +37,7 @@
                         <tr>
                             <td>{{ ($data->currentPage() - 1) * $data->perPage() + $loop->iteration }}</td>
                             <td>{{ $item->store_name }}</td>
-                            <td>{{ $item->location_id }}</td>
+                            <td>{{ $item->code }}</td>
                             <td>{{ $item->merchant_name }}</td>
                             <td>{{ $item->merchant_phone }}</td>
                             <td>{{ $item->category }}</td>

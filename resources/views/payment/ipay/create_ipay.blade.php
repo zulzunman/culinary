@@ -52,6 +52,10 @@
             justify-content: center;
             gap: 1rem;
         }
+        .colorP {
+            color: red;
+            font-style: italic;
+        }
     </style>
 </head>
 
@@ -82,6 +86,7 @@
                         </div>
                     @endif
 
+                    <p class="colorP">*Pembayaran registrasi sebesar Rp. 150.000</p>
                     <form action="{{ route('ipay.add') }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="mb-4 position-relative">

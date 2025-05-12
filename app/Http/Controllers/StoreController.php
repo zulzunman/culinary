@@ -17,7 +17,13 @@ class StoreController extends Controller
     {
         $data = DB::table('products')
             ->join('merchant_profiles', 'products.merchant_id', '=', 'merchant_profiles.id')
-            ->select('products.*', 'merchant_profiles.name as merchant_name', 'merchant_profiles.phone as merchant_phone')
+            ->join('locations', 'products.location_id', '=', 'locations.id')
+            ->select(
+                'products.*',
+                'merchant_profiles.name as merchant_name',
+                'merchant_profiles.phone as merchant_phone',
+                'locations.code as code'
+                )
             ->whereNotNull('products.booth_photo')
             ->orderBy('products.id', 'desc')
             ->paginate(10);

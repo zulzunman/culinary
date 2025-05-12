@@ -15,7 +15,7 @@ class ProductController extends Controller
     {
         $locations = Location::all(); // Add this line
         $merchantId = MerchantProfile::where('user_id', Auth::id())->value('id');
-        $data = Product::where('merchant_id', $merchantId)->first();
+        $data = Product::with('location')->where('merchant_id', $merchantId)->first();
         $user = Auth::user();
         $merchant = $user->merchant;
         // Pastikan merchant ada sebelum mengakses relasi
