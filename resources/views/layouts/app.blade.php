@@ -150,7 +150,41 @@
                 }, 5000);
             });
         });
+        // Add this to your script to include CSRF token in AJAX requests
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set up CSRF token for AJAX requests
+            const token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
+            // Add to all fetch requests
+            window.fetch = new Proxy(window.fetch, {
+                apply: function(fetch, that, args) {
+                    // If it's a Request
+                    if (args[0] instanceof Request) {
+                        if (args[0].method !== 'GET') {
+                            const req = new Request(args[0], {
+                                headers: new Headers({
+                                    ...Object.fromEntries(args[0].headers.entries()),
+                                    'X-CSRF-TOKEN': token
+                                })
+                            });
+                            args[0] = req;
+                        }
+                    }
+                    // If it's a URL string and has a second config object
+                    else if (typeof args[1] === 'object' && args[1] !== null) {
+                        if (args[1].method && args[1].method !== 'GET') {
+                            args[1].headers = {
+                                ...args[1].headers,
+                                'X-CSRF-TOKEN': token
+                            };
+                        }
+                    }
+                    return fetch.apply(that, args);
+                }
+            });
+        });
     </script>
+    @yield('scripts')
 </body>
 
 </html>

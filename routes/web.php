@@ -60,7 +60,10 @@ Route::middleware(['auth', 'check.status'])->group(function () {
     Route::get('/admin/eventpays/approve/{id}', [ApprovalController::class, 'approveEventPay'])->name('eventpays.approve');
     Route::get('/admin/eventpays/reject/{id}', [ApprovalController::class, 'rejectEventPay'])->name('eventpays.reject');
 
+    // Store Master Routes with Live Search
     Route::get('/admin/store-master', [StoreController::class, 'getAll'])->name('store-master.index');
+    Route::get('/admin/store-master/search', [StoreController::class, 'search'])->name('store-master.search');
+    Route::get('/admin/store-master/live-search', [StoreController::class, 'liveSearch'])->name('store-master.live-search'); // Add this line for live search
     Route::get('/admin/store-master/detail/{id}', [StoreController::class, 'getDetail'])->name('store-master.detail');
     Route::get('/cetak-pdf', [StoreController::class, 'printCard'])->name('store.print');
 

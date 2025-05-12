@@ -27,6 +27,27 @@ class MapController extends Controller
     public function getLocations()
     {
         $locations = Location::with('product')->get()->map(function ($loc) {
+            $imageUrl = null;
+            $boothPhotoUrl = null;
+
+            if ($loc->product) {
+                // Menambahkan menu_photo
+                if ($loc->product->menu_photo) {
+                    $imageUrl = $loc->product->menu_photo;
+                    if (!str_starts_with($imageUrl, '/') && !str_starts_with($imageUrl, 'http')) {
+                        $imageUrl = '/' . $imageUrl;
+                    }
+                }
+
+                // Menambahkan booth_photo
+                if ($loc->product->booth_photo) {
+                    $boothPhotoUrl = $loc->product->booth_photo;
+                    if (!str_starts_with($boothPhotoUrl, '/') && !str_starts_with($boothPhotoUrl, 'http')) {
+                        $boothPhotoUrl = '/' . $boothPhotoUrl;
+                    }
+                }
+            }
+
             return [
                 'id' => $loc->id,
                 'code' => $loc->code,
@@ -35,7 +56,8 @@ class MapController extends Controller
                 'longitude' => $loc->longitude,
                 'is_used' => $loc->isUsed(),
                 'store_name' => $loc->product ? $loc->product->store_name : null,
-                'image' => $loc->product ? $loc->product->menu_photo : null, // Ambil gambar dari produk
+                'image' => $imageUrl,
+                'booth_photo' => $boothPhotoUrl,
             ];
         });
         return response()->json($locations);
