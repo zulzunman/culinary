@@ -41,7 +41,7 @@
                                     <a href="{{ route('users.approve', $user->id) }}" class="btn btn-success flex-grow-1">
                                         <i class="bx bx-check me-1"></i> Approve
                                     </a>
-                                    <a href="{{ route('users.reject', $user->id) }}" class="btn btn-danger flex-grow-1">
+                                    <a href="{{ route('users.reject-form', $user->id) }}" class="btn btn-danger flex-grow-1">
                                         <i class="bx bx-x me-1"></i> Reject
                                     </a>
                                 </div>
