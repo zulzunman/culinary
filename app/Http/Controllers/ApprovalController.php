@@ -154,8 +154,10 @@ class ApprovalController extends Controller
 
     //     return redirect()->back()->with('success', 'User has been rejected.');
     // }
-    public function deleteAccount($user)
+    public function deleteAccount($id)
     {
-        $user->delete();
+        $dataStore = Product::findOrFail($id)->with('merchant.user')->first();
+        $dataStore->merchant->user->delete();
+        return redirect()->route('store-master.index')->with('success', 'Data toko telah di hapus.');
     }
 }
