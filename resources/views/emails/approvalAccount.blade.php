@@ -173,18 +173,24 @@
                 <th>Email</th>
                 <th>Password</th>
                 <th>Status</th>
+                @if ($user['status'] == 'REJECT')
+                    <th>Pesan</th>
+                @endif
             </tr>
             <tr>
                 <td>{{ $merchantProfile['name'] }}</td>
                 <td>{{ $user['email'] }}</td>
                 <td>{{ $merchantProfile['nik'] }}</td>
-                <td>
                     @if ($user['status'] == 'APPROVE')
-                        <span class="status-approved">DITERIMA</span>
+                        <td>
+                            <span class="status-approved">DITERIMA</span>
+                        </td>
                     @else
-                        <span class="status-rejected">DITOLAK</span>
+                        <td>
+                            <span class="status-rejected">DITOLAK</span>
+                        </td>
+                        <td>{{ $comment }}</td>
                     @endif
-                </td>
             </tr>
         </table>
 

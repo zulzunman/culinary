@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\ApprovalAccountApproveMail;
 use App\Mail\ApprovalAccountMail;
 use App\Mail\ApprovalEventpayMail;
 use App\Mail\ApprovalIpayMail;
@@ -63,15 +64,21 @@ class ApprovalController extends Controller
         $product = Product::where('merchant_id', $merchantProfile->id)->get();
 
         // Kirim email verifikasi
-        Mail::to($user->email)->send(new ApprovalAccountMail($user, $merchantProfile, $product));
+        Mail::to($user->email)->send(new ApprovalAccountApproveMail($user, $merchantProfile, $product));
 
         return redirect()->back()->with('success', 'User has been approved.');
     }
 
     // Reject user
-    public function reject($id)
+    public function rejectForm($id)
     {
         $user = User::findOrFail($id);
+        return view('admin.reject.reject', compact('user'));
+    }
+    public function reject(Request $request,$id)
+    {
+        $user = User::findOrFail($id);
+        $comment = $request->input('comment');
         $user->status = 'REJECT';
         $user->save();
 
@@ -79,12 +86,12 @@ class ApprovalController extends Controller
         $product = Product::where('merchant_id', $merchantProfile->id)->get();
 
         // Kirim email verifikasi
-        Mail::to($user->email)->send(new ApprovalAccountMail($user, $merchantProfile, $product));
+        Mail::to($user->email)->send(new ApprovalAccountMail($user, $merchantProfile, $product, $comment));
 
         // Pemanggilan fungsi delete account
         $this->deleteAccount($user);
 
-        return redirect()->back()->with('success', 'User has been rejected.');
+        return redirect()->route('dashboard')->with('success', 'User has been rejected.');
     }
 
     // Approval Initial Payment

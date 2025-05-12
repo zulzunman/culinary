@@ -51,7 +51,8 @@ Route::middleware(['auth', 'check.status'])->group(function () {
 
     Route::get('/admin/users', [ApprovalController::class, 'index'])->name('users.index');
     Route::get('/admin/users/approve/{id}', [ApprovalController::class, 'approve'])->name('users.approve');
-    Route::get('/admin/users/reject/{id}', [ApprovalController::class, 'reject'])->name('users.reject');
+    Route::get('/admin/users/reject-form/{id}', [ApprovalController::class, 'rejectForm'])->name('users.reject-form');
+    Route::post('/admin/users/reject/{id}', [ApprovalController::class, 'reject'])->name('users.reject');
     Route::get('/admin/users/delete/{id}', [ApprovalController::class, 'deleteAccount'])->name('users.delete');
     Route::get('/admin/ipays/approve/{id}', [ApprovalController::class, 'approveIPay'])->name('ipays.approve');
     Route::get('/admin/ipays/reject/{id}', [ApprovalController::class, 'rejectIPay'])->name('ipays.reject');
