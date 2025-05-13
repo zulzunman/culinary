@@ -27,7 +27,7 @@ class DashboardController extends Controller
         }
 
         if ($user->username == 'Super Admin' || $user->username == 'Admin') {
-            $users = User::where('status', 'PENDING')->get();
+            $users = User::with('merchant.product')->where('status', 'PENDING')->get();
         } else {
             $iPay = InitialPayment::where('user_id', $user->id)->first();
             if (!$iPay || $iPay->status !== 'Lunas') {

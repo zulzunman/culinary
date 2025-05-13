@@ -90,14 +90,7 @@ class ApprovalController extends Controller
         // Kirim email verifikasi
         Mail::to($user->email)->send(new ApprovalAccountMail($user, $merchantProfile, $product, $comment));
 
-        // Delete the user's data (no need to call another method)
-        if ($merchantProfile) {
-            $products = Product::where('merchant_id', $merchantProfile->id)->get();
-            foreach ($products as $product) {
-                $product->delete();
-            }
-            $merchantProfile->delete();
-        }
+        $user->delete();
 
         // Make sure to redirect to dashboard instead of back
         return redirect()->route('dashboard')->with('success', 'User has been rejected.');

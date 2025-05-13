@@ -47,7 +47,7 @@ document.addEventListener("DOMContentLoaded", function () {
       box-shadow: 0 2px 5px rgba(0,0,0,0.1);
       background: white;
     }
-    
+
     .slider-container {
   position: relative;
   overflow: hidden;
@@ -74,8 +74,8 @@ document.addEventListener("DOMContentLoaded", function () {
   object-fit: contain; /* Diubah dari cover ke contain */
   background-color: #f8f9fa; /* Warna latar untuk gambar */
 }
-    
-    
+
+
 .caption {
   position: absolute;
   top: 0; /* Diubah dari bottom: 0 */
@@ -87,7 +87,7 @@ document.addEventListener("DOMContentLoaded", function () {
   font-size: 12px;
   text-align: center;
 }
-    
+
     .nav-button {
       position: absolute;
       top: 50%;
@@ -106,19 +106,19 @@ document.addEventListener("DOMContentLoaded", function () {
       z-index: 1;
       transition: background 0.3s;
     }
-    
+
     .nav-button:hover {
       background: rgba(0,0,0,0.7);
     }
-    
+
     .prev {
       left: 8px;
     }
-    
+
     .next {
       right: 8px;
     }
-    
+
     .dots {
       position: absolute;
       bottom: 10px;
@@ -128,7 +128,7 @@ document.addEventListener("DOMContentLoaded", function () {
       justify-content: center;
       gap: 5px;
     }
-    
+
     .dot {
       width: 8px;
       height: 8px;
@@ -137,15 +137,15 @@ document.addEventListener("DOMContentLoaded", function () {
       cursor: pointer;
       transition: background 0.3s;
     }
-    
+
     .dot.active {
       background-color: white;
     }
-    
+
     .card-content {
       padding: 12px;
     }
-    
+
     .store-name {
       font-weight: bold;
       font-size: 16px;
@@ -153,14 +153,14 @@ document.addEventListener("DOMContentLoaded", function () {
       text-align: center;
       color: #333;
     }
-    
+
     .card-detail {
       font-size: 13px;
       color: #666;
       margin-bottom: 10px;
       line-height: 1.4;
     }
-    
+
     .status-badge {
       padding: 6px 10px;
       border-radius: 4px;
@@ -169,12 +169,12 @@ document.addEventListener("DOMContentLoaded", function () {
       text-align: center;
       margin-top: 8px;
     }
-    
+
     .status-occupied {
       background-color: #dc3545;
       color: white;
     }
-    
+
     .book-btn {
       background-color: #007bff;
       color: white;
@@ -187,11 +187,11 @@ document.addEventListener("DOMContentLoaded", function () {
       font-size: 13px;
       transition: background 0.3s;
     }
-    
+
     .book-btn:hover {
       background-color: #0069d9;
     }
-    
+
     .image-placeholder {
       display: flex;
       align-items: center;
