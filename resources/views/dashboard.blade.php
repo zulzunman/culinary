@@ -41,10 +41,40 @@
                                     <a href="{{ route('users.approve', $user->id) }}" class="btn btn-success flex-grow-1">
                                         <i class="bx bx-check me-1"></i> Approve
                                     </a>
-                                    <a href="{{ route('users.reject-form', $user->id) }}" class="btn btn-danger flex-grow-1">
+                                    <button type="button" class="btn btn-danger flex-grow-1" data-bs-toggle="modal"
+                                        data-bs-target="#rejectModal{{ $user->id }}">
                                         <i class="bx bx-x me-1"></i> Reject
-                                    </a>
+                                    </button>
                                 </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    {{-- Include rejection modal for each user --}}
+                    <div class="modal fade" id="rejectModal{{ $user->id }}" tabindex="-1"
+                        aria-labelledby="rejectModalLabel{{ $user->id }}" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="rejectModalLabel{{ $user->id }}">Reject User:
+                                        {{ $user->username }}</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <form action="{{ route('users.reject', $user->id) }}" method="post">
+                                    @csrf
+                                    <input type="hidden" name="redirect_to" value="{{ route('dashboard') }}">
+                                    <div class="modal-body">
+                                        <div class="mb-3">
+                                            <label for="comment{{ $user->id }}" class="form-label">Pesan
+                                                penolakan</label>
+                                            <textarea class="form-control" name="comment" id="comment{{ $user->id }}" rows="4" required></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="submit" class="btn btn-danger">Submit Rejection</button>
+                                    </div>
+                                </form>
                             </div>
                         </div>
                     </div>

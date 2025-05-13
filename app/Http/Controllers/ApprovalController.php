@@ -75,7 +75,9 @@ class ApprovalController extends Controller
         $user = User::findOrFail($id);
         return view('admin.reject.reject', compact('user'));
     }
-    public function reject(Request $request,$id)
+
+    // Reject user
+    public function reject(Request $request, $id)
     {
         $user = User::findOrFail($id);
         $comment = $request->input('comment');
@@ -88,9 +90,16 @@ class ApprovalController extends Controller
         // Kirim email verifikasi
         Mail::to($user->email)->send(new ApprovalAccountMail($user, $merchantProfile, $product, $comment));
 
-        // Pemanggilan fungsi delete account
-        $this->deleteAccount($user);
+        // Delete the user's data (no need to call another method)
+        if ($merchantProfile) {
+            $products = Product::where('merchant_id', $merchantProfile->id)->get();
+            foreach ($products as $product) {
+                $product->delete();
+            }
+            $merchantProfile->delete();
+        }
 
+        // Make sure to redirect to dashboard instead of back
         return redirect()->route('dashboard')->with('success', 'User has been rejected.');
     }
 
@@ -126,7 +135,6 @@ class ApprovalController extends Controller
 
         return redirect()->back()->with('success', 'User has been approved.');
     }
-    // public function rejectIPay($id)
 
     // Approval Event Payment
     public function approveEventPay($id)
@@ -144,27 +152,24 @@ class ApprovalController extends Controller
 
         return redirect()->back()->with('success', 'User has been approved.');
     }
-    // public function rejectIPay($id)
-    // {
-    //     $user = User::findOrFail($id);
-    //     $user->status = 'REJECT';
-    //     $user->save();
 
-    //     $merchantProfile = MerchantProfile::where('user_id', $user->id)->first();
-    //     $product = Product::where('merchant_id', $merchantProfile->id)->get();
-
-    //     // Kirim email verifikasi
-    //     Mail::to($user->email)->send(new ApprovalAccountMail($user, $merchantProfile, $product));
-
-    //     // Pemanggilan fungsi delete account
-    //     $this->deleteAccount($user);
-
-    //     return redirect()->back()->with('success', 'User has been rejected.');
-    // }
+    // Delete store account - kept for compatibility with routes
     public function deleteAccount($id)
     {
-        $dataStore = Product::findOrFail($id)->with('merchant.user')->first();
-        $dataStore->merchant->user->delete();
+        $user = User::findOrFail($id);
+
+        $merchantProfile = MerchantProfile::where('user_id', $user->id)->first();
+
+        if ($merchantProfile) {
+            $products = Product::where('merchant_id', $merchantProfile->id)->get();
+            foreach ($products as $product) {
+                $product->delete();
+            }
+            $merchantProfile->delete();
+        }
+
+        $user->delete();
+
         return redirect()->route('store-master.index')->with('success', 'Data toko telah di hapus.');
     }
 }
