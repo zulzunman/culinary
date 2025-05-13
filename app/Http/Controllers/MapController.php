@@ -29,6 +29,7 @@ class MapController extends Controller
         $locations = Location::with('product')->get()->map(function ($loc) {
             $imageUrl = null;
             $boothPhotoUrl = null;
+            $description = null;
 
             if ($loc->product) {
                 // Menambahkan menu_photo
@@ -46,6 +47,10 @@ class MapController extends Controller
                         $boothPhotoUrl = '/' . $boothPhotoUrl;
                     }
                 }
+
+                if ($loc->product->desctiption) {
+                    $description = $loc->product->desctiption;
+                }
             }
 
             return [
@@ -58,6 +63,7 @@ class MapController extends Controller
                 'store_name' => $loc->product ? $loc->product->store_name : null,
                 'image' => $imageUrl,
                 'booth_photo' => $boothPhotoUrl,
+                'description' => $description
             ];
         });
         return response()->json($locations);

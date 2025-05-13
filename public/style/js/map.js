@@ -49,44 +49,43 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     .slider-container {
-  position: relative;
-  overflow: hidden;
-  border-radius: 8px 8px 0 0;
-  height: 200px; /* Ditingkatkan dari 150px */
-  width: 100%;
-}
+      position: relative;
+      overflow: hidden;
+      border-radius: 8px 8px 0 0;
+      height: 200px; /* Ditingkatkan dari 150px */
+      width: 100%;
+    }
 
-.slides {
-  display: flex;
-  transition: transform 0.4s ease;
-  height: 100%;
-}
+    .slides {
+      display: flex;
+      transition: transform 0.4s ease;
+      height: 100%;
+    }
 
-.slide {
-  min-width: 100%;
-  position: relative;
-  height: 100%;
-}
+    .slide {
+      min-width: 100%;
+      position: relative;
+      height: 100%;
+    }
 
-.slide img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain; /* Diubah dari cover ke contain */
-  background-color: #f8f9fa; /* Warna latar untuk gambar */
-}
+    .slide img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain; /* Diubah dari cover ke contain */
+      background-color: #f8f9fa; /* Warna latar untuk gambar */
+    }
 
-
-.caption {
-  position: absolute;
-  top: 0; /* Diubah dari bottom: 0 */
-  left: 0;
-  right: 0;
-  background: rgba(0,0,0,0.5);
-  color: white;
-  padding: 4px 8px;
-  font-size: 12px;
-  text-align: center;
-}
+    .caption {
+      position: absolute;
+      top: 0; /* Diubah dari bottom: 0 */
+      left: 0;
+      right: 0;
+      background: rgba(0,0,0,0.5);
+      color: white;
+      padding: 4px 8px;
+      font-size: 12px;
+      text-align: center;
+    }
 
     .nav-button {
       position: absolute;
@@ -161,6 +160,18 @@ document.addEventListener("DOMContentLoaded", function () {
       line-height: 1.4;
     }
 
+    .product-description {
+      font-size: 13px;
+      color: #444;
+      margin-bottom: 10px;
+      line-height: 1.4;
+      border-left: 3px solid #007bff;
+      padding-left: 8px;
+      background-color: #f8f9fa;
+      padding: 8px;
+      border-radius: 4px;
+    }
+
     .status-badge {
       padding: 6px 10px;
       border-radius: 4px;
@@ -219,7 +230,7 @@ document.addEventListener("DOMContentLoaded", function () {
       }
 
       data.forEach(loc => {
-        console.log("Processing location:", loc.code, "Menu photo:", loc.image, "Booth photo:", loc.booth_photo);
+        console.log("Processing location:", loc.code, "Menu photo:", loc.image, "Booth photo:", loc.booth_photo, "Description:", loc.description);
         let marker = createMarker(
           loc.latitude,
           loc.longitude,
@@ -229,7 +240,8 @@ document.addEventListener("DOMContentLoaded", function () {
           loc.id,
           loc.store_name,
           loc.image,
-          loc.booth_photo
+          loc.booth_photo,
+          loc.description // Tambahkan parameter description
         );
         markers.push(marker);
         bounds.push([loc.latitude, loc.longitude]);
@@ -242,7 +254,7 @@ document.addEventListener("DOMContentLoaded", function () {
     .catch(error => console.error('Error fetching locations:', error));
 
   // Fungsi untuk membuat marker
-  function createMarker(lat, lng, isUsed, code, detail, id, storeName, menuPhoto, boothPhoto) {
+  function createMarker(lat, lng, isUsed, code, detail, id, storeName, menuPhoto, boothPhoto, description) {
     let markerOptions = {
       icon: isUsed ? redIcon : greenIcon
     };
@@ -251,8 +263,8 @@ document.addEventListener("DOMContentLoaded", function () {
     let popupContent = '';
 
     if (isUsed) {
-      // Debug photos
-      console.log("Creating marker with menu photo:", menuPhoto, "and booth photo:", boothPhoto);
+      // Debug photos dan description
+      console.log("Creating marker with menu photo:", menuPhoto, "booth photo:", boothPhoto, "and description:", description);
 
       // Pastikan path foto lengkap
       let menuPhotoPath = menuPhoto ? (menuPhoto.startsWith('http') || menuPhoto.startsWith('/') ? menuPhoto : '/' + menuPhoto) : null;
@@ -319,12 +331,19 @@ document.addEventListener("DOMContentLoaded", function () {
           </div>`;
       }
 
+      // Tampilkan description jika tersedia
+      let descriptionHtml = '';
+      if (description) {
+        descriptionHtml = `<div class="product-description">${description}</div>`;
+      }
+
       popupContent = `
         <div class="location-card">
           ${slideshowHtml}
           <div class="card-content">
             ${storeName ? `<div class="store-name">${storeName}</div>` : ''}
             <div class="card-detail">${detail}</div>
+            ${descriptionHtml}
             <div class="status-badge status-occupied">Lokasi Sudah DiTempati</div>
           </div>
         </div>`;
