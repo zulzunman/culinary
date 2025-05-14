@@ -86,7 +86,7 @@
                         </div>
                     @endif
 
-                    <p class="colorP">*Pembayaran registrasi sebesar Rp. 150.000</p>
+                    <p class="colorP">*Pembayaran registrasi sebesar Rp. 6.000.000</p>
                     <form action="{{ route('ipay.add') }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="mb-4 position-relative">
