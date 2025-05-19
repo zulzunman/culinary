@@ -16,6 +16,7 @@ use App\Models\Monthly;
 use App\Models\MounthlyDues;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 
 class ApprovalController extends Controller
@@ -149,20 +150,28 @@ class ApprovalController extends Controller
     // Delete store account - kept for compatibility with routes
     public function deleteAccount($id)
     {
-        $user = User::findOrFail($id);
+        $product = Product::findOrFail($id);
 
-        $merchantProfile = MerchantProfile::where('user_id', $user->id)->first();
+        // Pastikan merchant profile ada
+        $merchantProfile = MerchantProfile::find($product->merchant_id);
 
-        if ($merchantProfile) {
-            $products = Product::where('merchant_id', $merchantProfile->id)->get();
-            foreach ($products as $product) {
-                $product->delete();
+        DB::beginTransaction();
+        try {
+            if ($merchantProfile) {
+                $user = User::find($merchantProfile->user_id);
+
+                if ($user) {
+                    $user->delete();
+                }
             }
-            $merchantProfile->delete();
+
+            DB::commit();
+
+            return redirect()->route('store-master.index')->with('success', 'Data toko telah di hapus.');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return redirect()->route('store-master.index')
+                            ->withErrors(['message' => 'Terjadi kesalahan saat menghapus data: ' . $e->getMessage()]);
         }
-
-        $user->delete();
-
-        return redirect()->route('store-master.index')->with('success', 'Data toko telah di hapus.');
     }
 }
